@@ -41,3 +41,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+incl/lib/debug.php
+dashboard/incl/lang/dev/append.php
+dashboard/incl/lang/dev/append.txt
+.idea/
