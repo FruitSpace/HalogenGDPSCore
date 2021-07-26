@@ -1,23 +1,29 @@
-# GMDprivateServer
+# Halogen GDPS Core
 ## Geometry Dash Private Server
-Basically a Geometry Dash Server Emulator
+**I think that Cvolton's version is overcomplicated, so this is the most dumb GMDPS fork**
 
-Supported version of Geometry Dash: 1.0 - 2.11 (so any version of Geometry Dash works, as of writing this [February 02, 2020])
+**UPD: Cvolton's implementation is literally sh\*t**
 
-Required version of PHP: 5.4+ (tested up to 7.3.11)
+### Do not use! Staging tree
 
-### Setup
-1) Upload the files on a webserver
-2) Import database.sql into a MySQL/MariaDB database
-3) Edit the links in GeometryDash.exe (some are base64 encoded since 2.1, remember that)
+Supported Geometry Dash versions: 1.0 - 2.11 (All known versions as of Jul 2021)
+
+PHP version required: 5.4+ (Tested 8.0)
 
 ### Credits
-Base for account settings and the private messaging system by someguy28
+Used libs:
+- [incl/lib/XORCipher.php](https://github.com/sathoro/php-xor-cipher)
+- [incl/lib/defuse-crypto.phar](https://github.com/defuse/php-encryption)
+- [packCreate.php](http://jscolor.com/)
+- **pavlukivan** and **Italian APK Downloader** helped a lot w/ generateHash.php
+- Base for account settings and the private messaging system by someguy28
 
-Using this for XOR encryption - https://github.com/sathoro/php-xor-cipher - (incl/lib/XORCipher.php)
-
-Using this for cloud save encryption - https://github.com/defuse/php-encryption - (incl/lib/defuse-crypto.phar)
-
-Jscolor (color picker in packCreate.php) - http://jscolor.com/
-
-Most of the stuff in generateHash.php has been figured out by pavlukivan and Italian APK Downloader, so credits to them
+## Dev stuff, ignore
+Active Endpoints:
+```
+??? http://www.boomlings.com/databas/checkIfServerOnline.php
+??? databas??? not database wtf
+📁
+|__ [ROOT]
+|__ 📁 accounts
+```
