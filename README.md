@@ -6,6 +6,8 @@
 
 ### Do not use! Staging tree
 
+**Wanna see Halogen [README.md](Halogen/README.md)?**
+
 Supported Geometry Dash versions: 1.0 - 2.11 (All known versions as of Jul 2021)
 
 PHP version required: 5.4+ (Tested 8.0)
@@ -17,13 +19,3 @@ Used libs:
 - [packCreate.php](http://jscolor.com/)
 - **pavlukivan** and **Italian APK Downloader** helped a lot w/ generateHash.php
 - Base for account settings and the private messaging system by someguy28
-
-## Dev stuff, ignore
-Active Endpoints:
-```
-??? http://www.boomlings.com/databas/checkIfServerOnline.php
-??? databas??? not database wtf
-📁
-|__ [ROOT]
-|__ 📁 accounts
-```
