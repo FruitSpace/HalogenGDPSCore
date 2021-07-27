@@ -1,0 +1,22 @@
+<?php
+//----- SMALL CHEST -----
+define("CHEST_SMALL_ORBS_MIN", 200);
+define("CHEST_SMALL_ORBS_MAX", 400);
+define("CHEST_SMALL_DIAMONDS_MIN", 2);
+define("CHEST_SMALL_DIAMONDS_MAX", 10);
+define("CHEST_SMALL_SHARDS_MIN", 1);
+define("CHEST_SMALL_SHARDS_MAX", 6);
+define("CHEST_SMALL_KEYS_MIN",1);
+define("CHEST_SMALL_KEYS_MAX",6);
+define("CHEST_SMALL_WAIT", 3600); //sec
+
+//----- BIG CHEST -----
+define("CHEST_BIG_ORBS_MIN", 2000);
+define("CHEST_BIG_ORBS_MAX", 4000);
+define("CHEST_BIG_DIAMONDS_MIN", 20);
+define("CHEST_BIG_DIAMONDS_MAX", 100);
+define("CHEST_BIG_SHARDS_MIN", 1);
+define("CHEST_BIG_SHARDS_MAX", 6);
+define("CHEST_BIG_KEYS_MIN",1);
+define("CHEST_BIG_KEYS_MAX",6);
+define("CHEST_BIG_WAIT", 14400); //sec
