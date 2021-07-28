@@ -6,7 +6,8 @@ require "../../conf/mainconfig.php";
 $errTypes= array(
     'warn'=>'<font color="yellow">WARNING</font>',
     'err'=>'<font color="red">ERROR</font>',
-    'fatal'=>'<font color="darkred">FATAL</font>'
+    'fatal'=>'<font color="darkred">FATAL</font>',
+	'verbose'=>'<font color="gray">INFO</font>'
 );
 
 function err_handle($module, $errLevel, $message, $die=true){
@@ -15,5 +16,6 @@ function err_handle($module, $errLevel, $message, $die=true){
     $message=$prefix." <strong>$module</strong>:<br><pre>\t$message</pre><hr>";
     $fd=fopen(LOG_FILE,"a");
     fwrite($fd,$message);
+    if($errLevel=="warn" or $errLevel=="verbose") $die=false;
     if($die) die();
 }

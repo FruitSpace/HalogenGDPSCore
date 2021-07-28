@@ -28,6 +28,9 @@ class DBManagement{
 			$former="Query error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error;
 			err_handle("DBM","fatal", $former);
 		}
+		if(LOG_DB_REQUESTS){
+			err_handle("DBM", "verbose","Prepared query: [$query]\nDatatypes: [$datatypes]\nBind params: [".json_encode($vars)."]");
+		}
 		return $req->get_result();
     }
 
@@ -35,6 +38,9 @@ class DBManagement{
     	if(!($result=$this->db->query($query))){
 			$former="Direct query error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error."\nQUERY: $query";
 			err_handle("DBM","fatal", $former);
+		}
+    	if(LOG_DB_REQUESTS){
+    		err_handle("DBM", "verbose","Direct query: [$query]");
 		}
     	return $result;
 	}
