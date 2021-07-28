@@ -1,6 +1,6 @@
 <?php
 
-define("LOG_FILE", "../log.txt");
-define("LOG_DB_REQUESTS", false);
+define("LOG_FILE", "log.html");
+define("LOG_DB_REQUESTS", false); //Store all DB Requests
 define("SESS_EVERYTIME_CHECK", 0); //1 ➡ Check every request, 2 ➡ Check hourly
-define("SOUNDCLOUD_API_KEY",null);
+define("SOUNDCLOUD_API_KEY", null);
