@@ -1,7 +1,7 @@
 <?php
 
 //Simple error handler
-require "../../conf/mainconfig.php";
+require __DIR__."/../../conf/mainconfig.php";
 
 $errTypes= array(
     'warn'=>'<font color="yellow">WARNING</font>',
@@ -14,8 +14,9 @@ function err_handle($module, $errLevel, $message, $die=true){
     global $errTypes;
     $prefix="[<strong>".$errTypes[$errLevel]."</strong> | ".date("d/m/Y H:i:s")."]";
     $message=$prefix." <strong>$module</strong>:<br><pre>\t$message</pre><hr>";
-    $fd=fopen(LOG_FILE,"a");
+    $fd=fopen( __DIR__."/../../files/".LOG_FILE,"a");
     fwrite($fd,$message);
-    if($errLevel=="warn" or $errLevel=="verbose") $die=false;
+    if($errLevel=="
+    warn" or $errLevel=="verbose") $die=false;
     if($die) die();
 }

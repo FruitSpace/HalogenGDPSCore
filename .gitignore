@@ -46,3 +46,4 @@ dashboard/incl/lang/dev/append.php
 dashboard/incl/lang/dev/append.txt
 .idea/
 adminer.*
+Halogen/files/*

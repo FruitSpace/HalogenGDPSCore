@@ -1,6 +1,6 @@
 <?php
-require_once "../../conf/dbconfig.php";
-require_once "logger.php";
+require_once __DIR__."/../../conf/dbconfig.php";
+require_once __DIR__."/logger.php";
 
 class DBManagement{
     private $db;
@@ -20,16 +20,16 @@ class DBManagement{
     function preparedQuery($query,$datatypes, ...$vars){
         $req=$this->db->prepare($query);
         if(!$req){
-			$former="Query preparation error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error."\nQUERY: $query";
+			$former="Query preparation error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error."\n\tQUERY: $query";
 			err_handle("DBM","fatal", $former);
 		}
-        call_user_func("req->bind_param",array_merge((array)$datatypes,$vars));
+        call_user_func_array(array($req,"bind_param"),array_merge((array)$datatypes,$vars));
         if(!($req->execute())){
 			$former="Query error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error;
 			err_handle("DBM","fatal", $former);
 		}
 		if(LOG_DB_REQUESTS){
-			err_handle("DBM", "verbose","Prepared query: [$query]\nDatatypes: [$datatypes]\nBind params: [".json_encode($vars)."]");
+			err_handle("DBM", "verbose","Prepared query: [$query]\n\tDatatypes: [$datatypes]\n\tBind params: [".json_encode($vars)."]");
 		}
 		return $req->get_result();
     }
