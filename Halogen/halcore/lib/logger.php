@@ -13,7 +13,7 @@ $errTypes= array(
 function err_handle($module, $errLevel, $message, $die=true){
     global $errTypes;
     $prefix="[<strong>".$errTypes[$errLevel]."</strong> | ".date("d/m/Y H:i:s")."]";
-    $message=$prefix." <strong>$module</strong>:<br><pre>\t$message</pre><hr>";
+    $message=$prefix." <strong>$module</strong>:<br><pre>\t".htmlspecialchars($message)."</pre><hr>";
     $fd=fopen( __DIR__."/../../files/".LOG_FILE,"a");
     fwrite($fd,$message);
     if($errLevel=="

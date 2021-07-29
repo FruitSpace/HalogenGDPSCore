@@ -19,42 +19,72 @@ const HASH_FUNCTION_NAME = 'sha256';
 This is a hecking wrapper around built-in **openssl** lib. What a shame! (So I removed that lib)
 
 ## Ignore this
-to-do: Check this for possible exploits
+DB Merge: **users** + **accounts**
 ```
-isRegistered
+-----auth info
 userID
 extID
+accountID=extID
+isAdmin
 userName
+password
+email
+-----primary account stuff
 + stars
-+ demons
-icon
-color1
-color2
-iconType
++ diamonds
 + coins
 + userCoins
-special
++ demons
++ creatorPoints (cp)
++ orbs
+icon (actual iconID like acc****)
+iconType (id like 4=glider,0=cube etc)
+
+-----tech info
 gameVersion
-secret
-accIcon
-accShip
-accBall
-accBird
-accDart
-accRobot
-accGlow
-+ creatorPoints
 IP
 lastPlayed
-+ diamonds
-+ orbs
 completedLvls
-accSpider
-accExplosion
-chest1time
-chest2time
-chest1count
-chest2count
+special
+secret
+registerDate
+
+-----friendship stuff
 isBanned
-isCreatorBanned	
+friends
+friendsCount
+blockedBy
+blocked
+
+-----JSONed
+
+                      / color_primary
+                     / color_secondary
+                    / accIcon
+                   / accShip
+                  / accBall
+                 / accBird (ufo)
+vessels (json) <| accDart (Glider)
+                 \ accRobot
+                  \ accGlow ? Can we fix that
+                   \ accSpider
+                    \ accExplosion
+
+                     / chest_small_time
+                    / chest_big_time
+chest_data (json) <| chest_small_count
+                    \ chest_big_count
+
+                         / frS (Allow friend requests from)
+                        / cS (Show comment history to)
+                       / youtubeurl
+acc_settings (json)  <| twitter
+                       \ twitch
+                        \ mS (Allow messages from)
+```
+
+Removed:
+```
+isRegistered - ofc obv!
+isCreatorBanned - who cares
 ```
