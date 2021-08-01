@@ -1,14 +1,67 @@
 ## Ignore this
 Endpoints:
-- [ ] account/accountBackup
+- [X] account/accountBackup
 - [X] account/accountLogin
 - [X] account/accountManagement (http://s.halhost.cc/userpanel/)
 - [X] account/accountRegister
 - [X] account/accountSync
 
 
-- [ ] sus
+- [ ] comment/accountComment_delete
+- [ ] comment/accountComment_get
+- [ ] comment/accountComment_upload
+- [ ] comment/comment_delete
+- [ ] comment/comment_get
+- [ ] comment/comment_upload
 
+
+- [ ] communication/blockUser
+- [ ] communication/friend_acceptRequest
+- [ ] communication/friend_deleteRequest
+- [ ] communication/friend_getRequest
+- [ ] communication/friend_readRequest
+- [ ] communication/friend_remove
+- [ ] communication/friend_request
+- [ ] communication/message_delete
+- [ ] communication/message_get
+- [ ] communication/message_upload
+- [ ] communication/unblockUser
+
+
+- [ ] essential/getAccountUrl
+- [ ] essential/getSongInfo
+- [ ] essential/getTopArtists
+- [ ] essential/likeItem
+
+
+- [ ] level/getGauntlets
+- [ ] level/getMapPacks
+- [ ] level/level_deleteUser
+- [ ] level/level_download
+- [ ] level/level_getDaily
+- [ ] level/level_getLevels
+- [ ] level/level_report
+- [ ] level/level_updateDescription
+- [ ] level/level_upload
+- [ ] level/rateDemon
+- [ ] level/rateStar
+- [ ] level/suggestStar
+
+
+- [ ] profile/getUSerInfo
+- [ ] profile/getUserList
+- [ ] profile/getUsers
+- [ ] profile/updateAccountSettings
+
+
+- [ ] rewards/getChallenges
+- [ ] rewards/getRewards
+
+
+- [ ] score/getCreators
+- [ ] score/getLevelScores
+- [ ] score/getScores
+- [ ] score/updateUserScore
 
 DB List
 ```
