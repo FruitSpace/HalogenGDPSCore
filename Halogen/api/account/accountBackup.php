@@ -22,7 +22,15 @@ if(isset($_POST['userName']) and isset($_POST['password']) and $_POST['userName'
 		$taes= new ThunderAES();
 		$taes->genkey($pass);
 		file_put_contents($fh,$taes->encrypt($savedata)); //Dump to .hal profile
-
+		//Extract Orbs&Lvls
+		$acc->loadStats();
+		$savedata_arr=explode(";",$savedata);
+		$savedata=str_replace("-","+",str_replace("_","/",$savedata_arr[0]));
+		$savedata=gzdecode(base64_decode($savedata));
+		$acc->orbs=explode("</s>",explode("</s><k>14</k><s>",$savedata)[1])[0];
+		$acc->lvlsCompleted=explode("</s>",explode("</s><k>4</k><s>",explode("<k>GS_value</k>",$savedata)[1])[1])[0];
+		$acc->pushStats();
+		echo "1";
 	}else{
 		echo "-2";
 	}

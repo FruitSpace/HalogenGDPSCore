@@ -11,8 +11,8 @@ define("CBLACKLIST_UNBLOCK",71);
 class CAccount{
 
 	public $uid, $uname, $passhash, $email, $role_id, $isBanned;
-	public int $stars, $diamonds, $coins, $ucoins, $demons, $cpoints, $orbs, $special;
-	public $regDate, $accessDate, $lastIP, $gameVer, $lvlsCompleted;
+	public int $stars, $diamonds, $coins, $ucoins, $demons, $cpoints, $orbs, $special, $lvlsCompleted;
+	public $regDate, $accessDate, $lastIP, $gameVer;
 	public $blacklist, $friendsCount, $friendshipIds;
 	public $iconType, $colorPrimary, $colorSecondary, $cube, $ship, $ball, $ufo, $wave, $robot, $spider, $trace, $death;
 	public $chestSmallCount, $chestSmallTime, $chestBigCount, $chestBigTime;
@@ -62,7 +62,7 @@ class CAccount{
 	}
 
 	function loadStats(){
-		$req=$this->db->query("SELECT stars,diamonds,coins,ucoins,demons,cpoints,orbs,special FROM users WHERE uid=$this->uid")->fetch_assoc();
+		$req=$this->db->query("SELECT stars,diamonds,coins,ucoins,demons,cpoints,orbs,special,lvlsCompleted FROM users WHERE uid=$this->uid")->fetch_assoc();
 		$this->stars=$req['stars'];
 		$this->diamonds=$req['diamonds'];
 		$this->coins=$req['coins'];
@@ -71,6 +71,7 @@ class CAccount{
 		$this->cpoints=$req['cpoints'];
 		$this->orbs=$req['orbs'];
 		$this->special=$req['special'];
+		$this->lvlsCompleted=$req['lvlsCompleted'];
 	}
 
 	function loadAuth($method=CAUTH_UID){
@@ -97,12 +98,11 @@ class CAccount{
 	}
 
 	function loadTechnical(){
-		$req=$this->db->query("SELECT regDate,accessDate,lastIP,gameVer,lvlsCompleted FROM users WHERE uid=$this->uid")->fetch_assoc();
+		$req=$this->db->query("SELECT regDate,accessDate,lastIP,gameVer FROM users WHERE uid=$this->uid")->fetch_assoc();
 		$this->regDate=$req['regDate'];
 		$this->accessDate=$req['accessDate'];
 		$this->lastIP=$req['lastIP'];
 		$this->gameVer=$req['gameVer'];
-		$this->lvlsCompleted=$req['lvlsCompleted'];
 	}
 
 	function loadSocial(){
@@ -192,8 +192,26 @@ class CAccount{
 	}
 
 	function pushStats(){
-		$this->db->preparedQuery("UPDATE users SET stars=?,diamonds=?,coins=?,ucoins=?,demons=?,cpoints=?,orbs=?,special=? WHERE uid=$this->uid",
-		"iiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special);
+		$this->db->preparedQuery("UPDATE users SET stars=?,diamonds=?,coins=?,ucoins=?,demons=?,cpoints=?,orbs=?,special=?,lvlsCompleted=? WHERE uid=$this->uid",
+		"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
+	}
+
+	function pushVessels(){
+		$vessels=array(
+			'clr_primary'=>$this->colorPrimary,
+			'clr_secondary'=>$this->colorSecondary,
+			'cube'=>$this->cube,
+			'ship'=>$this->ship,
+			'ball'=>$this->ball,
+			'ufo'=>$this->ufo,
+			'wave'=>$this->wave,
+			'robot'=>$this->robot,
+			'spider'=>$this->spider,
+			'trace'=>$this->trace,
+			'death'=>$this->death
+		);
+		$vessels=json_encode($vessels);
+		$this->db->preparedQuery("UPDATE users SET iconType=?,vessels=? WHERE uid=$this->uid","is",$this->iconType,$vessels);
 	}
 
 	function updateAccessTime(){
