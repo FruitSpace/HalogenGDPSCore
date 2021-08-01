@@ -1,51 +1,40 @@
 <?php
-chdir(dirname(__FILE__));
-//error_reporting(0);
-include "../incl/lib/connection.php";
-require "../incl/lib/generatePass.php";
-require_once "../incl/lib/exploitPatch.php";
-include_once "../config/security.php";
-include_once "../incl/lib/defuse-crypto.phar";
-use Defuse\Crypto\KeyProtectedByPassword;
-use Defuse\Crypto\Crypto;
-use Defuse\Crypto\Key;
-$ep = new exploitPatch();
-//here im getting all the data
-$userName = $ep->remove($_POST["userName"]);
-$password = $_POST["password"];
-$secret = "";
-$generatePass = new generatePass();
-$pass = $generatePass->isValidUsrname($userName, $password);
-if ($pass == 1) {
-    $query = $db->prepare("select accountID, saveData from accounts where userName = :userName");
-    $query->execute([':userName' => $userName]);
-    $account = $query->fetch();
-    $accountID = $account["accountID"];
-    if(!is_numeric($accountID)){
-        exit("-1");
-    }
-    if(!file_exists("../data/accounts/$accountID")){
-        $saveData = $account["saveData"];
-        if(substr($saveData,0,4) == "SDRz"){
-            $saveData = base64_decode($saveData);
-        }
-    }else{
-        $saveData = file_get_contents("../data/accounts/$accountID");
-        if(file_exists("../data/accounts/keys/$accountID")){
-            if(substr($saveData,0,3) != "H4s"){
-                $protected_key_encoded = file_get_contents("../data/accounts/keys/$accountID");
-                $protected_key = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
-                $user_key = $protected_key->unlockKey($password);
-                try {
-                    $saveData = Crypto::decrypt($saveData, $user_key);
-                } catch (Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException $ex) {
-                    exit("-2");
-                }
-            }
-        }
-    }
-    echo $saveData.";21;30;a;a";
-}else{
-    echo -1;
+require_once __DIR__."/../../halcore/lib/DBManagement.php";
+require_once __DIR__."/../../halcore/CAccount.php";
+require_once __DIR__."/../../halcore/lib/legacy.php";
+require_once __DIR__."/../../halcore/lib/ThunderAES.php";
+require_once __DIR__."/../../halcore/lib/libsec.php";
+
+$ip=$_SERVER['REMOTE_ADDR'];
+$lsec=new LibSec();
+if ($lsec->isIPBlacklisted($ip)){
+	header('HTTP/1.1 403 Forbidden');
+	die('This IP is banned for security reasons');
 }
-?>
+if(isset($_POST['userName']) and isset($_POST['password']) and $_POST['userName']!="" and $_POST['password']!="") {
+	$uname = exploitPatch_remove($_POST['userName']);
+	$pass = exploitPatch_remove($_POST['password']);
+	$dbm=new DBManagement();
+	$acc=new CAccount($dbm);
+	if($acc->logIn($uname,$pass,$ip)>=0){
+		$fh=__DIR__."/../../files/savedata/".$acc->uid.".hal";
+		if(file_exists($fh)){
+			$taes= new ThunderAES();
+			$taes->genkey($pass);
+			$dat=$taes->decrypt(file_get_contents($fh));
+			echo $dat.";21;30;a;a";
+		}else{
+			echo "-1";
+		}
+	}else{
+		echo "-2";
+	}
+	$r=0;
+}else{
+	echo "-1";
+	$r=1;
+}
+if(LOG_ENDPOINT_ACCESS){
+	$former="$ip accessed endpoint ".__FILE__." ::with".($r==1?"out":"")." auth data";
+	err_handle("ENDPOINT","verbose",$former);
+}

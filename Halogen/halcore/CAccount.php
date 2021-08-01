@@ -1,15 +1,17 @@
 <?php
 
-include "lib/DBManagement.php"
-
 define("CAUTH_UID",17);
 define("CAUTH_UNAME",26);
-define("CAUTH_EMAIL",31);
+define("CAUTH_EMAIL",35);
+define("CBAN_BAN", 44);
+define("CBAN_UNBAN", 53);
+define("CBLACKLIST_BLOCK", 62);
+define("CBLACKLIST_UNBLOCK",71);
 
 class CAccount{
 
-	public int $uid, $uname, $passhash, $email, $role_id, $isBanned;
-	public $stars, $diamonds, $coins, $ucoins, $demons, $cpoints, $orbs, $special;
+	public $uid, $uname, $passhash, $email, $role_id, $isBanned;
+	public int $stars, $diamonds, $coins, $ucoins, $demons, $cpoints, $orbs, $special;
 	public $regDate, $accessDate, $lastIP, $gameVer, $lvlsCompleted;
 	public $blacklist, $friendsCount, $friendshipIds;
 	public $iconType, $colorPrimary, $colorSecondary, $cube, $ship, $ball, $ufo, $wave, $robot, $spider, $trace, $death;
@@ -169,7 +171,43 @@ class CAccount{
 		return $uid;
 	}
 
-	function logIn($uname, $pass){ //returns UID on success and -1 on failure
+	function updateIP($ip){
+		$this->lastIP=$ip;
+		$this->db->preparedQuery("UPDATE users SET lastIP=? WHERE uid=?","si",$ip,$this->uid);
+	}
+
+	function countIPs($ip){
+		return $this->db->preparedQuery("COUNT(*) FROM users WHERE lastIP=?","s",$ip)[0];
+	}
+
+	function updateBlacklist($action=CBLACKLIST_BLOCK, $uid){
+		$this->loadSocial();
+		$blacklist=explode(",",$this->blacklist);
+		if($action==CBLACKLIST_BLOCK and !in_array($uid,$blacklist)) array_push($blacklist,$uid);
+		if($action==CBLACKLIST_UNBLOCK and in_array($uid,$blacklist)){
+			unset($blacklist[array_search($uid, $blacklist)]);
+		}
+		$this->blacklist=implode(",",$blacklist);
+		$this->db->preparedQuery("UPDATE users SET blacklist=? WHERE uid=$this->uid","s",$this->blacklist);
+	}
+
+	function pushStats(){
+		$this->db->preparedQuery("UPDATE users SET stars=?,diamonds=?,coins=?,ucoins=?,demons=?,cpoints=?,orbs=?,special=? WHERE uid=$this->uid",
+		"iiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special);
+	}
+
+	function updateAccessTime(){
+		$this->db->query("UPDATE users SET accessDate=".date("d-m-Y H:i:s")." WHERE uid=$this->uid");
+	}
+
+	function banUser($action=CBAN_BAN){
+		if ($action==CBAN_BAN) $ban=1;
+		if ($action==CBAN_UNBAN) $ban=0;
+		$this->isBanned=$ban;
+		$this->db->query("UPDATE users SET isBanned=$ban WHERE uid=$this->uid");
+	}
+
+	function logIn($uname, $pass, $ip){ //returns UID on success and -1 on failure
 		$uid=$this->getUIDbyUname($uname, true);
 		if ($uid>0) {
 			$this->loadAuth(CAUTH_UID);
@@ -177,6 +215,7 @@ class CAccount{
 				return -12;
 			}
 			$pass = password_hash($pass);
+			$this->updateIP($ip);
 			if ($this->passhash == $pass) {
 				return $uid;
 			}
@@ -184,5 +223,16 @@ class CAccount{
 			return -1;
 	}
 
-	function register
+	function register($uname, $pass, $email, $ip){
+		if($this->getUIDbyUname($uname)!=-1) return -2;
+		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
+		if(!$this->db->isEmpty($req)) return -3;
+		$pass=password_hash($pass);
+		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
+		$date=date("d-m-Y H:i:s");
+		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
+		if($this->getUIDbyUname($uname, true)==-1) return -1;
+		$this->updateIP($ip);
+		return 1;
+	}
 }
