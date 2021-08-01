@@ -1,25 +1,29 @@
 <?php
-include "../incl/lib/connection.php";
-require_once "../incl/lib/exploitPatch.php";
-$ep = new exploitPatch();
-if($_POST["userName"] != ""){
-    //here im getting all the data
-    $userName = $ep->remove($_POST["userName"]);
-    $password = $ep->remove($_POST["password"]);
-    $email = $ep->remove($_POST["email"]);
-    $secret = "";
-    //checking if name is taken
-    $query2 = $db->prepare("SELECT count(*) FROM accounts WHERE userName LIKE :userName");
-    $query2->execute([':userName' => $userName]);
-    $regusrs = $query2->fetchColumn();
-    if ($regusrs > 0) {
-        echo "-2";
-    }else{
-        $hashpass = password_hash($password, PASSWORD_DEFAULT);
-        $query = $db->prepare("INSERT INTO accounts (userName, password, email, secret, saveData, registerDate, saveKey)
-		VALUES (:userName, :password, :email, :secret, '', :time, '')");
-        $query->execute([':userName' => $userName, ':password' => $hashpass, ':email' => $email, ':secret' => $secret, ':time' => time()]);
-        echo "1";
-    }
+require_once __DIR__."/../../halcore/lib/DBManagement.php";
+require_once __DIR__."/../../halcore/CAccount.php";
+require_once __DIR__."/../../halcore/lib/legacy.php";
+require_once __DIR__."/../../halcore/lib/libsec.php";
+
+$ip=$_SERVER['REMOTE_ADDR'];
+$lsec=new LibSec();
+if ($lsec->isIPBlacklisted($ip)){
+	header('HTTP/1.1 403 Forbidden');
+	die('This IP is banned for security reasons');
 }
-?>
+if(isset($_POST['userName']) and isset($_POST['password']) and isset($_POST['email']) and $_POST['userName']!=""
+	and $_POST['password']!="" and $_POST['email']!=""){
+	$uname=exploitPatch_remove($_POST['userName']);
+	$pass=exploitPatch_remove($_POST['password']);
+	$email=exploitPatch_remove($_POST['email']);
+	$dbm=new DBManagement();
+	$acc=new CAccount($dbm);
+	echo $acc->register($uname,$pass,$email,$ip);
+	$r=0;
+}else{
+	echo "-1";
+	$r=1;
+}
+if(LOG_ENDPOINT_ACCESS){
+	$former="$ip accessed endpoint ".__FILE__." ::with".($r==1?"out":"")." auth data";
+	err_handle("ENDPOINT","verbose",$former);
+}
