@@ -5,7 +5,7 @@ Endpoints:
 - [X] account/accountManagement (http://s.halhost.cc/userpanel/)
 - [X] account/accountRegister
 - [X] account/accountSync
-
+---
 
 - [ ] comment/accountComment_delete
 - [ ] comment/accountComment_get
@@ -13,7 +13,7 @@ Endpoints:
 - [ ] comment/comment_delete
 - [ ] comment/comment_get
 - [ ] comment/comment_upload
-
+---
 
 - [ ] communication/blockUser
 - [ ] communication/friend_acceptRequest
@@ -26,13 +26,13 @@ Endpoints:
 - [ ] communication/message_get
 - [ ] communication/message_upload
 - [ ] communication/unblockUser
-
+---
 
 - [ ] essential/getAccountUrl
 - [ ] essential/getSongInfo
 - [ ] essential/getTopArtists
 - [ ] essential/likeItem
-
+---
 
 - [ ] level/getGauntlets
 - [ ] level/getMapPacks
@@ -46,93 +46,29 @@ Endpoints:
 - [ ] level/rateDemon
 - [ ] level/rateStar
 - [ ] level/suggestStar
-
+---
 
 - [ ] profile/getUSerInfo
 - [ ] profile/getUserList
 - [ ] profile/getUsers
 - [ ] profile/updateAccountSettings
-
+---
 
 - [ ] rewards/getChallenges
 - [ ] rewards/getRewards
-
+---
 
 - [ ] score/getCreators
 - [ ] score/getLevelScores
 - [ ] score/getScores
 - [ ] score/updateUserScore
+---
 
 DB List
 ```
-OLD: acccomments - Account comments
-\ userID | userName | comment | secret | commentID | timestamp | likes | isSpam	
-
 OLD: actions - All actions really
 \ ID | type | value | timestamp | value2 | value3 | value4 | value5 | value6 | account
 
- | !BLOCKS! Replaced by blacklist feature in 'users'
- | Lookup your id in target user blacklist to decide
- 
- 
-OLD: comments - Level comments
-\ userID | userName | comment | secret | levelID | commentID | timestamp | likes | percent | isSpam	
-
-OLD: friendreqs - All active friend requests
-\ accountID | toAccountID | comment | uploadDate | ID | isNew
-
-OLD: friendships
-\ ID | person1 | person2 | isNew2 | isNew1
-
-OLD: levelscores
-\ scoreID | accountID | levelID | percent | uploadDate | attempts | coins
-
-OLD: messages
-\ userID | userName | body | subject | accID | messageID | toAccountID |timestamp | secret | isNew
-
-OLD: quests - All-time quests (To merge with daily)
-\ ID | type | amount | reward | name
-
-OLD: dailyfeatures - daily Table
-\ feaID | levelID | timestamp | type
-
-OLD: roles
-\ roleID | priority | roleName | modipCategory | isDefault | commentColor | modBadgeLevel
-         | commandRate	
-         | commandFeature	
-         | commandEpic	
-         | commandUnepic	
-         | commandVerifycoins	
-         | commandDaily	
-         | commandWeekly	
-         | commandDelete	
-         | commandSetacc	
-         | commandRenameOwn	
-         | commandRenameAll	
- JSONify<| commandPassOwn	
- (privs) | commandPassAll	
-         | commandDescriptionOwn	
-         | commandDescriptionAll	
-         | commandPublicOwn	
-         | commandPublicAll	
-         | commandUnlistOwn	
-         | commandUnlistAll	
-         | commandSharecpOwn	
-         | commandSharecpAll	
-         | commandSongOwn	
-         | commandSongAll
-         | actionRateDemon	
-         | actionRateStars	
-         | actionSendLevel	
-         | actionRateDifficulty	
-         | actionRequestMod	
-         | toolLeaderboardsban	
-         | toolPackcreate	
-         | toolModactions	
-         | dashboardModTools	
-
-OLD: songs
-\ ID | name | authorID | authorName | size | download | hash | isDisabled | levelsCount | reuploadTime	
 ```
 Removed tables:
 ```
@@ -235,7 +171,7 @@ Notes:
 ### Levelpacks
 ```mysql
 CREATE TABLE 'levelpacks' (
-    id int(11) NOT NULL PRIMARY KEY,
+    id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     packType tinyint(1) NOT NULL,
     packName varchar(256) NOT NULL,
     levels varchar(512) NOT NULL,
@@ -251,6 +187,124 @@ Notes:
 - packName (Number if Gauntlet, name if mappack)
 - levels (comma-separated. 5 for gauntlet, 3 for mappack)
 
+### Roles
+```mysql
+CREATE TABLE 'roles' (
+    id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    roleName varchar(64) NOT NULL DEFAULT 'Moderator',
+    commentColor varchar(11) NOT NULL DEFAULT '0,0,255',
+    modLevel tinyint(1) NOT NULL DEFAULT 1,
+    privs text  NOT NULL DEFAULT '{"cRate":0,"cFeature":0,"cEpic":0,"cUnepic":0,"cVerCoins":0,"cDaily":0,"cWeekly":0,"cDelete":0,"cSetacc":0,"aRateDemon":0,"aRateStars":0,"aReqMod":0,"dashboardMod":0,"dashboardCreatePack":0}'
+);
+```
+
+### Songs
+```mysql
+CREATE TABLE 'songs'(
+    id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    author_id int(11) NOT NULL DEFAULT 0,
+    name varchar(128) NOT NULL DEFAULT 'Unnamed',
+    author_name varchar(128) NOT NULL DEFAULT 'Unknown',
+    size varchar(5) NOT NULL,
+    url varchar(1024) NOT NULL,
+    isBanned tinyint(1) NOT NULL DEFAULT 0
+);
+```
+
+### Friendships
+```mysql
+CREATE TABLE 'friendships' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid1 int(11) NOT NULL,
+    uid2 int(11) NOT NULL,
+    u1_new tinyint(1) NOT NULL DEFAULT 1,
+    u2_new tinyint(1) NOT NULL DEFAULT 1
+);
+```
+
+### FriendReqs
+```mysql
+CREATE TABLE 'friendreqs' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid_src int(11) NOT NULL,
+    uid_dest int(11) NOT NULL,
+    uploadDate DATETIME NOT NULL,
+    comment varchar(512) NOT NULL DEFAULT '',
+    isNew tinyint(1) NOT NULL DEFAULT 1
+);
+```
+
+### AccountComments
+```mysql
+CREATE TABLE 'acccomments' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid int(11) NOT NULL,
+    comment varchar(128) NOT NULL,
+    postedTime DATETIME NOT NULL,
+    likes int(11) NOT NULL DEFAULT 0,
+    isSpam tinyint(1) NOT NULL DEFAULT 0
+);
+```
+
+### Comments
+```mysql
+CREATE TABLE 'comments' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid int(11) NOT NULL,
+    lvl_id int(11) NOT NULL,
+    comment varchar(128) NOT NULL,
+    postedTime DATETIME NOT NULL,
+    likes int(11) NOT NULL DEFAULT 0,
+    isSpam tinyint(1) NOT NULL DEFAULT 0,
+    percent tinyint(3) NOT NULL
+);
+```
+
+### Scores
+```mysql
+CREATE TABLE 'scores' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid int(11) NOT NULL,
+    lvl_id int(11) NOT NULL,
+    postedTime DATETIME NOT NULL,
+    percent tinyint(3) NOT NULL,
+    attempts int(11) NOT NULL DEFAULT 0,
+    coins tinyint(1) NOT NULL DEFAULT 0
+);
+```
+
+### Messages
+```mysql
+CREATE TABLE 'messages' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    uid_src int(11) NOT NULL,
+    uid_dest int(11) NOT NULL,
+    subject varchar(256) NOT NULL DEFAULT '',
+    body varchar(1024) NOT NULL,
+    postedTime DATETIME NOT NULL,
+    isNew tinyint(1) NOT NULL DEFAULT 1
+);
+```
+
+### Quests
+```mysql
+CREATE TABLE 'quests' (
+    id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    type tinyint(1) NOT NULL,
+    name varchar(64) NOT NULL DEFAULT '',
+    needed int(7) NOT NULL DEFAULT 0,
+    reward int(7) NOT NULL DEFAULT 0,
+    lvl_id int(11) NOT NULL DEFAULT 0,
+    timeExpire DATETIME NOT NULL
+);
+```
+Notes:
+ - type (0 - dailylevel, 1 - orbs, 2 - coins, 3 - stars)
+ - needed (only for quests)
+ - reward (only for quests)
+ - name (only for quests)
+ - lvl_id (only for daily)
+ - timeExpire (when reload quests/update level)
 
 ##UserDat Format
 | Key | Name/Value | Description |

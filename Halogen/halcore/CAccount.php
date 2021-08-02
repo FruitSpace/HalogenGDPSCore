@@ -196,6 +196,11 @@ class CAccount{
 		"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
 	}
 
+	function updateRole($role_id){
+		$this->role_id=$role_id;
+		$this->db->preparedQuery("UPDATE users SET role_id=? WHERE uid=$this->uid","i",$role_id);
+	}
+
 	function pushVessels(){
 		$vessels=array(
 			'clr_primary'=>$this->colorPrimary,
