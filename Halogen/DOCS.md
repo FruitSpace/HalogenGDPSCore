@@ -64,12 +64,6 @@ Endpoints:
 - [ ] score/updateUserScore
 ---
 
-DB List
-```
-OLD: actions - All actions really
-\ ID | type | value | timestamp | value2 | value3 | value4 | value5 | value6 | account
-
-```
 Removed tables:
 ```
 modactions - why not to add them to actions but with MOD mark
@@ -86,8 +80,8 @@ reports - integrated to levels
 ## Reconstructed DB
 ### Users
 ```mysql
-CREATE TABLE 'users' (
-    uid int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE users (
+    uid int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     uname varchar(16) NOT NULL,
     passhash varchar(128) NOT NULL,
     email varchar(256) NOT NULL,
@@ -122,7 +116,7 @@ CREATE TABLE 'users' (
 
 ### Levels
 ```mysql
-CREATE  TABLE 'levels' (
+CREATE  TABLE levels (
     id int(11) NOT NULL UNIQUE KEY,
     name varchar(32) NOT NULL DEFAULT 'Unnamed',
     description varchar(256) NOT NULL DEFAULT '',
@@ -170,7 +164,7 @@ Notes:
 
 ### Levelpacks
 ```mysql
-CREATE TABLE 'levelpacks' (
+CREATE TABLE levelpacks (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     packType tinyint(1) NOT NULL,
     packName varchar(256) NOT NULL,
@@ -189,7 +183,7 @@ Notes:
 
 ### Roles
 ```mysql
-CREATE TABLE 'roles' (
+CREATE TABLE roles (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     roleName varchar(64) NOT NULL DEFAULT 'Moderator',
     commentColor varchar(11) NOT NULL DEFAULT '0,0,255',
@@ -200,7 +194,7 @@ CREATE TABLE 'roles' (
 
 ### Songs
 ```mysql
-CREATE TABLE 'songs'(
+CREATE TABLE songs (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     author_id int(11) NOT NULL DEFAULT 0,
     name varchar(128) NOT NULL DEFAULT 'Unnamed',
@@ -213,7 +207,7 @@ CREATE TABLE 'songs'(
 
 ### Friendships
 ```mysql
-CREATE TABLE 'friendships' (
+CREATE TABLE friendships (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid1 int(11) NOT NULL,
     uid2 int(11) NOT NULL,
@@ -224,7 +218,7 @@ CREATE TABLE 'friendships' (
 
 ### FriendReqs
 ```mysql
-CREATE TABLE 'friendreqs' (
+CREATE TABLE friendreqs (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid_src int(11) NOT NULL,
     uid_dest int(11) NOT NULL,
@@ -236,7 +230,7 @@ CREATE TABLE 'friendreqs' (
 
 ### AccountComments
 ```mysql
-CREATE TABLE 'acccomments' (
+CREATE TABLE acccomments (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid int(11) NOT NULL,
     comment varchar(128) NOT NULL,
@@ -248,7 +242,7 @@ CREATE TABLE 'acccomments' (
 
 ### Comments
 ```mysql
-CREATE TABLE 'comments' (
+CREATE TABLE comments (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid int(11) NOT NULL,
     lvl_id int(11) NOT NULL,
@@ -262,7 +256,7 @@ CREATE TABLE 'comments' (
 
 ### Scores
 ```mysql
-CREATE TABLE 'scores' (
+CREATE TABLE scores (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid int(11) NOT NULL,
     lvl_id int(11) NOT NULL,
@@ -275,7 +269,7 @@ CREATE TABLE 'scores' (
 
 ### Messages
 ```mysql
-CREATE TABLE 'messages' (
+CREATE TABLE messages (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     uid_src int(11) NOT NULL,
     uid_dest int(11) NOT NULL,
@@ -288,7 +282,7 @@ CREATE TABLE 'messages' (
 
 ### Quests
 ```mysql
-CREATE TABLE 'quests' (
+CREATE TABLE quests (
     id int(12) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     type tinyint(1) NOT NULL,
     name varchar(64) NOT NULL DEFAULT '',
@@ -305,6 +299,23 @@ Notes:
  - name (only for quests)
  - lvl_id (only for daily)
  - timeExpire (when reload quests/update level)
+
+### Actions
+```mysql
+CREATE TABLE actions (
+    id int(13) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    date DATETIME NOT NULL,
+    uid int(11) NOT NULL,
+    type tinyint(1) NOT NULL,
+    isMod tinyint(1) NOT NULL DEFAULT 0,
+    data JSON NOT NULL DEFAULT '{}'
+);
+```
+Notes:
+ - uid=0 if server made action
+ - type (0->register, 1->login, 2->banEvent(Ban/Unban), 3->levelEvent(Upload/Delete/Update),
+   4->panelEvents(addGauntlet/editGauntlet/addLevelPack/editlevelPack/addQuest/editQuest))
+ - data (wtf will the panel support who caress)
 
 ##UserDat Format
 | Key | Name/Value | Description |
@@ -355,4 +366,13 @@ Notes:
 
 
 
-1,2,3,4,8.10,11,13,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,35,37,43,44,45,46,47,49,50
+1,2,3,4,8,  10,11,13,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,35,37,43,44,45,46,47,49,50
+
+
+
+## God Tier Quotes
+```php
+if($weekly == 1){
+	$dailyID = $dailyID + 100001; //the fuck went through robtops head when he was implementing this
+}
+```

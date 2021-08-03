@@ -3,6 +3,7 @@ require_once __DIR__."/../../halcore/lib/DBManagement.php";
 require_once __DIR__."/../../halcore/CAccount.php";
 require_once __DIR__."/../../halcore/lib/legacy.php";
 require_once __DIR__."/../../halcore/lib/libsec.php";
+require_once __DIR__."/../../halcore/lib/halhost.php";
 
 $ip=$_SERVER['REMOTE_ADDR'];
 $lsec=new LibSec();
@@ -17,7 +18,10 @@ if(isset($_POST['userName']) and isset($_POST['password']) and isset($_POST['ema
 	$email=exploitPatch_remove($_POST['email']);
 	$dbm=new DBManagement();
 	$acc=new CAccount($dbm);
-	echo $acc->register($uname,$pass,$email,$ip);
+	if(checkRegister($acc->countUsers())){
+		echo $acc->register($uname,$pass,$email,$ip);
+	}else{echo "-1";}
+
 	$r=0;
 }else{
 	echo "-1";
