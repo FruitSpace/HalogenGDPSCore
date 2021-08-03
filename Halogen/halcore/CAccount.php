@@ -24,6 +24,10 @@ class CAccount{
 		$this->db=$db;
 	}
 
+	function countUsers(){
+		return $this->db->query("SELECT count(*) FROM users")[0];
+	}
+
 	function loadSettings(){
 		$req=$this->db->query("SELECT settings FROM users WHERE uid=$this->uid");
 		$reqd=json_decode($req->fetch_assoc()['settings']);
