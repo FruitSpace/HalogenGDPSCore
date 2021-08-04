@@ -20,7 +20,7 @@ Security GJP Check:
 - [ ] comment/comment_upload
 ---
 
-- [ ] communication/blockUser
+- [X] communication/blockUser
 - [ ] communication/friend_acceptRequest
 - [ ] communication/friend_deleteRequest
 - [ ] communication/friend_getRequest
@@ -30,7 +30,7 @@ Security GJP Check:
 - [ ] communication/message_delete
 - [ ] communication/message_get
 - [ ] communication/message_upload
-- [ ] communication/unblockUser
+- [X] communication/unblockUser
 ---
 
 - [ ] essential/getAccountUrl
