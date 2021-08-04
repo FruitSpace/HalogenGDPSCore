@@ -25,7 +25,9 @@ class CComment{
 
 	function getAllAccComments(int $uid, int $page){
 		$page=$page*10;
-		$req=$this->db->query("SELECT id,comment,postedTime,likes,isSpam FROM acccomments WHERE uid=$uid ORDER BY postedTime DESC LIMIT 10 OFFSET $page")->fetch_assoc();
+		$req=$this->db->query("SELECT id,comment,postedTime,likes,isSpam FROM acccomments WHERE uid=$uid ORDER BY postedTime DESC LIMIT 10 OFFSET $page");
+		if($this->db->isEmpty($req)) return array();
+		$req=$req->fetch_assoc();
 		$acc=array();
 		foreach($req as $sreq){
 			$ccObj= new CComment($this->db);
@@ -52,7 +54,9 @@ class CComment{
 	}
 
 	function getAllLvlComments($lvl_id){
-		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=?","i",$lvl_id)->fetch_assoc();
+		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=?","i",$lvl_id);
+		if($this->db->isEmpty($req)) return array();
+		$req=$req->fetch_assoc();
 		$lvl=array();
 		foreach($req as $sreq){
 			$ccObj= new CComment($this->db);

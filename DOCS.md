@@ -21,12 +21,12 @@ Security GJP Check:
 ---
 
 - [X] communication/blockUser
-- [ ] communication/friend_acceptRequest
-- [ ] communication/friend_deleteRequest
+- [X] communication/friend_acceptRequest
+- [X] communication/friend_deleteRequest
 - [ ] communication/friend_getRequest
-- [ ] communication/friend_readRequest
+- [X] communication/friend_readRequest
 - [ ] communication/friend_remove
-- [ ] communication/friend_request
+- [X] communication/friend_request
 - [ ] communication/message_delete
 - [ ] communication/message_get
 - [ ] communication/message_upload
@@ -379,5 +379,14 @@ Notes:
 ```php
 if($weekly == 1){
 	$dailyID = $dailyID + 100001; //the fuck went through robtops head when he was implementing this
+}
+
+...
+
+	//RESPONSE SO IT DOESNT SAY "FAILED"
+	echo "1";
+}else{
+	//OR YOU KNOW WHAT LETS MAKE IT SAY "FAILED"
+	echo "-1";
 }
 ```
