@@ -26,4 +26,16 @@ class LibSec{
 	function isIPBlacklisted($ip){
 		return in_array($ip,$this->iplist);
 	}
+
+	function verifySession(DBManagement $db, int $uid, $ip, $gjp){
+		$req=$db->query("SELECT accessDate, lastIP FROM users WHERE uid=$uid")->fetch_assoc();
+		if($ip==$req['lastIP'] and (time()-strtotime($req['accessDate']))<3600) return 1;
+		require_once __DIR__."/legacy.php";
+		require_once __DIR__."/../CAccount.php";
+		$gjp=str_replace("-","+",str_replace("_","/",$gjp));
+		$gjp=doXOR(base64_decode($gjp),37526);
+		$acc=new CAccount($db);
+		if($acc->logIn(null,$gjp,$ip,$uid)>0) return 1;
+		return 0;
+	}
 }
