@@ -7,6 +7,8 @@ define("CBAN_BAN", 44);
 define("CBAN_UNBAN", 53);
 define("CBLACKLIST_BLOCK", 62);
 define("CBLACKLIST_UNBLOCK",71);
+define("CFRIENDSHIP_ADD", 37);
+define("CFRIENDSHIP_REMOVE", 38);
 
 class CAccount{
 
@@ -90,7 +92,7 @@ class CAccount{
 				$req=$this->db->preparedQuery("SELECT uid,uname,passhash,email,role_id,isBanned FROM users WHERE email=?","s",$this->email)->fetch_assoc();
 				break;
 			default:
-				return 1;
+				return 0;
 
 		}
 		$this->uid=$req['uid'];
@@ -99,6 +101,7 @@ class CAccount{
 		$this->email=$req['email'];
 		$this->role_id=$req['role_id'];
 		$this->isBanned=$req['isBanned'];
+		return 1;
 	}
 
 	function loadTechnical(){
@@ -195,6 +198,28 @@ class CAccount{
 		$this->db->preparedQuery("UPDATE users SET blacklist=? WHERE uid=$this->uid","s",$this->blacklist);
 	}
 
+	function updateFriendships($action=CFRIENDSHIP_ADD, int $id){
+		$this->loadSocial();
+		$friendships=(empty($this->friendshipIds)?array():explode(",",$this->friendshipIds));
+		if($action==CFRIENDSHIP_ADD and !in_array($id,$friendships)) {
+			$this->friendsCount++;
+			array_push($friendships, $id);
+			$this->friendshipIds = implode(",", $friendships);
+			$this->db->preparedQuery("UPDATE users SET friends_cnt=?, friendship_ids=? WHERE uid=$this->uid", "is",
+				$this->friendsCount, $this->friendshipIds);
+			return 1;
+		}
+		if($action==CFRIENDSHIP_REMOVE and !empty($friendships) and $this->friendsCount>0 and in_array($id,$friendships)){
+			$this->friendsCount--;
+			unset($friendships[array_search($id, $friendships)]);
+			$this->friendshipIds=implode(",",$friendships);
+			$this->db->preparedQuery("UPDATE users SET friends_cnt=?, friendship_ids=? WHERE uid=$this->uid","is",
+			$this->friendsCount,$this->friendshipIds);
+			return 1;
+		}
+		return -1;
+	}
+
 	function pushStats(){
 		$this->db->preparedQuery("UPDATE users SET stars=?,diamonds=?,coins=?,ucoins=?,demons=?,cpoints=?,orbs=?,special=?,lvlsCompleted=? WHERE uid=$this->uid",
 		"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
@@ -241,7 +266,7 @@ class CAccount{
 			if($this->isBanned==1){
 				return -12;
 			}
-			$pass = password_hash($pass);
+			$pass = password_hash($pass, PASSWORD_BCRYPT);
 			if ($this->passhash == $pass) {
 				$this->updateIP($ip);
 				return $uid;
@@ -255,7 +280,7 @@ class CAccount{
 		if($this->getUIDbyUname($uname)!=-1) return -2;
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;
-		$pass=password_hash($pass);
+		$pass=password_hash($pass, PASSWORD_BCRYPT);
 		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
 		$date=date("d-m-Y H:i:s");
 		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
