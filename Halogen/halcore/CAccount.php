@@ -25,7 +25,7 @@ class CAccount{
 	}
 
 	function countUsers(){
-		return $this->db->query("SELECT count(*) FROM users")[0];
+		return $this->db->query("SELECT count(*) as cnt FROM users")->fetch_assoc()['cnt'];
 	}
 
 	function loadSettings(){
@@ -181,7 +181,7 @@ class CAccount{
 	}
 
 	function countIPs($ip){
-		return $this->db->preparedQuery("COUNT(*) FROM users WHERE lastIP=?","s",$ip)[0];
+		return $this->db->preparedQuery("SELECT count(*) as cnt FROM users WHERE lastIP=?","s",$ip)->fetch_assoc()['cnt'];
 	}
 
 	function updateBlacklist($action=CBLACKLIST_BLOCK, $uid){
@@ -234,16 +234,16 @@ class CAccount{
 		$this->db->query("UPDATE users SET isBanned=$ban WHERE uid=$this->uid");
 	}
 
-	function logIn($uname, $pass, $ip){ //returns UID on success and -1 on failure
-		$uid=$this->getUIDbyUname($uname, true);
+	function logIn($uname, $pass, $ip, $uid=null){ //returns UID on success and -1 on failure
+		$uid=($uid==null?$this->getUIDbyUname($uname, true):(int)$uid);
 		if ($uid>0) {
 			$this->loadAuth(CAUTH_UID);
 			if($this->isBanned==1){
 				return -12;
 			}
 			$pass = password_hash($pass);
-			$this->updateIP($ip);
 			if ($this->passhash == $pass) {
+				$this->updateIP($ip);
 				return $uid;
 			}
 		}
@@ -251,6 +251,7 @@ class CAccount{
 	}
 
 	function register($uname, $pass, $email, $ip){
+		if(strlen($uname)>16) return -1;
 		if($this->getUIDbyUname($uname)!=-1) return -2;
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;

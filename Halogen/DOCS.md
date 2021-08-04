@@ -1,5 +1,10 @@
 ## Ignore this
-Endpoints:
+
+###Important
+Security GJP Check:
+ - Sessions->get ip&lastAccessDate (1Hr Limit) or request password
+
+### Endpoints
 - [X] account/accountBackup
 - [X] account/accountLogin
 - [X] account/accountManagement (http://s.halhost.cc/userpanel/)
@@ -7,9 +12,9 @@ Endpoints:
 - [X] account/accountSync
 ---
 
-- [ ] comment/accountComment_delete
-- [ ] comment/accountComment_get
-- [ ] comment/accountComment_upload
+- [X] comment/accountComment_delete
+- [X] comment/accountComment_get
+- [X] comment/accountComment_upload
 - [ ] comment/comment_delete
 - [ ] comment/comment_get
 - [ ] comment/comment_upload
