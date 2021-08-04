@@ -3,6 +3,7 @@ require_once __DIR__."/../../halcore/lib/DBManagement.php";
 require_once __DIR__."/../../halcore/CComment.php";
 require_once __DIR__."/../../halcore/lib/legacy.php";
 require_once __DIR__."/../../halcore/lib/libsec.php";
+require_once __DIR__."/../../halcore/lib/halhost.php";
 
 $ip=$_SERVER['REMOTE_ADDR'];
 $lsec=new LibSec();
@@ -18,9 +19,15 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cc = new CComment($dbm);
-		$cc->uid=$uid;
-		$cc->comment=$comment;
-		echo $cc->postAccComment();
+		if(checkPosts($cc->countAccComments())) {
+			$cc->uid = $uid;
+			$cc->comment = $comment;
+			echo $cc->postAccComment();
+		}else{
+			echo "-1";
+		}
+	}else{
+		echo "-1";
 	}
 	$r=0;
 }else{
