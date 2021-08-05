@@ -20,7 +20,7 @@ class CAccount{
 	public $chestSmallCount, $chestSmallTime, $chestBigCount, $chestBigTime;
 	public $frS, $cS, $mS, $youtube, $twitch, $twitter;
 
-	public DBManagement $db;
+	public $db;
 
 	function __construct($db){
 		$this->db=$db;
