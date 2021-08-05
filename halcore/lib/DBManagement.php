@@ -29,7 +29,7 @@ class DBManagement{
 			err_handle("DBM","fatal", $former);
 		}
 		if(LOG_DB_REQUESTS){
-			$former="Prepared query: [$query]\n\tDatatypes: [$datatypes]\n\tBind params: [".json_encode($vars)."]"
+			$former="Prepared query: [$query]\n\tDatatypes: [$datatypes]\n\tBind params: [".json_encode($vars)."]";
 			if(LOG_DB_RESPONSES){
 				$r=$req->get_result();
 				$r=($this->isEmpty($r)?"EMPTY":$r->fetch_assoc());
