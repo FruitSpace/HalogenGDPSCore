@@ -78,7 +78,7 @@ class CFriendship{
 		$comment=($comment==null?'':$comment);
 		if(strlen($comment)>512) return -1;
 		$this->db->preparedQuery("INSERT INTO friendreqs (uid_src, uid_dest, uploadDate, comment) VALUES (?,?,?,?)",
-		"iiss",$uid,$uid_dest,date("d-m-Y H:i:s"),$comment);
+		"iiss",$uid,$uid_dest,date("Y-m-d H:i:s"),$comment);
 		return 1;
 	}
 

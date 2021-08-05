@@ -1,8 +1,8 @@
 <?php
 
 class CComment{
-	public DBManagement $db;
-	public int $likes, $id, $uid, $lvl_id, $percent, $isSpam;
+	public $db;
+	public $likes, $id, $uid, $lvl_id, $percent, $isSpam;
 	public $postedDate, $comment;
 
 	function __construct($db){
@@ -76,13 +76,13 @@ class CComment{
 	function postAccComment(){
 		if(strlen($this->comment)>128) return -1;
 		$this->db->preparedQuery("INSERT INTO acccomments (uid,comment,postedTime) VALUES (?,?,?)","iss",
-		$this->uid,$this->comment,date("d-m-Y H:i:s"));
+		$this->uid,$this->comment,date("Y-m-d H:i:s"));
 		return 1;
 	}
 
 	function postLvlComment(){
 		$this->db->preparedQuery("INSERT INTO comments (uid,lvl_id,comment,postedTime,percent) VALUES (?,?,?,?,?)",
-		"iissi",$this->uid,$this->lvl_id,$this->comment,date("d-m-Y H:i:s"),$this->percent);
+		"iissi",$this->uid,$this->lvl_id,$this->comment,date("Y-m-d H:i:s"),$this->percent);
 	}
 
 	function deleteAccComment($id=null, $uid=null){
