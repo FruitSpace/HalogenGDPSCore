@@ -1,7 +1,7 @@
 <?php
 
 class CFriendship{
-	public DBManagement $db;
+	public $db;
 
 	function __construct($db){
 		$this->db=$db;
