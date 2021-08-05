@@ -28,16 +28,16 @@ class DBManagement{
 			$former="Query error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error;
 			err_handle("DBM","fatal", $former);
 		}
+		$r=$req->get_result();
 		if(LOG_DB_REQUESTS){
 			$former="Prepared query: [$query]\n\tDatatypes: [$datatypes]\n\tBind params: [".json_encode($vars)."]";
 			if(LOG_DB_RESPONSES){
-				$r=$req->get_result();
 				$r=($this->isEmpty($r)?"EMPTY":$r->fetch_assoc());
 				$former.="\n\tResponse: ".json_encode($r);
 			}
 			err_handle("DBM", "verbose",$former);
 		}
-		return $req->get_result();
+		return $r;
     }
 
     function query($query){
