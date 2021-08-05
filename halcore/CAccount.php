@@ -13,7 +13,7 @@ define("CFRIENDSHIP_REMOVE", 38);
 class CAccount{
 
 	public $uid, $uname, $passhash, $email, $role_id, $isBanned;
-	public int $stars, $diamonds, $coins, $ucoins, $demons, $cpoints, $orbs, $special, $lvlsCompleted;
+	public $stars, $diamonds, $coins, $ucoins, $demons, $cpoints, $orbs, $special, $lvlsCompleted;
 	public $regDate, $accessDate, $lastIP, $gameVer;
 	public $blacklist, $friendsCount, $friendshipIds;
 	public $iconType, $colorPrimary, $colorSecondary, $cube, $ship, $ball, $ufo, $wave, $robot, $spider, $trace, $death;
@@ -269,7 +269,7 @@ class CAccount{
 	}
 
 	function updateAccessTime(){
-		$this->db->query("UPDATE users SET accessDate=".date("d-m-Y H:i:s")." WHERE uid=$this->uid");
+		$this->db->query("UPDATE users SET accessDate=".date("Y-m-d H:i:s")." WHERE uid=$this->uid");
 	}
 
 	function banUser($action=CBAN_BAN){
@@ -302,7 +302,7 @@ class CAccount{
 		if(!$this->db->isEmpty($req)) return -3;
 		$pass=password_hash($pass, PASSWORD_BCRYPT);
 		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
-		$date=date("d-m-Y H:i:s");
+		$date=date("Y-m-d H:i:s");
 		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
 		if($this->getUIDbyUname($uname, true)==-1) return -1;
 		$this->updateIP($ip);

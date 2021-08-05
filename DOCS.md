@@ -60,7 +60,7 @@
 - [ ] level/suggestStar
 ---
 
-- [ ] profile/getUSerInfo
+- [ ] profile/getUserInfo
 - [ ] profile/getUserList
 - [ ] profile/getUsers
 - [ ] profile/updateAccountSettings
