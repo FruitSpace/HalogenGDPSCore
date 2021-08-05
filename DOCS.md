@@ -1,8 +1,15 @@
 ## Ignore this
 
 ###Important
-Security GJP Check:
+**Security GJP Check:**
  - Sessions->get ip&lastAccessDate (1Hr Limit) or request password
+
+**Logging**
+ - `DBM` Verbose, Fatal (die)
+ - `HAL_LIMIT` Error
+ - `ENDPOINT` Verbose
+ - `ThunderAES` Error (die)
+ - `CFriendship` Error (die)
 
 ### Endpoints
 - [X] account/accountBackup
@@ -23,9 +30,9 @@ Security GJP Check:
 - [X] communication/blockUser
 - [X] communication/friend_acceptRequest
 - [X] communication/friend_deleteRequest
-- [ ] communication/friend_getRequest
+- [X] communication/friend_getRequests
 - [X] communication/friend_readRequest
-- [ ] communication/friend_remove
+- [X] communication/friend_remove
 - [X] communication/friend_request
 - [ ] communication/message_delete
 - [ ] communication/message_get

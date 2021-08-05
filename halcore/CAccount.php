@@ -225,6 +225,26 @@ class CAccount{
 		"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
 	}
 
+	function getShownIcon(){
+		switch($this->iconType){
+			case 1:
+				return $this->ship;
+			case 2:
+				return $this->ball;
+			case 3:
+				return $this->ufo;
+			case 4:
+				return $this->wave;
+			case 5:
+				return $this->robot;
+			case 6:
+				return $this->spider;
+			case 0:
+			default:
+				return $this->cube;
+		}
+	}
+
 	function updateRole($role_id){
 		$this->role_id=$role_id;
 		$this->db->preparedQuery("UPDATE users SET role_id=? WHERE uid=$this->uid","i",$role_id);
