@@ -286,7 +286,7 @@ class CAccount{
 			if($this->isBanned==1){
 				return -12;
 			}
-			$pass = password_hash($pass, PASSWORD_BCRYPT);
+			$pass = password_hash($pass, PASSWORD_BCRYPT,['salt'=>"halogun"]);
 			if ($this->passhash == $pass) {
 				$this->updateIP($ip);
 				return $uid;
@@ -300,7 +300,7 @@ class CAccount{
 		if($this->getUIDbyUname($uname)!=-1) return -2;
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;
-		$pass=password_hash($pass, PASSWORD_BCRYPT);
+		$pass=password_hash($pass, PASSWORD_BCRYPT,['salt'=>"halogun"]);
 		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
 		$date=date("Y-m-d H:i:s");
 		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
