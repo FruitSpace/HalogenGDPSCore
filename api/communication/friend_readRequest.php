@@ -19,6 +19,8 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cf=new CFriendship($dbm);
 		echo $cf->readFriendRequest($id,$uid);
+	}else{
+		echo "-1";
 	}
 	$r=0;
 }else{

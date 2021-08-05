@@ -20,6 +20,8 @@ if(isset($_POST['accountID']) and isset($_POST['targetAccountID']) and isset($_P
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cf=new CFriendship($dbm);
 		echo $cf->acceptFriendRequest($id, $uid);
+	}else{
+		echo "-1";
 	}
 	$r=0;
 }else{

@@ -1,8 +1,9 @@
 <?php
 
 define("LOG_FILE", "log.html");
-define("LOG_DB_REQUESTS", false); //Store all DB Requests
+define("LOG_DB_REQUESTS", false);
 define("LOG_ENDPOINT_ACCESS", true);
+
 define("SOUNDCLOUD_API_KEY", null);
 
 define("SRV_ID", "1234");
