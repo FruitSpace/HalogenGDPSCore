@@ -48,7 +48,10 @@ class DBManagement{
 		}
     	if(LOG_DB_REQUESTS){
     		$former="Direct query: [$query]";
-    		if(LOG_DB_RESPONSES) $former.="\n\tResponse: ".json_encode($result);
+			$ra=($this->isEmpty($result)?"EMPTY":($result->fetch_assoc()));
+			$result->data_seek(0);
+			$former.="\n\tResponse: ".json_encode($ra);
+    		if(LOG_DB_RESPONSES) $former.="\n\tResponse: ".json_encode($ra);
     		err_handle("DBM", "verbose",$former);
 		}
     	return $result;
