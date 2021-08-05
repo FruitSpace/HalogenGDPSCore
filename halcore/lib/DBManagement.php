@@ -33,6 +33,7 @@ class DBManagement{
 			$former="Prepared query: [$query]\n\tDatatypes: [$datatypes]\n\tBind params: [".json_encode($vars)."]";
 			if(LOG_DB_RESPONSES){
 				$r=($this->isEmpty($r)?"EMPTY":$r->fetch_assoc());
+				$r->data_seek(0);
 				$former.="\n\tResponse: ".json_encode($r);
 			}
 			err_handle("DBM", "verbose",$former);
