@@ -40,7 +40,7 @@
 - [X] communication/unblockUser
 ---
 
-- [ ] essential/getAccountUrl
+- [X] essential/getAccountUrl
 - [ ] essential/getSongInfo
 - [ ] essential/getTopArtists
 - [ ] essential/likeItem
@@ -48,7 +48,7 @@
 
 - [ ] level/getGauntlets
 - [ ] level/getMapPacks
-- [ ] level/level_deleteUser
+- [X] level/level_delete
 - [ ] level/level_download
 - [ ] level/level_getDaily
 - [ ] level/level_getLevels
@@ -305,7 +305,7 @@ CREATE TABLE quests (
 );
 ```
 Notes:
- - type (0 - dailylevel, 1 - orbs, 2 - coins, 3 - stars)
+ - type (0 - dailylevel, 1 - weeklylevel, 2 - orbs, 3 - coins, 4 - stars)
  - needed (only for quests)
  - reward (only for quests)
  - name (only for quests)
@@ -319,14 +319,16 @@ CREATE TABLE actions (
     date DATETIME NOT NULL,
     uid int(11) NOT NULL,
     type tinyint(1) NOT NULL,
+    target_id int(11) NOT NULL,
     isMod tinyint(1) NOT NULL DEFAULT 0,
     data JSON NOT NULL DEFAULT '{}'
 );
 ```
 Notes:
  - uid=0 if server made action
- - type (0->register, 1->login, 2->banEvent(Ban/Unban), 3->levelEvent(Upload/Delete/Update),
-   4->panelEvents(addGauntlet/editGauntlet/addLevelPack/editlevelPack/addQuest/editQuest))
+ - type (0->register, 1->login, 2->delete, 3->banEvent(Ban/Unban), 4->levelEvent(Upload/Delete/Update),
+   5->panelEvents(addGauntlet/deleteGauntlet/editGauntlet/addMapPack/deleteMapPack/editMapPack/addQuest/
+   deleteQuest/editQuest))
  - data (wtf will the panel support who caress)
 
 ##UserDat Format

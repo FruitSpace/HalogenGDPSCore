@@ -26,3 +26,61 @@ function getDateAgo($date){
 	if($diff<604800*4*12) return (int)($diff/(604800*4))." months";
 	return (int)($diff/(604800*4*12))." years";
 }
+
+function genhash_genMulti($lvlsarray, $db) {
+	$hash = "";
+	foreach($lvlsarray as $id){
+		$req=$db->query("SELECT starsGot,coins FROM levels WHERE id=$id")->fetch_assoc();
+		$hash.=$id[0].$id[strlen($id)-1].$req['starsGot'].$req['coins'];
+	}
+	return sha1($hash . "xI25fpAapCQg");
+}
+
+function genhash_genSolo($levelstring) {
+	$hash = "aaaaa";
+	$len = strlen($levelstring);
+	$divided = intval($len/40);
+	$p = 0;
+	for($k = 0; $k < $len ; $k= $k+$divided){
+		if($p > 39) break;
+		$hash[$p] = $levelstring[$k];
+		$p++;
+	}
+	return sha1($hash . "xI25fpAapCQg");
+}
+
+function genhash_genSolo2($lvlsmultistring) {
+	return sha1($lvlsmultistring . "xI25fpAapCQg");
+}
+
+function genhash_genSolo3($lvlsmultistring) {
+	return sha1($lvlsmultistring . "oC36fpYaPtdg");
+}
+
+function genhash_genSolo4($lvlsmultistring){
+	return sha1($lvlsmultistring . "pC26fpYaQCtg");
+}
+
+function genhash_genPack($lvlsmultistring, $db) {
+	$lvlsarray = explode(",", $lvlsmultistring);
+	$hash = "";
+	foreach($lvlsarray as $id){
+		$req=$db->query("SELECT packCoins, packStars FROM levelpacks WHERE id=$id")->fetch_assoc();
+		$hash.=$id[0].$id[strlen($id)-1].$req["packStars"].$req["packCoins"];
+	}
+	return sha1($hash . "xI25fpAapCQg");
+}
+
+function genhash_genSeed2noXor($levelstring) {
+	$hash = "aaaaa";
+	$len = strlen($levelstring);
+	$divided = intval($len/50);
+	$p = 0;
+	for($k = 0; $k < $len ; $k= $k+$divided){
+		if($p > 49) break;
+		$hash[$p] = $levelstring[$k];
+		$p++;
+	}
+	$hash = sha1($hash."xI25fpAapCQg");
+	return $hash;
+}

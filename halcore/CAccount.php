@@ -286,7 +286,7 @@ class CAccount{
 			if($this->isBanned==1){
 				return -12;
 			}
-			$pass = md5(md5($pass."HalogenCore1704")."ae07").md5(substr($pass,0,4));
+			$pass=md5(md5($pass."HalogenCore1704")."ae07").substr(0,4,md5($pass));
 			if ($this->passhash == $pass) {
 				$this->updateIP($ip);
 				return $uid;
@@ -300,7 +300,7 @@ class CAccount{
 		if($this->getUIDbyUname($uname)!=-1) return -2;
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;
-		$pass=md5(md5($pass."HalogenCore1704")."ae07").md5(substr($pass,0,4));
+		$pass=md5(md5($pass."HalogenCore1704")."ae07").substr(0,4,md5($pass));
 		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
 		$date=date("Y-m-d H:i:s");
 		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
