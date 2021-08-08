@@ -1,3 +1,3 @@
 <?php
-include "../api/level/level_deleteUser.php";
+include "../api/level/level_delete.php";
 ?>
