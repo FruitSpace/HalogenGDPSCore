@@ -20,7 +20,7 @@ class CAccount{
 	public $chestSmallCount, $chestSmallTime, $chestBigCount, $chestBigTime;
 	public $frS, $cS, $mS, $youtube, $twitch, $twitter;
 
-	public DBManagement $db; //! REMOVE DBM
+	public $db; //! REMOVE DBM
 
 	function __construct($db){
 		$this->db=$db;
@@ -240,7 +240,7 @@ class CAccount{
 			"twitter"=>$this->twitter
 		);
 		$settings=json_encode($settings);
-		$this->db->preparedQuery("UPDATE users SET settings=? WHERE uid=$this->uid","s",$settings)
+		$this->db->preparedQuery("UPDATE users SET settings=? WHERE uid=$this->uid","s",$settings);
 	}
 
 	function getShownIcon(){

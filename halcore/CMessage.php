@@ -1,7 +1,7 @@
 <?php
 
 class CMessage{
-	public DBManagement $db; //! Remove DBM
+	public $db; //! Remove DBM
 
 	public $id, $uid_src, $uid_dest, $subject, $message, $postedtime, $isNew;
 

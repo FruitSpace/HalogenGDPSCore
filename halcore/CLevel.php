@@ -1,7 +1,7 @@
 <?php
 
 class CLevel{
-	public DBManagement $db; //REMOVE DBM!!
+	public $db; //REMOVE DBM!!
 
 	public $id, $name, $description, $uid, $password, $version, $length, $difficulty, $demonDifficulty;
 	public $track_id, $song_id, $versionGame, $versionBinary, $stringExtra, $stringLevel, $stringLevelInfo, $origId;
