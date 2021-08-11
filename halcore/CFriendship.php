@@ -15,12 +15,9 @@ class CFriendship{
 
 	function getFriendRequests(int $uid, int $page, bool $sent=false){
 		require_once __DIR__."/CAccount.php";
-		$queryx="SELECT * FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid LIMIT 10 OFFSET $page";
-		$acc=new CAccount($this->db);
-		$acc->loadSocial();
-		$cnt=$acc->friendsCount;
+		$cnt=$this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid")->fetch_assoc()['cnt'];
 		if($cnt==0) return -2;
-		$req=$this->db->query($queryx)->fetch_assoc();
+		$req=$this->db->query("SELECT * FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid LIMIT 10 OFFSET $page")->fetch_assoc();
 		$output=array('cnt'=>$cnt);
 		foreach ($req as $frq){
 			$item=array();
@@ -28,6 +25,7 @@ class CFriendship{
 			$item['comment']=$frq['comment'];
 			$acc=new CAccount($this->db);
 			$acc->uid=($sent?$frq['uid_dest']:$frq['uid_src']);
+			$item['uid']=$acc->uid;
 			$acc->loadAuth(); //Get uname
 			$item['uname']=$acc->uname;
 			$item['isNew']=$frq['isNew'];
@@ -44,6 +42,8 @@ class CFriendship{
 		}
 		return $output;
 	}
+
+	function getFriendRequestsCount(int $uid, bool $sen=false)
 
 	function deleteFriendship(int $uid, int $uid_dest){
 		require_once __DIR__ . "/../../halcore/CAccount.php";

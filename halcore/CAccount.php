@@ -20,7 +20,7 @@ class CAccount{
 	public $chestSmallCount, $chestSmallTime, $chestBigCount, $chestBigTime;
 	public $frS, $cS, $mS, $youtube, $twitch, $twitter;
 
-	public $db;
+	public DBManagement $db; //! REMOVE DBM
 
 	function __construct($db){
 		$this->db=$db;
@@ -28,6 +28,11 @@ class CAccount{
 
 	function countUsers(){
 		return $this->db->query("SELECT count(*) as cnt FROM users")->fetch_assoc()['cnt'];
+	}
+
+	function exists($uid){
+		$req=$this->db->query("SELECT uname FROM users WHERE uid=$uid");
+		return !$this->db->isEmpty($req);
 	}
 
 	function loadSettings(){
@@ -243,6 +248,12 @@ class CAccount{
 			default:
 				return $this->cube;
 		}
+	}
+
+	function getLeaderboardRank(){
+		$req=$this->db->query("SELECT count(*) as cnt FROM users WHERE stars>= $this->stars AND isBanned=0");
+		if($this->db->isEmpty($req)) return 0;
+		return $req->fetch_assoc()['cnt']+1;
 	}
 
 	function updateRole($role_id){

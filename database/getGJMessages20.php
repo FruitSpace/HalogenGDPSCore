@@ -1,3 +1,3 @@
 <?php
-include "../api/communication/message_get.php";
+include "../api/communication/message_getAll.php";
 ?>

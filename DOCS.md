@@ -12,6 +12,8 @@
  - `CFriendship` Error (die)
 
 ### Endpoints
+
+done
 - [X] account/accountBackup
 - [X] account/accountLogin
 - [X] account/accountManagement (http://s.halhost.cc/userpanel/)
@@ -27,6 +29,7 @@
 - [ ] comment/comment_upload
 ---
 
+done
 - [X] communication/blockUser
 - [X] communication/friend_acceptRequest
 - [X] communication/friend_deleteRequest
@@ -34,9 +37,10 @@
 - [X] communication/friend_readRequest
 - [X] communication/friend_remove
 - [X] communication/friend_request
-- [ ] communication/message_delete
-- [ ] communication/message_get
-- [ ] communication/message_upload
+- [X] communication/message_delete
+- [X] communication/message_get
+- [X] communication/message_getAll
+- [X] communication/message_upload
 - [X] communication/unblockUser
 ---
 
@@ -330,58 +334,6 @@ Notes:
    5->panelEvents(addGauntlet/deleteGauntlet/editGauntlet/addMapPack/deleteMapPack/editMapPack/addQuest/
    deleteQuest/editQuest))
  - data (wtf will the panel support who caress)
-
-##UserDat Format
-| Key | Name/Value | Description |
-| --- | ---------- | ----------- |
-| 1 | uname | The name of player |
-| 2 | uid | The ID of player |
-| 3 | stars | The count of stars player have |
-| 4 | demons | The count of demons player have |
-| 6 | ranking | the global leaderboard position of the player |
-| 7 | accountHighlight | The accountID of the player. Is used for highlighting the player on the leaderboards |
-| 8 | creatorpoints | The count of creatorpoints player have |
-| 9 | iconID | maybe... [link](https://github.com/gd-programming/gddocs/pull/16/files#r417926661) |
-| 10 | playerColor | First color of the player use |
-| 11 | playerColor2 | Second color of the player use |
-| 13 | secretCoins | The count of coins player have |
-| 14 | iconType | The iconType of the player use |
-| 15 | special | The special number of the player use |
-| 16 | accountID | The accountid of this player |
-| 17 | usercoins | The count of usercoins player have |
-| 18 | messageState | 0: All, 1: Only friends, 2: None |
-| 19 | friendsState | 0: All, 1: None |
-| 20 | youTube |  The youtubeurl of player |
-| 21 | accIcon | The icon number of the player use |
-| 22 | accShip | The ship number of the player use |
-| 23 | accBall | The ball number of the player use |
-| 24 | accBird | The bird number of the player use |
-| 25 | accDart(wave) | The dart(wave) number of the player use |
-| 26 | accRobot | The robot number of the player use |
-| 27 | accStreak | The streak of the user |
-| 28 | accGlow | The glow number of the player use |
-| 29 | isRegistered | if an account is registered or not |
-| 30 | globalRank | The global rank of this player |
-| 31 | friendstate | 0: None, 1: already is friend, 3: send request to target, but target haven't accept, 4: target send request, but haven't accept
-| 38 | messages | How many new messages the user has (shown in-game as a notification) | <!-- there are a bunch of keys before here but they are exclusive to friend requests so i didnt add them here -->
-| 39 | friendRequests | How many new friend requests the user has (shown in-game as a notificaiton) |
-| 40 | newFriends | How many new Friends the user has (shown in-game as a notificaiton) |
-| 41 | hasBlocked |  appears on userlist endpoint to show if the user is blocked |
-| 42 | age |  the time since you submitted a levelScore |
-| 43 | accSpider | The spider number of the player use |
-| 44 | twitter|  The twitter of player |
-| 45 | twitch |  The twitch of player |
-| 46 | diamonds | The count of diamonds player have |
-| 48 | accExplosion | The explosion number of the player use |
-| 49 | modlevel | 0: None, 1: Normal Mod(yellow), 2: Elder Mod(orange) |
-| 50 | commentHistoryState | 0: All, 1: Only friends, 2: None |
-
-
-
-
-
-1,2,3,4,8,  10,11,13,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,35,37,43,44,45,46,47,49,50
-
 
 
 ## God Tier Quotes
