@@ -47,8 +47,8 @@ class CAccount{
 	}
 
 	function loadChests(){
-		$req=$this->db->query("SELECT chests FROM users WHERE uid=$this->uid");
-		$reqd=json_decode($req->fetch_assoc()['chests']);
+		$req=$this->db->query("SELECT chests FROM users WHERE uid=$this->uid")->fetch_assoc();
+		$reqd=json_decode($req['chests']);
 		$this->chestSmallCount=$reqd['small_count'];
 		$this->chestBigCount=$reqd['big_count'];
 		$this->chestSmallTime=$reqd['small_time'];
@@ -56,9 +56,9 @@ class CAccount{
 	}
 
 	function loadVessels(){
-		$req=$this->db->query("SELECT iconType,vessels FROM users WHERE uid=$this->uid");
-		$reqd=json_decode($req->fetch_assoc()['vessels']);
-		$this->iconType=$req->fetch_assoc()['iconType'];
+		$req=$this->db->query("SELECT iconType,vessels FROM users WHERE uid=$this->uid")->fetch_assoc();
+		$reqd=json_decode($req['vessels']);
+		$this->iconType=$req['iconType'];
 		$this->colorPrimary=$reqd['clr_primary'];
 		$this->colorSecondary=$reqd['clr_secondary'];
 		$this->cube=$reqd['cube'];
@@ -148,7 +148,7 @@ class CAccount{
 		$this->blacklist=$req['blacklist'];
 		$this->friendsCount=$req['friends_cnt'];
 		$this->friendshipIds=$req['friendship_ids'];
-		$reqd=json_decode($req->fetch_assoc()['vessels']);
+		$reqd=json_decode($req['vessels']);
 		$this->iconType=$req['iconType'];
 		$this->colorPrimary=$reqd['clr_primary'];
 		$this->colorSecondary=$reqd['clr_secondary'];
@@ -161,7 +161,7 @@ class CAccount{
 		$this->spider=$reqd['spider'];
 		$this->trace=$reqd['trace'];
 		$this->death=$reqd['death'];
-		$reqc=json_decode($req->fetch_assoc()['chests']);
+		$reqc=json_decode($req['chests']);
 		$this->chestSmallCount=$reqc['small_count'];
 		$this->chestBigCount=$reqc['big_count'];
 		$this->chestSmallTime=$reqc['small_time'];
