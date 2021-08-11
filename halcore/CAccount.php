@@ -230,6 +230,19 @@ class CAccount{
 		"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
 	}
 
+	function pushSettings(){
+		$settings=array(
+			"frS"=>$this->frS,
+			"cS"=>$this->cS,
+			"mS"=>$this->mS,
+			"youtube"=>$this->youtube,
+			"twitch"=>$this->twitch,
+			"twitter"=>$this->twitter
+		);
+		$settings=json_encode($settings);
+		$this->db->preparedQuery("UPDATE users SET settings=? WHERE uid=$this->uid","s",$settings)
+	}
+
 	function getShownIcon(){
 		switch($this->iconType){
 			case 1:

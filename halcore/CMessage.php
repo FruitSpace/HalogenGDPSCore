@@ -14,6 +14,10 @@ class CMessage{
 		return !$this->db->isEmpty($req);
 	}
 
+	function countMessages(int $uid, bool $new=false){
+		return $this->db->query("SELECT count(*) as cnt FROM messages WHERE uid_dest=$uid".($new?" AND isNew=1":""))->fetch_assoc()['cnt'];
+	}
+
 	function loadMessageById(int $id=0){
 		$id=($id==0?$this->id:$id);
 		$req=$this->db->query("SELECT * FROM messages WHERE id=$id")->fetch_assoc();
@@ -24,6 +28,7 @@ class CMessage{
 		$this->message=$req['body'];
 		$this->postedtime=$req['postedTime'];
 		$this->isNew=$req['isNew'];
+		$this->db->query("UPDATE messages SET isNew=0 WHERE id=$id");
 	}
 
 	function deleteMessage(int $uid){

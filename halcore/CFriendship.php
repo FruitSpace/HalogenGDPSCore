@@ -13,6 +13,10 @@ class CFriendship{
 		return 0;
 	}
 
+	function countFriendRequests(int $uid, bool $new=false){
+		return $this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE uid_dest=$uid".($new?" AND isNew=1":""))->fetch_assoc()['cnt'];
+	}
+
 	function getFriendRequests(int $uid, int $page, bool $sent=false){
 		require_once __DIR__."/CAccount.php";
 		$cnt=$this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid")->fetch_assoc()['cnt'];
@@ -43,7 +47,9 @@ class CFriendship{
 		return $output;
 	}
 
-	function getFriendRequestsCount(int $uid, bool $sen=false)
+	function getFriendRequestsCount(int $uid, bool $sent=false){
+		return $this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid")->fetch_assoc()['cnt'];
+	}
 
 	function deleteFriendship(int $uid, int $uid_dest){
 		require_once __DIR__ . "/../../halcore/CAccount.php";
@@ -77,6 +83,14 @@ class CFriendship{
 		if($this->isAlreadyFriend($uid, $uid_dest)) return -1;
 		$comment=($comment==null?'':$comment);
 		if(strlen($comment)>512) return -1;
+		require_once __DIR__."/CAccount.php";
+		$acc=new CAccount($this->db);
+		$acc->uid=$uid_dest;
+		$acc->loadSettings();
+		if($acc->frS>0) return -1;
+		$acc->loadSocial();
+		$blacklist=explode(",",$acc->blacklist);
+		if(in_array($uid,$blacklist)) return -1;
 		$this->db->preparedQuery("INSERT INTO friendreqs (uid_src, uid_dest, uploadDate, comment) VALUES (?,?,?,?)",
 		"iiss",$uid,$uid_dest,date("Y-m-d H:i:s"),$comment);
 		return 1;
