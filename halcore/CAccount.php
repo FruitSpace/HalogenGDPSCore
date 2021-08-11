@@ -305,6 +305,7 @@ class CAccount{
 
 	function logIn($uname, $pass, $ip, $uid=null){ //returns UID on success and -1 on failure
 		$uid=($uid==null?$this->getUIDbyUname($uname, true):(int)$uid);
+		$this->uid=$uid;
 		if ($uid>0) {
 			$this->loadAuth(CAUTH_UID);
 			if($this->isBanned==1){
