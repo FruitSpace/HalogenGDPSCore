@@ -13,7 +13,7 @@
 
 ### Endpoints
 
-done
+account: done
 - [X] account/accountBackup
 - [X] account/accountLogin
 - [X] account/accountManagement (http://s.halhost.cc/userpanel/)
@@ -21,6 +21,7 @@ done
 - [X] account/accountSync
 ---
 
+comment:
 - [X] comment/accountComment_delete
 - [X] comment/accountComment_get
 - [X] comment/accountComment_upload
@@ -29,7 +30,7 @@ done
 - [ ] comment/comment_upload
 ---
 
-done
+communication: done
 - [X] communication/blockUser
 - [X] communication/friend_acceptRequest
 - [X] communication/friend_deleteRequest
@@ -44,12 +45,14 @@ done
 - [X] communication/unblockUser
 ---
 
+essential:
 - [X] essential/getAccountUrl
 - [ ] essential/getSongInfo
 - [ ] essential/getTopArtists
 - [ ] essential/likeItem
 ---
 
+level:
 - [ ] level/getGauntlets
 - [ ] level/getMapPacks
 - [X] level/level_delete
@@ -64,16 +67,19 @@ done
 - [ ] level/suggestStar
 ---
 
-- [ ] profile/getUserInfo
+profile:
+- [X] profile/getUserInfo
 - [ ] profile/getUserList
 - [ ] profile/getUsers
-- [ ] profile/updateAccountSettings
+- [X] profile/updateAccountSettings
 ---
 
+rewards:
 - [ ] rewards/getChallenges
 - [ ] rewards/getRewards
 ---
 
+score:
 - [ ] score/getCreators
 - [ ] score/getLevelScores
 - [ ] score/getScores
