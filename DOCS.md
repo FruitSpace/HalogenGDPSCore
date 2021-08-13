@@ -67,10 +67,10 @@ level:
 - [ ] level/suggestStar
 ---
 
-profile:
+profile: done
 - [X] profile/getUserInfo
-- [ ] profile/getUserList
-- [ ] profile/getUsers
+- [X] profile/getUserList
+- [X] profile/getUsers
 - [X] profile/updateAccountSettings
 ---
 
