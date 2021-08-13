@@ -298,24 +298,6 @@ class CAccount{
 		$this->db->preparedQuery("UPDATE users SET role_id=? WHERE uid=$this->uid","i",$role_id);
 	}
 
-	function pushVessels(){
-		$vessels=array(
-			'clr_primary'=>$this->colorPrimary,
-			'clr_secondary'=>$this->colorSecondary,
-			'cube'=>$this->cube,
-			'ship'=>$this->ship,
-			'ball'=>$this->ball,
-			'ufo'=>$this->ufo,
-			'wave'=>$this->wave,
-			'robot'=>$this->robot,
-			'spider'=>$this->spider,
-			'trace'=>$this->trace,
-			'death'=>$this->death
-		);
-		$vessels=json_encode($vessels);
-		$this->db->preparedQuery("UPDATE users SET iconType=?,vessels=? WHERE uid=$this->uid","is",$this->iconType,$vessels);
-	}
-
 	function updateAccessTime(){
 		$this->db->query("UPDATE users SET accessDate=".date("Y-m-d H:i:s")." WHERE uid=$this->uid");
 	}
