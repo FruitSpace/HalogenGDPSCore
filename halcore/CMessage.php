@@ -60,9 +60,11 @@ class CMessage{
 		require_once __DIR__."/CAccount.php";
 		$cnt=$this->db->query("SELECT count(*) as cnt FROM messages WHERE ".($sent?"uid_src":"uid_dest")."=$uid")->fetch_assoc()['cnt'];
 		if($cnt==0) return -2;
-		$messages=$this->db->query("SELECT * FROM messages WHERE ".($sent?"uid_src":"uid_dest")."=$uid ORDER BY id LIMIT 10 OFFSET $page")->fetch_assoc();
+		$req=$this->db->query("SELECT * FROM messages WHERE ".($sent?"uid_src":"uid_dest")."=$uid ORDER BY id LIMIT 10 OFFSET $page");
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
 		$output=array('cnt'=>$cnt);
-		foreach($messages as $msg){
+		foreach($reqm as $msg){
 			$item=array();
 			$item['id']=$msg['id'];
 			$item['subject']=$msg['subject'];

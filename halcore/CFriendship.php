@@ -21,9 +21,11 @@ class CFriendship{
 		require_once __DIR__."/CAccount.php";
 		$cnt=$this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid")->fetch_assoc()['cnt'];
 		if($cnt==0) return -2;
-		$req=$this->db->query("SELECT * FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid LIMIT 10 OFFSET $page")->fetch_assoc();
+		$req=$this->db->query("SELECT * FROM friendreqs WHERE ".($sent?"uid_src":"uid_dest")."=$uid LIMIT 10 OFFSET $page");
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
 		$output=array('cnt'=>$cnt);
-		foreach ($req as $frq){
+		foreach ($reqm as $frq){
 			$item=array();
 			$item['id']=$frq['id'];
 			$item['comment']=$frq['comment'];

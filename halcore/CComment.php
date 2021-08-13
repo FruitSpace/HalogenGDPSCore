@@ -57,9 +57,10 @@ class CComment{
 	function getAllLvlComments($lvl_id){
 		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=?","i",$lvl_id);
 		if($this->db->isEmpty($req)) return array();
-		$req=$req->fetch_assoc();
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
 		$lvl=array();
-		foreach($req as $sreq){
+		foreach($reqm as $sreq){
 			$ccObj= new CComment($this->db);
 			$ccObj->lvl_id=$this->lvl_id;
 			$ccObj->uid=$sreq['uid'];
