@@ -83,7 +83,7 @@ score:
 - [ ] score/getCreators
 - [ ] score/getLevelScores
 - [ ] score/getScores
-- [ ] score/updateUserScore
+- [X] score/updateUserScore
 ---
 
 Removed tables:
