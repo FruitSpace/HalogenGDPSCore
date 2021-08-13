@@ -16,6 +16,8 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$acc=new CAccount($dbm);
+		$acc->uid=$uid;
+		$acc->loadStats();
 		$acc->stars=(empty($_POST['stars'])?0:(int)$_POST['stars']);
 		$acc->demons=(empty($_POST['demons'])?0:(int)$_POST['demons']);
 		$acc->diamonds=(empty($_POST['diamonds'])?0:(int)$_POST['diamonds']);
