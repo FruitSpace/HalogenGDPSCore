@@ -73,6 +73,11 @@ class CFriendship{
 		return $req->fetch_assoc()['id'];
 	}
 
+	function getFriendByFID(int $id){
+		$req=$this->db->query("SELECT uid1,uid2 FROM friendships WHERE id=$id")->fetch_assoc();
+		return $req;
+	}
+
 	function readFriendRequest(int $id, int $uid){
 		$this->db->query("UPDATE friendreqs SET isNew=0 WHERE id=$id AND uid_dest=$uid");
 		return 1;

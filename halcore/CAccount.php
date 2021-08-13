@@ -35,6 +35,12 @@ class CAccount{
 		return !$this->db->isEmpty($req);
 	}
 
+	function searchUsers($sterm){
+		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE uid=? OR uname LIKE ? ORDER BY stars LIMIT 1","is",$sterm,$sterm);
+		if($this->db->isEmpty($req)) return array();
+		return $req->fetch_assoc();
+	} //Following original GD style
+
 	function loadSettings(){
 		$req=$this->db->query("SELECT settings FROM users WHERE uid=$this->uid");
 		$reqd=json_decode($req->fetch_assoc()['settings'],true);
