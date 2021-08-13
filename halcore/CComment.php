@@ -27,9 +27,10 @@ class CComment{
 		$page=$page*10;
 		$req=$this->db->query("SELECT id,comment,postedTime,likes,isSpam FROM acccomments WHERE uid=$uid ORDER BY postedTime DESC LIMIT 10 OFFSET $page");
 		if($this->db->isEmpty($req)) return array();
-		$req=($req->num_rows==1?array(0=>$req->fetch_assoc()):$req->fetch_assoc());
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
 		$acc=array();
-		foreach($req as $sreq){
+		foreach($reqm as $sreq){
 			$ccObj= new CComment($this->db);
 			$ccObj->uid=$uid;
 			$ccObj->id=$sreq['id'];
