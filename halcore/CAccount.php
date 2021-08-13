@@ -52,6 +52,19 @@ class CAccount{
 		$this->twitter=$reqd['twitter'];
 	}
 
+	function pushSettings(){
+		$settings=array(
+			"frS"=>$this->frS,
+			"cS"=>$this->cS,
+			"mS"=>$this->mS,
+			"youtube"=>$this->youtube,
+			"twitch"=>$this->twitch,
+			"twitter"=>$this->twitter
+		);
+		$settings=json_encode($settings);
+		$this->db->preparedQuery("UPDATE users SET settings=? WHERE uid=$this->uid","s",$settings);
+	}
+
 	function loadChests(){
 		$req=$this->db->query("SELECT chests FROM users WHERE uid=$this->uid")->fetch_assoc();
 		$reqd=json_decode($req['chests'],true);
@@ -78,6 +91,24 @@ class CAccount{
 		$this->death=$reqd['death'];
 	}
 
+	function pushVessels(){
+		$vessels=array(
+			"clr_primary"=>$this->colorPrimary,
+			"clr_secondary"=>$this->colorSecondary,
+			"cube"=>$this->cube,
+			"ship"=>$this->ship,
+			"ball"=>$this->ball,
+			"ufo"=>$this->ufo,
+			"wave"=>$this->wave,
+			"robot"=>$this->robot,
+			"spider"=>$this->spider,
+			"trace"=>$this->trace,
+			"death"=>$this->death
+		);
+		$vessels=json_encode($vessels);
+		$this->db->preparedQuery("UPDATE users SET vessels=?, iconType=? WHERE uid=$this->uid","si",$vessels,$this->iconType);
+	}
+
 	function loadStats(){
 		$req=$this->db->query("SELECT stars,diamonds,coins,ucoins,demons,cpoints,orbs,special,lvlsCompleted FROM users WHERE uid=$this->uid")->fetch_assoc();
 		$this->stars=$req['stars'];
@@ -89,6 +120,11 @@ class CAccount{
 		$this->orbs=$req['orbs'];
 		$this->special=$req['special'];
 		$this->lvlsCompleted=$req['lvlsCompleted'];
+	}
+
+	function pushStats(){
+		$this->db->preparedQuery("UPDATE users SET stars=?,diamonds=?,coins=?,ucoins=?,demons=?,cpoints=?,orbs=?,special=?,lvlsCompleted=? WHERE uid=$this->uid",
+			"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
 	}
 
 	function loadAuth($method=CAUTH_UID){
@@ -229,24 +265,6 @@ class CAccount{
 			return 1;
 		}
 		return -1;
-	}
-
-	function pushStats(){
-		$this->db->preparedQuery("UPDATE users SET stars=?,diamonds=?,coins=?,ucoins=?,demons=?,cpoints=?,orbs=?,special=?,lvlsCompleted=? WHERE uid=$this->uid",
-		"iiiiiiiii",$this->stars,$this->diamonds,$this->coins,$this->ucoins,$this->demons,$this->cpoints,$this->orbs,$this->special,$this->lvlsCompleted);
-	}
-
-	function pushSettings(){
-		$settings=array(
-			"frS"=>$this->frS,
-			"cS"=>$this->cS,
-			"mS"=>$this->mS,
-			"youtube"=>$this->youtube,
-			"twitch"=>$this->twitch,
-			"twitter"=>$this->twitter
-		);
-		$settings=json_encode($settings);
-		$this->db->preparedQuery("UPDATE users SET settings=? WHERE uid=$this->uid","s",$settings);
 	}
 
 	function getShownIcon(){
