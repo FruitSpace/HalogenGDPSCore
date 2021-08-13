@@ -18,12 +18,15 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 		$acc=new CAccount($dbm);
 		$acc->uid=$uid;
 		$acc->loadStats();
+		$acc->colorPrimary=(empty($_POST['color1'])?0:(int)$_POST['color1']);
+		$acc->colorSecondary=(empty($_POST['color2'])?0:(int)$_POST['color2']);
 		$acc->stars=(empty($_POST['stars'])?0:(int)$_POST['stars']);
 		$acc->demons=(empty($_POST['demons'])?0:(int)$_POST['demons']);
 		$acc->diamonds=(empty($_POST['diamonds'])?0:(int)$_POST['diamonds']);
 		$acc->iconType=(empty($_POST['iconType'])?0:(int)$_POST['iconType']);
 		$acc->coins=(empty($_POST['coins'])?0:(int)$_POST['coins']);
 		$acc->ucoins=(empty($_POST['userCoins'])?0:(int)$_POST['userCoins']);
+		$acc->special=(empty($_POST['special'])?0:(int)$_POST['special']);
 		$acc->cube=(empty($_POST['accIcon'])?0:(int)$_POST['accIcon']);
 		$acc->ship=(empty($_POST['accShip'])?0:(int)$_POST['accShip']);
 		$acc->ball=(empty($_POST['accBall'])?0:(int)$_POST['accBall']);
