@@ -32,7 +32,7 @@ class DBManagement{
 		if(LOG_DB_REQUESTS){
 			$former="Prepared query: [$query]\n\tDatatypes: [$datatypes]\n\tBind params: [".json_encode($vars)."]";
 			if(LOG_DB_RESPONSES){
-				$ra=(($this->isEmpty($r) or $r==false)?"EMPTY":($r->fetch_assoc()));
+				$ra=(($this->isEmpty($r) or $r===false or $r===true)?"EMPTY":($r->fetch_assoc()));
 				if($r) $r->data_seek(0);
 				$former.="\n\tResponse: ".json_encode($ra);
 			}
@@ -48,7 +48,7 @@ class DBManagement{
 		}
     	if(LOG_DB_REQUESTS){
     		$former="Direct query: [$query]";
-			$ra=(($this->isEmpty($result) or $result==false)?"EMPTY":($result->fetch_assoc()));
+			$ra=(($this->isEmpty($result) or $result===false or $result===true)?"EMPTY":($result->fetch_assoc()));
 			if($result) $result->data_seek(0);
 			$former.="\n\tResponse: ".json_encode($ra);
     		err_handle("DBM", "verbose",$former);
