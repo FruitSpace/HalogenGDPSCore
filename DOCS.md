@@ -139,7 +139,7 @@ CREATE TABLE users (
 ### Levels
 ```mysql
 CREATE  TABLE levels (
-    id int(11) NOT NULL UNIQUE KEY,
+    id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name varchar(32) NOT NULL DEFAULT 'Unnamed',
     description varchar(256) NOT NULL DEFAULT '',
     uid int(11) NOT NULL,
