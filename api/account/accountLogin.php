@@ -20,7 +20,7 @@ if(isset($_POST['userName']) and isset($_POST['password']) and $_POST['userName'
 		echo $uid;
 	}else{
 		echo "$uid,$uid";
-		require_once __DIR__."../../halcore/lib/actions.php";
+		require_once __DIR__."/../../halcore/lib/actions.php";
 		registerAction(ACTION_USER_LOGIN,0,$uid,array("uname"=>$uname),$dbm);
 	}
 	$r=0;

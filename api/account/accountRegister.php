@@ -22,7 +22,7 @@ if(isset($_POST['userName']) and isset($_POST['password']) and isset($_POST['ema
 		$resp=$acc->register($uname,$pass,$email,$ip);
 		if($resp>0) {
 			echo "1";
-			require_once __DIR__."../../halcore/lib/actions.php";
+			require_once __DIR__."/../../halcore/lib/actions.php";
 			registerAction(ACTION_USER_REGISTER, 0, $resp, array("uname" => $uname,"email"=>$email), $dbm);
 		}else{
 			echo "-1";
