@@ -1,7 +1,7 @@
 <?php
 
 class CLevel{
-	public DBManagement $db; //REMOVE DBM!!
+	public $db; //REMOVE DBM!!
 
 	public $id, $name, $description, $uid, $password, $version, $length, $difficulty, $demonDifficulty;
 	public $track_id, $song_id, $versionGame, $versionBinary, $stringExtra, $stringLevel, $stringLevelInfo, $origId;
@@ -154,7 +154,7 @@ class CLevel{
 	function uploadLevel(){
 		if(!$this->checkParams()) return -1;
 		$query="INSERT INTO levels (name, description, uid, password, version, length, track_id, song_id, versionGame, versionBinary, stringExtra, stringLevel, stringLevelInfo, original_id, objects, starsRequested, ucoins, is2p, isVerified, isUnlisted, isLDM, uploadDate, updateDate) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		$this->db->preparedQuery($query,"ssiiiiiiiisssiiiiiiiiii",$this->name,$this->description,$this->uid,$this->password,$this->version,$this->length,$this->length,$this->track_id,$this->song_id,$this->versionGame,$this->versionBinary,$this->stringExtra,$this->stringLevel,$this->stringLevelInfo,$this->origId,$this->objects,
+		$this->db->preparedQuery($query,"ssiiiiiiiisssiiiiiiiiii",$this->name,$this->description,$this->uid,$this->password,$this->version,$this->length,$this->track_id,$this->song_id,$this->versionGame,$this->versionBinary,$this->stringExtra,$this->stringLevel,$this->stringLevelInfo,$this->origId,$this->objects,
 		$this->starsRequested,$this->ucoins,$this->is2p,$this->isVerified,$this->isUnlisted,$this->isLDM,date("Y-m-d H:i:s"),date("Y-m-d H:i:s"));
 		return $this->db->getDB()->insert_id;
 	}
