@@ -56,7 +56,7 @@ level:
 - [ ] level/getGauntlets
 - [ ] level/getMapPacks
 - [X] level/level_delete
-- [ ] level/level_download
+- [X] level/level_download
 - [ ] level/level_getDaily
 - [ ] level/level_getLevels
 - [ ] level/level_report
@@ -319,7 +319,7 @@ Notes:
  - needed (only for quests)
  - reward (only for quests)
  - name (only for quests)
- - lvl_id (only for daily)
+ - lvl_id (only for daily/weekly)
  - timeExpire (when reload quests/update level)
 
 ### Actions
