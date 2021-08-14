@@ -1,7 +1,7 @@
 <?php
 
 class CLevel{
-	public $db; //REMOVE DBM!!
+	public DBManagement $db; //REMOVE DBM!!
 
 	public $id, $name, $description, $uid, $password, $version, $length, $difficulty, $demonDifficulty;
 	public $track_id, $song_id, $versionGame, $versionBinary, $stringExtra, $stringLevel, $stringLevelInfo, $origId;
@@ -27,6 +27,11 @@ class CLevel{
 		$this->isEpic=$req['isEpic'];
 		$this->isUnlisted=$req['isUnlisted'];
 		$this->isLDM=$req['isLDM'];
+	}
+
+	function pushParams(){
+		$this->db->query("UPDATE levels SET is2p=$this->is2p,isVerified=$this->isVerified,isFeatured=$this->isFeatured,isHall=$this->isHall,isEpic=$this->isEpic,isUnlisted=$this->isUnlisted,isLDM=$this->isLDM WHERE id=$this->id");
+
 	}
 
 	function loadDates(){
@@ -121,7 +126,36 @@ class CLevel{
 		return $uid==$this->uid;
 	}
 
+	function checkParams(){
+		if(strlen($this->name)>32  or strlen($this->description)>256
+			or $this->password>99999999 or $this->version<1
+			or $this->version>127 or $this->length<0
+			or $this->length>4 or $this->track_id<0
+			or $this->song_id<0 or $this->versionGame<0
+			or $this->versionBinary<0 or strlen($this->stringLevel)<16
+			or $this->origId<0 or $this->objects<100
+			or $this->starsRequested<0 or $this->starsRequested>10
+			or $this->ucoins<0 or $this->ucoins>3
+		) return 0;
+		$this->is2p=(empty($this->is2p)?0:1);
+		$this->isVerified=(empty($this->isVerified)?0:1);
+		$this->isFeatured=(empty($this->isFeatured)?0:1);
+		$this->isHall=(empty($this->isHall)?0:1);
+		$this->isEpic=(empty($this->isEpic)?0:1);
+		$this->isUnlisted=(empty($this->isUnlisted)?0:1);
+		$this->isLDM=(empty($this->isLDM)?0:1);
+		return 1;
+	}
+
 	function deleteLevel(){
 		$this->db->query("DELETE FROM levels WHERE id=$this->id");
+	}
+
+	function uploadLevel(){
+		if(!$this->checkParams()) return -1;
+		$query="INSERT INTO levels (name, description, uid, password, version, length, track_id, song_id, versionGame, versionBinary, stringExtra, stringLevel, stringLevelInfo, original_id, objects, starsRequested, ucoins, is2p, isVerified, isUnlisted, isLDM, uploadDate, updateDate) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		$this->db->preparedQuery($query,"ssiiiiiiiisssiiiiiiiiii",$this->name,$this->description,$this->uid,$this->password,$this->version,$this->length,$this->length,$this->track_id,$this->song_id,$this->versionGame,$this->versionBinary,$this->stringExtra,$this->stringLevel,$this->stringLevelInfo,$this->origId,$this->objects,
+		$this->starsRequested,$this->ucoins,$this->is2p,$this->isVerified,$this->isUnlisted,$this->isLDM,date("Y-m-d H:i:s"),date("Y-m-d H:i:s"));
+		return $this->db->getDB()->insert_id;
 	}
 }

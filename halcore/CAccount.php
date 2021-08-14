@@ -36,7 +36,7 @@ class CAccount{
 	}
 
 	function searchUsers($sterm){
-		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE uid=? OR uname LIKE ? ORDER BY stars LIMIT 1","is",$sterm,$sterm);
+		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE uid=? OR uname=? ORDER BY stars LIMIT 1","is",$sterm,$sterm);
 		if($this->db->isEmpty($req)) return array();
 		return $req->fetch_assoc();
 	} //Following original GD style
@@ -337,6 +337,6 @@ class CAccount{
 		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
 		if($this->getUIDbyUname($uname, true)==-1) return -1;
 		$this->updateIP($ip);
-		return 1;
+		return $this->db->getDB()->insert_id;
 	}
 }

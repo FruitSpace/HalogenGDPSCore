@@ -61,7 +61,7 @@ level:
 - [ ] level/level_getLevels
 - [ ] level/level_report
 - [ ] level/level_updateDescription
-- [ ] level/level_upload
+- [X] level/level_upload
 - [ ] level/rateDemon
 - [ ] level/rateStar
 - [ ] level/suggestStar
