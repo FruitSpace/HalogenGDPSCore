@@ -36,7 +36,7 @@ class CQuests{
 
 	function publishQuest(int $type, int $needed, int $reward, $name){
 		$type=$type-200;
-		if(strlen($name)<64) return -1;
+		if(strlen($name)>64) return -1;
 		$this->db->preparedQuery("INSERT INTO quests (type,needed,reward,name) VALUES (?,?,?,?)","iiis",$type,$needed,$reward,$name);
 		return $this->db->getDB()->insert_id;
 	}
