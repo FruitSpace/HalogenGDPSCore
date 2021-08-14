@@ -56,7 +56,7 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
 					"objects"=>$cl->objects,
 					"starsReq"=>$cl->starsRequested
 				);
-				require_once __DIR__."../../halcore/lib/actions.php";
+				require_once __DIR__."/../../halcore/lib/actions.php";
 				registerAction(ACTION_LEVEL_UPLOAD,$uid,$res,$xdata,$dbm);
 			}
 		}
