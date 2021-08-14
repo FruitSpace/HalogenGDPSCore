@@ -49,7 +49,6 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$cl->loadAll();
 	$auto=0;
 	$password=($cl->password==0?"0":doXOR($cl->password,26364));
-	//40 (41) 42 43 45 46 47 48
 	if($cl->difficulty<0){
 		$auto=1;
 		$cl->difficulty=0;
