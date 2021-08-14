@@ -22,7 +22,7 @@ if(isset($_POST['str']) and $_POST['str']!=""){
 		$acc->loadAuth();
 		$acc->loadVessels();
 		$acc->loadStats();
-		echo "1:".$acc->uname.":2:".$acc->uid.":13:".$acc->coins.":17:".$acc->ucoins.":9:".$acc->getShownIcon().":10:".$acc->colorPrimary.":11:".$acc->colorSecondary.":14:".$acc->iconType.":15:".$acc->special.":16:".$acc->uid.":3:".$acc->stars.":8:".$acc->cpoints.":4:".$acc->demons."#999:0:10";
+		echo "1:".$acc->uname.":2:".$acc->uid.":13:".$acc->coins.":17:".$acc->ucoins.":9:".$acc->getShownIcon().":10:".$acc->colorPrimary.":11:".$acc->colorSecondary.":14:".$acc->iconType.":15:".$acc->special.":16:".$acc->uid.":3:".$acc->stars.":8:".$acc->cpoints.":4:".$acc->demons."#1:0:10";
 	}
 }else{
 	echo "-1";

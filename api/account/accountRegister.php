@@ -19,7 +19,14 @@ if(isset($_POST['userName']) and isset($_POST['password']) and isset($_POST['ema
 	$dbm=new DBManagement();
 	$acc=new CAccount($dbm);
 	if(checkRegister($acc->countUsers())){
-		echo $acc->register($uname,$pass,$email,$ip);
+		$resp=$acc->register($uname,$pass,$email,$ip);
+		if($resp>0) {
+			echo "1";
+			require_once __DIR__ . "/lib/actions.php";
+			registerAction(ACTION_USER_REGISTER, 0, $resp, array("uname" => $uname,"email"=>$email), $dbm);
+		}else{
+			echo "-1";
+		}
 	}else{echo "-1";}
 
 	$r=0;
