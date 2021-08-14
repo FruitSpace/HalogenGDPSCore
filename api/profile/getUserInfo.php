@@ -32,12 +32,13 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	$acc->loadAll();
 	$cf=new CFriendship($dbm);
 	$isFriend=($uid_self>0?$cf->isAlreadyFriend($uid,$uid_self):0);
+	$roleObj=$acc->getRoleObj();
 	$output="1:".$acc->uname.":2:".$acc->uid.":3:".$acc->stars.":4:".$acc->demons.":6:".$acc->getLeaderboardRank().":7:".$acc->uid;
 	$output.=":8:".$acc->cpoints.":9:".$acc->getShownIcon().":10:".$acc->colorPrimary.":11:".$acc->colorSecondary.":13:".$acc->coins;
 	$output.=":14:".$acc->iconType.":15:".$acc->special.":16:".$acc->uid.":17:".$acc->ucoins.":18:".$acc->mS.":19:".$acc->frS;
 	$output.=":20:".$acc->youtube.":21:".$acc->cube.":22:".$acc->ship.":23:".$acc->ball.":24:".$acc->ufo.":25:".$acc->wave.":26:".$acc->robot;
 	$output.=":28:".$acc->trace.":29:1:30:".$acc->getLeaderboardRank().":31:".$isFriend.":43:".$acc->spider.":44:".$acc->twitter;
-	$output.=":45:".$acc->twitch.":46:".$acc->diamonds.":48:".$acc->death.":49:".$acc->role_id.":50:".$acc->cS;
+	$output.=":45:".$acc->twitch.":46:".$acc->diamonds.":48:".$acc->death.":49:".(empty($roleObj)?"0":$roleObj['level']).":50:".$acc->cS;
 	//check blacklist status
 	$blacklist=explode(",",$acc->blacklist);
 	if(in_array($uid_self,$blacklist)) die("-1");

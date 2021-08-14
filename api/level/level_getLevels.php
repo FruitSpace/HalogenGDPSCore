@@ -14,16 +14,60 @@ if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
-	$dbm = new DBManagement();
-	$cl=new CLevel($dbm);
-	$cl->id=3;
-	$cl->loadAll();
-	$auto=0;
-	$password=($cl->password==0?"0":doXOR($cl->password,26364));
-	$output="1:".$cl->id.":2:".$cl->name.":3:".$cl->description.":4:".$cl->stringLevel.":5:".$cl->version.":6:".$cl->uid.":8:10:9:".$cl->difficulty;
-	$output.=":10:".$cl->downloads.":12:".$cl->track_id.":13:".$cl->versionGame.":14:".$cl->likes.":15:".$cl->length.":17:".$cl->demonDifficulty;
-	$output.=":18:".$cl->starsGot.":19:".$cl->isFeatured.":25:".$auto.":27:".$password.":28:".getDateAgo(strtotime($cl->uploadDate)).":29:".getDateAgo(strtotime($cl->updateDate));
-	$output.=":30:".$cl->origId.":31:".$cl->is2p.":35:".$cl->song_id.":36:".$cl->stringExtra.":37:".$cl->ucoins.":38:".$cl->coins.":39:".$cl->starsRequested;
-	$output.=":40:".$cl->isLDM.":42:".$cl->isEpic.":43:".$cl->demonDifficulty.":45:".$cl->objects.":46:1:47:2";
-	$output.=":48:1".($dailylvl?":41:".$mid['id']:""); //GD 2.2 and daily/weekly
-	echo $output;
+
+$param=array();
+$type=(empty($_POST['type'])?0:(int)$_POST['type']);
+if(!empty($_POST['str'])){
+	$param["sterm"]=exploitPatch_remove($_POST['str']);
+}
+if(!empty($_POST['diff'])){
+	switch((int)$_POST['diff']){
+		case -1:
+			$param['diff']=0; //N/A
+			break;
+		case -2:
+			$param['isDemon']=true;
+			if(!empty($_POST['demonFilter'])){
+				switch ((int)$_POST['demonFilter']){
+					case 1:
+						$param['demonDiff']=3; //Demon Easy
+						break;
+					case 2:
+						$param['demonDiff']=4; //Demon Medium
+						break;
+					case 3:
+						$param['demonDiff']=0; //Demon Hard
+						break;
+					case 4:
+						$param['demonDiff']=5; //Demon Insane
+						break;
+					case 5:
+						$param['demonDiff']=6; //Demon Extreme
+						break;
+				}
+			}
+			break;
+		case -3:
+			$param['diff']=-1; //AUTO
+			break;
+		case 1:
+			$param['diff']=10; //EASY
+			break;
+		case 2:
+			$param['diff']=20; //NORMAL
+			break;
+		case 3:
+			$param['diff']=30; //HARD
+			break;
+		case 4:
+			$param['diff']=40; //HARDER
+			break;
+		case 5:
+			$param['diff']=50; //INSANE
+			break;
+		}
+}
+if(isset($_POST['len'])){
+	$param['length']=abs((int)$_POST['len'])%5;
+}
+$page=(empty($_POST['page'])?0:((int)$_POST['page'])*10);
