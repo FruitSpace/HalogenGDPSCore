@@ -95,6 +95,6 @@ function registerAction(int $action, int $uid, int $target_id, $data, $db=null){
 	}
 	$isMod=($db->query("SELECT role_id FROM users WHERE uid=$uid")->fetch_assoc()['role_id']>0?1:0);
 	$data=json_encode($data);
-	$db->preparedQuery("INSERT INTO actions (date, uid, type, target_id, isMod, data) VALUES (?,?,?,?,?)",
+	$db->preparedQuery("INSERT INTO actions (date, uid, type, target_id, isMod, data) VALUES (?,?,?,?,?,?)",
 		"siiiis",date("Y-m-d H:i:s"),$uid, $type, $target_id, $isMod, $data);
 }
