@@ -14,6 +14,11 @@ class CComment{
 		return $this->db->query("SELECT count(*) as cnt FROM acccomments $postfix")->fetch_assoc()['cnt'];
 	}
 
+	function countLevelComments($id=null){
+		$postfix=($id==null?"":"WHERE lvl_id=".(int)$id);
+		return $this->db->query("SELECT count(*) as cnt FROM acccomments $postfix")->fetch_assoc()['cnt'];
+	}
+
 	function loadAccComment(){
 		$req=$this->db->query("SELECT uid,comment,postedTime,likes,isSpam FROM acccomments WHERE id=$this->id")->fetch_assoc();
 		$this->uid=$req['uid'];
@@ -94,8 +99,10 @@ class CComment{
 		$this->db->query("DELETE FROM acccomments WHERE id=$id AND $uid=$uid");
 	}
 
-	function deleteLvlComment(){
-		$this->db->query("DELETE FROM comments WHERE id=$this->id");
+	function deleteLvlComment($id=null, $uid=null){
+		$id=($id==null?$this->id:(int)$id);
+		$uid=($uid==null?$this->uid:(int)$uid);
+		$this->db->query("DELETE FROM comments WHERE id=$id AND uid=$uid");
 	}
 
 	function clean(){

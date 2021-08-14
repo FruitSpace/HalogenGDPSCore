@@ -21,13 +21,13 @@ account: done
 - [X] account/accountSync
 ---
 
-comment:
+comment: done
 - [X] comment/accountComment_delete
 - [X] comment/accountComment_get
 - [X] comment/accountComment_upload
-- [ ] comment/comment_delete
-- [ ] comment/comment_get
-- [ ] comment/comment_upload
+- [X] comment/comment_delete
+- [X] comment/comment_get
+- [X] comment/comment_upload
 ---
 
 communication: done

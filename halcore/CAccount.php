@@ -298,6 +298,21 @@ class CAccount{
 		$this->db->preparedQuery("UPDATE users SET role_id=? WHERE uid=$this->uid","i",$role_id);
 	}
 
+	function getRoleObj(bool $fetchPrivs=false){
+		if($this->role_id==0) return array();
+		$embed=($fetchPrivs?",privs":"");
+		$req=$this->db->query("SELECT roleName,commentColor,modLevel$embed FROM roles WHERE id=$this->role_id");
+		if($this->db->isEmpty($req)) return array();
+		$req=$req->fetch_assoc();
+		$roleObj=array(
+			"name"=>$req['roleName'],
+			"color"=>$req['commentColor'],
+			"level"=>$req['modLevel'],
+			"privs"=>($fetchPrivs?json_decode($req['privs']):"")
+		);
+		return $roleObj;
+	}
+
 	function updateAccessTime(){
 		$this->db->query("UPDATE users SET accessDate=".date("Y-m-d H:i:s")." WHERE uid=$this->uid");
 	}
