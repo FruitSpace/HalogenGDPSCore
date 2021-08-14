@@ -76,7 +76,7 @@ class CLevel{
 		$this->demonDifficulty=$req['demonDifficulty'];
 	}
 
-	function LoadAll(){
+	function loadAll(){
 		$req=$this->db->query("SELECT * FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->name=$req['name'];
 		$this->description=$req['description'];
