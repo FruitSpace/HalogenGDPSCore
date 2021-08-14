@@ -19,6 +19,7 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cl=new CLevel($dbm);
+		$cl->uid=$uid;
 		$cl->versionGame=$gameVersion;
 		$cl->stringLevel=$stringLevel;
 		$cl->name=(empty($_POST['levelName'])?"Unnamed":exploitPatch_remove($_POST['levelName']));
