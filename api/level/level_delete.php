@@ -21,7 +21,7 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 		$cl->id=$id;
 		if($cl->isOwnedBy($uid)){
 			$cl->deleteLevel();
-			require_once __DIR__."/lib/actions.php";
+			require_once __DIR__."../../halcore/lib/actions.php";
 			registerAction(ACTION_LEVEL_DELETE,$uid,$id,array(),$dbm);
 			echo "1";
 		}else{
