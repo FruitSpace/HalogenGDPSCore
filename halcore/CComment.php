@@ -1,5 +1,7 @@
 <?php
 
+define("CCOMMENT_ACTION_LIKE",300);
+define("CCOMMENT_ACTION_DISLIKE",301);
 class CComment{
 	public $db;
 	public $likes, $id, $uid, $lvl_id, $percent, $isSpam;
@@ -7,6 +9,14 @@ class CComment{
 
 	function __construct($db){
 		$this->db=$db;
+	}
+
+	function existsLvlComment(int $id){
+		return $this->db->query("SELECT count(*) as cnt FROM comments WHERE id=$id")->fetch_assoc()['cnt']>0;
+	}
+
+	function existsAccComment(int $id){
+		return $this->db->query("SELECT count(*) as cnt FROM acccomments WHERE id=$id")->fetch_assoc()['cnt']>0;
 	}
 
 	function countAccComments($uid=null){
@@ -103,6 +113,14 @@ class CComment{
 		$id=($id==null?$this->id:(int)$id);
 		$uid=($uid==null?$this->uid:(int)$uid);
 		$this->db->query("DELETE FROM comments WHERE id=$id AND uid=$uid");
+	}
+
+	function likeAccComment(int $comm_id, int $action=CCOMMENT_ACTION_LIKE){
+		$this->db->query("UPDATE acccomments SET likes=likes".($action=CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
+	}
+
+	function likeLvlComment(int $comm_id, int $action=CCOMMENT_ACTION_LIKE){
+		$this->db->query("UPDATE comments SET likes=likes".($action=CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
 	}
 
 	function clean(){
