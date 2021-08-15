@@ -45,11 +45,11 @@ communication: done
 - [X] communication/unblockUser
 ---
 
-essential:
+essential: done
 - [X] essential/getAccountUrl
-- [ ] essential/getSongInfo
-- [ ] essential/getTopArtists
-- [ ] essential/likeItem
+- [X] essential/getSongInfo
+- [X] essential/getTopArtists
+- [X] essential/likeItem
 ---
 
 level:

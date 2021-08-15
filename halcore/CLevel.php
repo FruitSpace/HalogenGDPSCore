@@ -1,5 +1,8 @@
 <?php
 
+
+define("CLEVEL_ACTION_LIKE",300);
+define("CLEVEL_ACTION_DISLIKE",301);
 class CLevel{
 	public $db; //REMOVE DBM!!
 
@@ -157,5 +160,9 @@ class CLevel{
 		$this->db->preparedQuery($query,"ssiiiiiiiisssiiiiiiiiss",$this->name,$this->description,$this->uid,$this->password,$this->version,$this->length,$this->track_id,$this->song_id,$this->versionGame,$this->versionBinary,$this->stringExtra,$this->stringLevel,$this->stringLevelInfo,$this->origId,$this->objects,
 		$this->starsRequested,$this->ucoins,$this->is2p,$this->isVerified,$this->isUnlisted,$this->isLDM,date("Y-m-d H:i:s"),date("Y-m-d H:i:s"));
 		return $this->db->getDB()->insert_id;
+	}
+
+	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
+		$this->db->query("UPDATE levels SET likes=likes".($action=CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
 	}
 }
