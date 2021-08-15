@@ -80,8 +80,8 @@ rewards:
 ---
 
 score:
-- [ ] score/getCreators
-- [ ] score/getLevelScores
+- [X] score/getCreators
+- [X] score/getLevelScores
 - [ ] score/getScores
 - [X] score/updateUserScore
 ---
