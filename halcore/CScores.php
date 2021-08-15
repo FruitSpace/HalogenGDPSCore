@@ -1,7 +1,7 @@
 <?php
 
 class CScores{
-	public DBManagement $db; //!  Remove dbm
+	public $db; //!  Remove dbm
 
 	public $id, $uid, $lvl_id, $postedTime, $percent, $attempts, $coins;
 
