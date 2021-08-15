@@ -79,10 +79,10 @@ rewards:
 - [ ] rewards/getRewards
 ---
 
-score:
+score: done
 - [X] score/getCreators
 - [X] score/getLevelScores
-- [ ] score/getScores
+- [X] score/getScores
 - [X] score/updateUserScore
 ---
 

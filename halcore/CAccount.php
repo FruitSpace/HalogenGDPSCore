@@ -11,6 +11,8 @@ define("CFRIENDSHIP_ADD", 37);
 define("CFRIENDSHIP_REMOVE", 38);
 define("CLEADERBOARD_BY_CPOINTS",14);
 define("CLEADERBOARD_BY_STARS",15);
+define("CLEADERBOARD_GLOBAL",21);
+define("CLEADERBOARD_FRIENDS",22);
 
 class CAccount{
 
@@ -295,9 +297,26 @@ class CAccount{
 		return $req->fetch_assoc()['cnt']+1;
 	}
 
-	function getLeaderboard(int $type=CLEADERBOARD_BY_STARS){
+	function getLeaderboard(int $type=CLEADERBOARD_BY_STARS, $grep_uids=array(), int $global_stars=0){
 		$embed=($type==CLEADERBOARD_BY_CPOINTS?"cpoints":"stars");
-		$query="SELECT uid FROM users WHERE $embed>0 AND isBanned=0 ORDER BY $embed LIMIT 100";
+		switch ($type){
+			case CLEADERBOARD_BY_STARS:
+				$query="SELECT uid FROM users WHERE stars>0 AND isBanned=0 ORDER BY stars LIMIT 100";
+				break;
+			case CLEADERBOARD_BY_CPOINTS:
+				$query="SELECT uid FROM users WHERE cpoints>0 AND isBanned=0 ORDER BY cpoints LIMIT 100";
+				break;
+			case CLEADERBOARD_GLOBAL:
+				$query="SELECT X.uid as uid,X.stars FROM (SELECT uid FROM users WHERE stars>$global_stars AND isBanned=0 ORDER BY stars ASC LIMIT 50)";
+				$query.=" UNION (SELECT uid FROM users WHERE stars<=$global_stars AND stars>0 isBanned=0 ORDER BY stars DESC LIMIT 50) as A ORDER BY X.stars DESC";
+				break;
+			case  CLEADERBOARD_FRIENDS:
+				$grep_uids=implode(",",$grep_uids);
+				$query="SELECT uid FROM users WHERE stars>0 AND isBanned=0 and uid IN ($grep_uids) ORDER BY stars LIMIT 100";
+				break;
+			default:
+				$query="SELECT uid FROM users WHERE 1=0";
+		}
 		$req=$this->db->query($query);
 		if($this->db->isEmpty($req)) return array();
 		$out=array();
