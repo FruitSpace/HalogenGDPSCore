@@ -9,6 +9,8 @@ define("CBLACKLIST_BLOCK", 62);
 define("CBLACKLIST_UNBLOCK",71);
 define("CFRIENDSHIP_ADD", 37);
 define("CFRIENDSHIP_REMOVE", 38);
+define("CLEADERBOARD_BY_CPOINTS",14);
+define("CLEADERBOARD_BY_STARS",15);
 
 class CAccount{
 
@@ -291,6 +293,18 @@ class CAccount{
 		$req=$this->db->query("SELECT count(*) as cnt FROM users WHERE stars>= $this->stars AND isBanned=0");
 		if($this->db->isEmpty($req)) return 0;
 		return $req->fetch_assoc()['cnt']+1;
+	}
+
+	function getLeaderboard(int $type=CLEADERBOARD_BY_STARS){
+		$embed=($type==CLEADERBOARD_BY_CPOINTS?"cpoints":"stars");
+		$query="SELECT uid FROM users WHERE $embed>0 AND isBanned=0 ORDER BY $embed LIMIT 100";
+		$req=$this->db->query($query);
+		if($this->db->isEmpty($req)) return array();
+		$out=array();
+		while($item=$req->fetch_assoc()){
+			array_push($out,$item['uid']);
+		}
+		return $out;
 	}
 
 	function updateRole($role_id){
