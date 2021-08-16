@@ -116,12 +116,11 @@ class CComment{
 	}
 
 	function likeAccComment(int $comm_id, int $action=CCOMMENT_ACTION_LIKE){
-		err_handle("TMP","verbose","Liked: ".(int)$action);
-		$this->db->query("UPDATE acccomments SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
+		$this->db->query("UPDATE acccomments SET likes=likes".($action==CCOMMENT_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
 	}
 
 	function likeLvlComment(int $comm_id, int $action=CCOMMENT_ACTION_LIKE){
-		$this->db->query("UPDATE comments SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
+		$this->db->query("UPDATE comments SET likes=likes".($action==CCOMMENT_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
 	}
 
 	function clean(){
