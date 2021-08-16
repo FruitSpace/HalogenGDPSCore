@@ -21,7 +21,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 		$acc->loadSocial();
 		if($type==1){
 			$blacklist=explode(",",$acc->blacklist);
-			if(empty($blacklist)){
+			if(empty($blacklist) or empty($acc->blacklist)){
 				echo "-2";
 			}else {
 				$bstring = "";
