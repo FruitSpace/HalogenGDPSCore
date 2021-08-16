@@ -162,6 +162,12 @@ class CLevel{
 		return $this->db->getDB()->insert_id;
 	}
 
+	function updateDescription($desc){
+		if(strlen($this->description)>256) return -1;
+		$this->db->preparedQuery("UPDATE levels SET description=? WHERE id=$this->id","s",$desc);
+		return 1;
+	}
+
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
 		$this->db->query("UPDATE levels SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
 	}
