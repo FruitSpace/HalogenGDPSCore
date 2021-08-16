@@ -52,7 +52,7 @@ class CMessage{
 			if(!$cf->isAlreadyFriend($this->uid_src, $this->uid_dest)) return -1;
 		}
 		$this->db->preparedQuery("INSERT INTO messages (uid_src, uid_dest, subject, body, postedTime) VALUES (?,?,?,?,?)",
-		"iisss",$this->uid_src,$this->uid_dest,$this->subject,date("Y-m-d H:i:s"));
+		"iisss",$this->uid_src,$this->uid_dest,$this->subject,$this->message,date("Y-m-d H:i:s"));
 		return 1;
 	}
 
