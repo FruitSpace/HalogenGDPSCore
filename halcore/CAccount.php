@@ -301,10 +301,10 @@ class CAccount{
 		$embed=($type==CLEADERBOARD_BY_CPOINTS?"cpoints":"stars");
 		switch ($type){
 			case CLEADERBOARD_BY_STARS:
-				$query="SELECT uid FROM users WHERE stars>0 AND isBanned=0 ORDER BY stars LIMIT 100";
+				$query="SELECT uid FROM users WHERE stars>0 AND isBanned=0 ORDER BY stars DESC LIMIT 100";
 				break;
 			case CLEADERBOARD_BY_CPOINTS:
-				$query="SELECT uid FROM users WHERE cpoints>0 AND isBanned=0 ORDER BY cpoints LIMIT 100";
+				$query="SELECT uid FROM users WHERE cpoints>0 AND isBanned=0 ORDER BY cpoints DESC LIMIT 100";
 				break;
 			case CLEADERBOARD_GLOBAL:
 				$query="SELECT X.uid as uid,X.stars FROM ((SELECT uid,stars FROM users WHERE stars>$global_stars AND isBanned=0 ORDER BY stars ASC LIMIT 50)";
@@ -312,7 +312,7 @@ class CAccount{
 				break;
 			case  CLEADERBOARD_FRIENDS:
 				$grep_uids=implode(",",$grep_uids);
-				$query="SELECT uid FROM users WHERE stars>0 AND isBanned=0 and uid IN ($grep_uids) ORDER BY stars LIMIT 100";
+				$query="SELECT uid FROM users WHERE stars>0 AND isBanned=0 and uid IN ($grep_uids) ORDER BY stars DESC LIMIT 100";
 				break;
 			default:
 				$query="SELECT uid FROM users WHERE 1=0";
