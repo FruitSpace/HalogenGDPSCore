@@ -163,6 +163,6 @@ class CLevel{
 	}
 
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
-		$this->db->query("UPDATE levels SET likes=likes".($action=CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
+		$this->db->query("UPDATE levels SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
 	}
 }
