@@ -307,8 +307,8 @@ class CAccount{
 				$query="SELECT uid FROM users WHERE cpoints>0 AND isBanned=0 ORDER BY cpoints LIMIT 100";
 				break;
 			case CLEADERBOARD_GLOBAL:
-				$query="SELECT X.uid as uid,X.stars FROM ((SELECT uid FROM users WHERE stars>$global_stars AND isBanned=0 ORDER BY stars ASC LIMIT 50)";
-				$query.=" UNION (SELECT uid FROM users WHERE stars<=$global_stars AND stars>0 AND isBanned=0 ORDER BY stars DESC LIMIT 50)) as X ORDER BY X.stars DESC";
+				$query="SELECT X.uid as uid,X.stars FROM ((SELECT uid,stars FROM users WHERE stars>$global_stars AND isBanned=0 ORDER BY stars ASC LIMIT 50)";
+				$query.=" UNION (SELECT uid,stars FROM users WHERE stars<=$global_stars AND stars>0 AND isBanned=0 ORDER BY stars DESC LIMIT 50)) as X ORDER BY X.stars DESC";
 				break;
 			case  CLEADERBOARD_FRIENDS:
 				$grep_uids=implode(",",$grep_uids);
