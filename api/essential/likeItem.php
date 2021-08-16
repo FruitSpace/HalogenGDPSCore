@@ -13,7 +13,7 @@ if(isset($_POST['itemID']) and isset($_POST['type']) and $_POST['itemID']!="" an
 	$id=(int)$_POST['itemID'];
 	$type=(int)$_POST['type'];
 	$like=(isset($_POST['like'])?(empty($_POST['like'])?false:true):true);
-	err_handle("TMP","verbose","Liked: $like");
+	err_handle("TMP","verbose","Liked: ".(int)$like);
 	$dbm=new DBManagement();
 	switch($type){
 		case 1:
