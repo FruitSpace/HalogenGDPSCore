@@ -109,13 +109,13 @@ class CFriendship{
 		$req=$req->fetch_assoc();
 		if($uid==$req['uid_dest']){
 			$this->db->query("INSERT INTO friendships (uid1, uid2) VALUES ($uid, ".$req['uid_src'].")");
+			$iid=$this->db->getDB()->insert_id;
 			$this->db->query("DELETE FROM friendreqs WHERE id=$id");
 			require_once __DIR__."/CAccount.php";
 			$cc1=new CAccount($this->db);
 			$cc2=new CAccount($this->db);
 			$cc1->uid=$uid;
 			$cc2->uid=$req['uid_src'];
-			$iid=$this->db->getDB()->insert_id;
 			$res=$cc1->updateFriendships(CFRIENDSHIP_ADD, $iid);
 			$res+=$cc2->updateFriendships(CFRIENDSHIP_ADD, $iid);
 			return ($res==2?1:-1);
