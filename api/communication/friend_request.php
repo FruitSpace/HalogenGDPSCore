@@ -15,7 +15,7 @@ if(isset($_POST['accountID']) and isset($_POST['toAccountID']) and isset($_POST[
 	$uid=(int)$_POST['accountID'];
 	$uid_dest=(int)$_POST['toAccountID'];
 	$gjp=exploitPatch_remove($_POST['gjp']);
-	$comment=(isset($_POST['comment']) and $_POST['comment']!=""?exploitPatch_remove($_POST['comment']):null);
+	$comment=((isset($_POST['comment']) and $_POST['comment']!="")?exploitPatch_remove($_POST['comment']):null);
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cf=new CFriendship($dbm);
