@@ -79,6 +79,7 @@ class CLevelFilter{
 				$whereq.=" AND track_id=".$params['songid'];
 			}
 		} //Song NG/Classic stuff
+		err_handle("TMP","verbose",json_encode($whereq));
 		return $whereq;
 	}
 
