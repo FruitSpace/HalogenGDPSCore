@@ -171,6 +171,7 @@ switch($type){
 if(empty($levels)) die("-2");
 $output="";
 $userstring="";
+$hashstr="";
 foreach($levels as $slevel){
 	$cl=new CLevel($dbm);
 	$cl->id=$slevel;
@@ -188,5 +189,7 @@ foreach($levels as $slevel){
 	$output.=":12:".$cl->track_id.":13:".$cl->versionGame.":14:".$cl->likes.":15:".$cl->length.":17:".$cl->demonDifficulty.":18:".$cl->starsGot;
 	$output.=":19:".$cl->isFeatured.":25:".$auto.":29:".":30:".$cl->origId.":31:".$cl->is2p.":35:".$cl->song_id.":37:".$cl->ucoins.":38:".$cl->coins;
 	$output.=":39:".$cl->starsRequested.":40:".$cl->isLDM.":42:".$cl->isEpic.":43:".$cl->demonDifficulty.":45:".$cl->objects.":46:1:47:2|";
+
+	$hashstr.=$cl->id[0].$cl->id[strlen($cl->id)-1].$cl->starsGot.$cl->coins;
 }
-echo substr($output,0,-1)."#".substr($userstring,0,-1)."##".count($levels).":".$page.":10";
+echo substr($output,0,-1)."#".substr($userstring,0,-1)."##".count($levels).":".$page.":10#".genhash_genSolo2($hashstr);
