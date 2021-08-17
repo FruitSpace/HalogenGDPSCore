@@ -43,15 +43,17 @@ class CLevel{
 		$this->uploadDate=$req['uploadDate'];
 	}
 
-	function loadLevel(){
-		$req=$this->db->query("SELECT track_id, song_id,versionGame,versionBinary,stringExtra,stringLevel,stringLevelInfo, original_id FROM levels WHERE id=$this->id")->fetch_assoc();
+	function loadLevel(bool $level=true){
+		$req=$this->db->query("SELECT track_id, song_id,versionGame,versionBinary,".($level?"stringExtra,stringLevel,stringLevelInfo,":"")."original_id FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->track_id=$req['track_id'];
 		$this->song_id=$req['song_id'];
 		$this->versionGame=$req['versionGame'];
 		$this->versionBinary=$req['versionBinary'];
-		$this->stringExtra=$req['stringExtra'];
-		$this->stringLevel=$req['stringLevel'];
-		$this->stringLevelInfo=$req['stringLevelInfo'];
+		if($level) {
+			$this->stringExtra = $req['stringExtra'];
+			$this->stringLevel = $req['stringLevel'];
+			$this->stringLevelInfo = $req['stringLevelInfo'];
+		}
 		$this->origId=$req['original_id'];
 	}
 

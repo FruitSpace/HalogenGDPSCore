@@ -60,7 +60,7 @@ level:
 - [ ] level/level_getDaily
 - [ ] level/level_getLevels
 - [ ] level/level_report
-- [ ] level/level_updateDescription
+- [X] level/level_updateDescription
 - [X] level/level_upload
 - [ ] level/rateDemon
 - [ ] level/rateStar
