@@ -1,7 +1,4 @@
 <?php
-
-die("1:11940:2:Level Easy:5:1:6:2565:8:10:9:20:10:51533144:12:0:13:7:14:3322464:17::43:4:25::18:3:19:14:42:0:45:0:3:Q29keQ==:15:3:30:0:31:0:37:0:38:0:39:0:46:1:47:2:35:0|1:490078:2:Easy :5:4:6:389329:8:10:9:30:10:17631529:12:0:13:20:14:1209623:17::43:0:25::18:4:19:161:42:0:45:0:3:Tm90IHNvIGhhcmQ=:15:3:30:0:31:0:37:3:38:1:39:2:46:1:47:2:35:0|1:59767:2:stereo madness v2:5:11:6:31245:8:10:9:20:10:15705278:12:0:13:18:14:966568:17::43:4:25::18:3:19:90:42:0:45:0:3:U3RlcmVvIG1hZG5lc3MgdjI=:15:3:30:0:31:0:37:0:38:0:39:0:46:1:47:2:35:0|1:506009:2:Stereo Madness X:5:1:6:6988:8:10:9:30:10:12234222:12:0:13:7:14:962014:17::43:0:25::18:4:19:170:42:0:45:0:3:RmluZCB0aHJlZSBjb2lucyAh:15:3:30:0:31:0:37:0:38:0:39:0:46:1:47:2:35:0|1:1512012:2:UFO Madness:5:1:6:114346:8:10:9:20:10:20782780:12:0:13:21:14:946449:17::43:4:25::18:3:19:2000:42:0:45:5447:3:QW1hemluZyBhcnQgdXBkYXRlIHRoaXMgaXMgYmV0dGVyIHRoYW4gZ29kIGVhdGVy:15:3:30:0:31:0:37:2:38:0:39:0:46:1:47:2:35:0|1:513124:2:Stereo Madness v2:5:13:6:322511:8:10:9:30:10:10765227:12:0:13:20:14:885498:17::43:0:25::18:4:19:170:42:0:45:0:3:ICAgICB2MTE6IFJlZGVzaWduZWQgdGhlIHdob2xlIGxldmVsISB2MTI6IEFkZGVkIGNvaW5zISAgICAgU3Vic2NyaWJlIHRvIG15IFlvdVR1YmUgY2hhbm5lbDogU3Vtc2FyIQ==:15:3:30:0:31:0:37:3:38:0:39:3:46:1:47:2:35:0|1:61757:2:square adventure:5:6:6:46587:8:10:9:30:10:14850262:12:0:13:19:14:756015:17::43:0:25::18:4:19:19:42:0:45:0:3:WW91IGNhbiBkbyBpdCE=:15:3:30:0:31:0:37:0:38:0:39:0:46:1:47:2:35:0|1:70196:2:Practice Level:5:1:6:36314:8:10:9:10:10:5776669:12:0:13:7:14:546598:17::43:3:25::18:2:19:0:42:0:45:0:3::15:3:30:0:31:0:37:0:38:0:39:0:46:1:47:2:35:0|1:364445:2:stage of madness:5:1:6:220662:8:10:9:30:10:8098501:12:0:13:7:14:529447:17::43:0:25::18:5:19:151:42:0:45:0:3:OXRoIHN0YWdlLiBsZXZlbCB1cA==:15:3:30:0:31:0:37:0:38:0:39:0:46:1:47:2:35:0|1:281148:2:Partition Madness:5:1:6:1187:8:10:9:30:10:5293357:12:0:13:20:14:483934:17::43:0:25::18:4:19:100:42:0:45:0:3:UGFydGl0aW9uLnMgTWFkbmVzcy4gaW5zZXJ0Y29pbiEgcGx6IHN1YnNjcmliZSBteSB5b3V0dWJlIGNoYW5uZWwuIHBhcnRpdGlvbiBnZW9tZXRyeQ==:15:3:30:281148:31:0:37:3:38:0:39:0:46:1:47:2:35:0#1187:Partition:13781|31245:IIINePtunEIII:1741|36314:YunHaSeu14:1187377|114346:ZelLink:677|220662:nurong3:134576|322511:Sumsar:92|389329:MrCheeseTigrr:40664##9999:0:10#73ee8f6e8e1429dce6c0875235bbe65512fc47df");
-
 require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/CAccount.php";
@@ -188,10 +185,11 @@ foreach($levels as $slevel){
 		$auto=1;
 		$cl->difficulty=0;
 	}
-	$output.="1:".$cl->id.":2:".$cl->name.":3:".$cl->description.":5:".$cl->version.":6:".$cl->uid.":8:10:9:".$cl->difficulty.":10:".$cl->downloads;
+	//(:8:)(($cl->difficulty>0?10:0))
+	$output.="1:".$cl->id.":2:".$cl->name.":3:".$cl->description.":5:".$cl->version.":6:".$cl->uid.":8:".($cl->difficulty>0?10:0).":9:".$cl->difficulty.":10:".$cl->downloads;
 	$output.=":12:".$cl->track_id.":13:".$cl->versionGame.":14:".$cl->likes.":15:".$cl->length.":17:".$cl->demonDifficulty.":18:".$cl->starsGot;
-	$output.=":19:".$cl->isFeatured.":25:".$auto.":29:".":30:".$cl->origId.":31:".$cl->is2p.":35:".$cl->song_id.":37:".$cl->ucoins.":38:".$cl->coins;
-	$output.=":39:".$cl->starsRequested.":40:".$cl->isLDM.":42:".$cl->isEpic.":43:".$cl->demonDifficulty.":45:".$cl->objects.":46:1:47:2|";
+	$output.=":19:".$cl->isFeatured.":25:".$auto.":30:".$cl->origId.":31:".$cl->is2p.":35:".$cl->song_id.":37:".$cl->ucoins.":38:".$cl->coins;
+	$output.=":39:".$cl->starsRequested.":42:".$cl->isEpic.":43:".$cl->demonDifficulty.":45:".$cl->objects.":46:1:47:2|";
 
 	$hashstr.=$cl->id[0].$cl->id[strlen($cl->id)-1].$cl->starsGot.$cl->coins;
 }
