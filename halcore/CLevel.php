@@ -77,7 +77,7 @@ class CLevel{
 		$this->password=$req['password'];
 		$this->version=$req['version'];
 		$this->length=$req['length'];
-		$this->difficulty=['difficulty'];
+		$this->difficulty=$req['difficulty'];
 		$this->demonDifficulty=$req['demonDifficulty'];
 	}
 
@@ -89,7 +89,7 @@ class CLevel{
 		$this->password=$req['password'];
 		$this->version=$req['version'];
 		$this->length=$req['length'];
-		$this->difficulty=['difficulty'];
+		$this->difficulty=$req['difficulty'];
 		$this->demonDifficulty=$req['demonDifficulty'];
 		$this->track_id=$req['track_id'];
 		$this->song_id=$req['song_id'];
