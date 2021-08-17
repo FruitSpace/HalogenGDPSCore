@@ -8,7 +8,7 @@ define("CLEVELFILTER_MAGIC",704);
 define("CLEVELFILTER_HALL",705);
 
 class CLevelFilter{
-	public DBManagement $db; //!Remove dbm
+	public $db; //!Remove dbm
 
 	/*
 	 * --- [PARAMS] Object ---
