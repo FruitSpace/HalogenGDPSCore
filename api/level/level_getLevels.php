@@ -16,7 +16,7 @@ if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
-$versionGame=(empty($_POST['gameVersion'])?0:(int)$_POST['gameVersion']);
+$versionGame=(empty($_POST['gameVersion'])?30:(int)$_POST['gameVersion']);
 if($versionGame == 20){
 	$versionBinary = (int)$_POST["binaryVersion"];
 	if($versionBinary > 27) $versionGame++;
