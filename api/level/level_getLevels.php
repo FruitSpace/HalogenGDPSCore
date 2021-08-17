@@ -191,6 +191,6 @@ foreach($levels as $slevel){
 	$output.=":19:".$cl->isFeatured.":25:".$auto.":30:".$cl->origId.":31:".$cl->is2p.":35:".$cl->song_id.":37:".$cl->ucoins.":38:".$cl->coins;
 	$output.=":39:".$cl->starsRequested.":42:".$cl->isEpic.":43:".($cl->demonDifficulty>=0?$cl->demonDifficulty:"3").":45:".$cl->objects.":46:1:47:2|";
 
-	$hashstr.=$cl->id[0].$cl->id[strlen($cl->id)-1].$cl->starsGot.$cl->coins;
+	$hashstr.=((string)$cl->id)[0].((string)$cl->id)[strlen(((string)$cl->id))-1].$cl->starsGot.$cl->coins;
 }
 echo substr($output,0,-1)."#".substr($userstring,0,-1)."##".count($levels).":".$page.":10#".genhash_genSolo2($hashstr);
