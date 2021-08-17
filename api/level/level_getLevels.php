@@ -26,6 +26,8 @@ if($versionGame == 20){
 //Init empty array
 $param=array();
 
+err_handle("TMPR","verbose",json_encode($_POST));
+
 $param['versionGame']=$versionGame;
 $type=(empty($_POST['type'])?0:(int)$_POST['type']);
 if(!empty($_POST['str'])){
