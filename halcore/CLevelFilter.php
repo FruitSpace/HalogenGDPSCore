@@ -118,7 +118,7 @@ class CLevelFilter{
 		}else{
 			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
 		}
-		if($this->db->isEmpty()) return array();
+		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
 		$lvls=array();
@@ -138,7 +138,7 @@ class CLevelFilter{
 		}else{
 			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
 		}
-		if($this->db->isEmpty()) return array();
+		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
 		$lvls=array();
