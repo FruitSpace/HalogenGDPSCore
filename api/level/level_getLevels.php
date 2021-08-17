@@ -177,6 +177,7 @@ foreach($levels as $slevel){
 	$cl->loadAll();
 	$acc=new CAccount($dbm);
 	$acc->uid=$cl->uid;
+	err_handle("TMPR","verbose",json_encode(array($cl->id,$cl->uid,$cl->name,$cl->description,$cl->version,$cl->difficulty,$cl->downloads)));
 	$acc->loadAuth();
 	$userstring.=$acc->uid.":".$acc->uname.":".$acc->uid."|";
 	$auto=0;
