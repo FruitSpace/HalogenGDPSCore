@@ -125,6 +125,7 @@ class CLevelFilter{
 		foreach($reqm as $sreq){
 			array_push($lvls,$sreq['id']);
 		}
+		err_handle("TMP","verbose",json_encode($lvls));
 		return $lvls;
 	}
 
