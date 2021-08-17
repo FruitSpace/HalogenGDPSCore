@@ -33,7 +33,7 @@ $type=(empty($_POST['type'])?0:(int)$_POST['type']);
 if(!empty($_POST['str'])){
 	$param["sterm"]=exploitPatch_remove($_POST['str']);
 }
-if(!empty($_POST['diff'])){
+if(!(empty($_POST['diff']) or preg_replace("/[^0-9,-]/", '',$_POST['diff'])=="-" or preg_replace("/[^0-9,-]/", '',$_POST['diff'])==",")){
 	$diff=explode(",",$_POST['diff']);
 	$xdiff=array();
 	foreach ($diff as $df) {
