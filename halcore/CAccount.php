@@ -341,7 +341,7 @@ class CAccount{
 			"name"=>$req['roleName'],
 			"color"=>$req['commentColor'],
 			"level"=>$req['modLevel'],
-			"privs"=>($fetchPrivs?json_decode($req['privs']):"")
+			"privs"=>($fetchPrivs?json_decode($req['privs'],true):"")
 		);
 		return $roleObj;
 	}
