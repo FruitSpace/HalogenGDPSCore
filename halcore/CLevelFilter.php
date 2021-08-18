@@ -79,7 +79,8 @@ class CLevelFilter{
 
 	function searchLevels(int $page,$params, int $type=CLEVELFILTER_MOSTLIKED){
 		$suffix=$this->generateQueryString($params);
-		$query="SELECT id FROM levels WHERE versionGame<=? AND isUnlisted=0";
+		$unlisted=true;
+		$query="SELECT id FROM levels WHERE versionGame<=?";
 		switch($type){
 			case CLEVELFILTER_MOSTLIKED:
 				$orderitem="likes";
@@ -107,7 +108,7 @@ class CLevelFilter{
 		}
 		$sortstr=" ORDER BY $orderitem DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
-			if(is_numeric($page['sterm'])) $suffix=" OR isUnlisted=1".$suffix;
+			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=1";
 			$req=$this->db->preparedQuery($query." AND (id=? OR name LIKE ?)".$suffix.$sortstr,"iis",
 				$params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 		}else{
@@ -125,14 +126,14 @@ class CLevelFilter{
 
 	function searchUserLevels(int $page,$params, bool $followmode=false){
 		$suffix=$this->generateQueryString($params);
-		$query="SELECT id FROM levels WHERE versionGame<=? AND isUnlisted=0";
+		$query="SELECT id FROM levels WHERE versionGame<=?";
 		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm']) and $followmode===false){
-			if(is_numeric($page['sterm'])) $suffix=" OR isUnlisted=1".$suffix;
+			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=1";
 			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii", $params['versionGame'],$params['sterm']);
 		}elseif($followmode==true){
 			if(isset($params['sterm'])) {
-				if(is_numeric($page['sterm'])) $suffix=" OR isUnlisted=1".$suffix;
+				if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=1";
 				$req = $this->db->preparedQuery($query . " AND uid IN (" . $params['followList'] . ") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 			}else{
 				$req = $this->db->preparedQuery($query . " AND uid IN (" . $params['followList'] . $suffix . $sortstr, "ii", $params['versionGame']);
