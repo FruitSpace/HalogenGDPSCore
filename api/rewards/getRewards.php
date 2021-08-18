@@ -10,7 +10,7 @@ if ($lsec->isIPBlacklisted($ip)){
 	die('This IP is banned for security reasons');
 }
 if(LOG_ENDPOINT_ACCESS){
-	$former="$ip accessed endpoint ".__FILE__.;
+	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
 if(isset($_POST['accountID']) and isset($_POST['udid']) and isset($_POST['gjp']) and isset($_POST['chk'])
