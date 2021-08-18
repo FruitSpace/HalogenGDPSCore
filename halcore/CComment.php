@@ -26,7 +26,7 @@ class CComment{
 
 	function countLevelComments($id=null){
 		$postfix=($id==null?"":"WHERE lvl_id=".(int)$id);
-		return $this->db->query("SELECT count(*) as cnt FROM acccomments $postfix")->fetch_assoc()['cnt'];
+		return $this->db->query("SELECT count(*) as cnt FROM comments $postfix")->fetch_assoc()['cnt'];
 	}
 
 	function loadAccComment(){
@@ -101,6 +101,7 @@ class CComment{
 		if(strlen($this->comment)>128) return -1;
 		$this->db->preparedQuery("INSERT INTO comments (uid,lvl_id,comment,postedTime,percent) VALUES (?,?,?,?,?)",
 		"iissi",$this->uid,$this->lvl_id,$this->comment,date("Y-m-d H:i:s"),$this->percent);
+		return 1;
 	}
 
 	function deleteAccComment($id=null, $uid=null){
