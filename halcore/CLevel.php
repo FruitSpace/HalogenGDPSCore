@@ -71,7 +71,7 @@ class CLevel{
 	}
 
 	function loadMain(){
-		$req=$this->db->query("SELECT name,description,uid,password,versionBinary,length,difficulty,demonDifficulty,suggestDifficulty FROM levels WHERE id=$this->id")->fetch_assoc();
+		$req=$this->db->query("SELECT name,description,uid,password,versionBinary,length,difficulty,demonDifficulty,suggestDifficulty,suggestDifficultyCnt FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->name=$req['name'];
 		$this->description=$req['description'];
 		$this->uid=$req['uid'];
@@ -178,7 +178,7 @@ class CLevel{
 	function doSuggestDifficulty($difficulty){
 		$this->suggestDifficulty=($this->suggestDifficulty*$this->suggestDifficultyCnt+$difficulty)/($this->suggestDifficultyCnt+1);
 		$this->suggestDifficultyCnt++;
-		$this->db->preparedQuery("UPDATE levels SET suggestDifficulty=?,suggestDifficultyCnt=?","di",$this->suggestDifficulty,$this->suggestDifficultyCnt);
+		$this->db->preparedQuery("UPDATE levels SET suggestDifficulty=?,suggestDifficultyCnt=? WHERE id=$this->id","di",$this->suggestDifficulty,$this->suggestDifficultyCnt);
 	}
 
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
