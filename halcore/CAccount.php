@@ -231,7 +231,7 @@ class CAccount{
 
 	function updateIP($ip){
 		$this->lastIP=$ip;
-		$this->db->preparedQuery("UPDATE users SET lastIP=?, accessDate=? WHERE uid=?","si",$ip,date("Y-m-d H:i:s"),$this->uid);
+		$this->db->preparedQuery("UPDATE users SET lastIP=?, accessDate=? WHERE uid=?","ssi",$ip,date("Y-m-d H:i:s"),$this->uid);
 	}
 
 	function countIPs($ip){
