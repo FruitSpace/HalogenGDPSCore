@@ -108,8 +108,7 @@ class CLevelFilter{
 		}
 		$sortstr=" ORDER BY $orderitem DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
-			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
-			err_handle("RMD","verbose",json_encode(array(is_numeric($page['sterm']),$page['sterm'],gettype($page['sterm']))));
+			if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 			$req=$this->db->preparedQuery($query." AND (id=? OR name LIKE ?)".$suffix.$sortstr,"iis",
 				$params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 		}else{
@@ -130,11 +129,11 @@ class CLevelFilter{
 		$query="SELECT id FROM levels WHERE versionGame<=?";
 		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm']) and $followmode===false){
-			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
+			if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii", $params['versionGame'],$params['sterm']);
 		}elseif($followmode==true){
 			if(isset($params['sterm'])) {
-				if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
+				if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 				$req = $this->db->preparedQuery($query." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 			}else{
 				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".$params['followList'].$suffix . $sortstr, "ii", $params['versionGame']);
