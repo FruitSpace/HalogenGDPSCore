@@ -108,11 +108,11 @@ class CLevelFilter{
 		}
 		$sortstr=" ORDER BY $orderitem DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
-			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=1";
+			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
 			$req=$this->db->preparedQuery($query." AND (id=? OR name LIKE ?)".$suffix.$sortstr,"iis",
 				$params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 		}else{
-			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
+			$req=$this->db->preparedQuery($query." AND isUnlisted=0".$suffix.$sortstr,"i",$params['versionGame']);
 		}
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
@@ -129,14 +129,14 @@ class CLevelFilter{
 		$query="SELECT id FROM levels WHERE versionGame<=?";
 		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm']) and $followmode===false){
-			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=1";
+			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
 			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii", $params['versionGame'],$params['sterm']);
 		}elseif($followmode==true){
 			if(isset($params['sterm'])) {
-				if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=1";
-				$req = $this->db->preparedQuery($query . " AND uid IN (" . $params['followList'] . ") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
+				if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
+				$req = $this->db->preparedQuery($query." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 			}else{
-				$req = $this->db->preparedQuery($query . " AND uid IN (" . $params['followList'] . $suffix . $sortstr, "ii", $params['versionGame']);
+				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".$params['followList'].$suffix . $sortstr, "ii", $params['versionGame']);
 			}
 		}else{
 			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
