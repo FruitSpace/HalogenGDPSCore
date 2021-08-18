@@ -112,7 +112,7 @@ if(!empty($_POST['completedLevels'])){
 if(!empty($_POST['featured'])) $param['isFeatured']=true;
 if(!empty($_POST['original'])) $param['isOrig']=true; //WHERE origId=0
 if(!empty($_POST['twoPlayer'])) $param['is2p']=true;
-if(isset($_POST['coins'])) $param['coins']=((int)$_POST['coins']>0?true:false); //anycoins or nocoins
+if(!empty($_POST['coins'])) $param['coins']=true; //anycoins or nocoins
 if(!empty($_POST['epic'])) $param['isEpic']=true;
 if(!empty($_POST['star'])) $param['star']=true; //stars>0
 if(!empty($_POST['noStar'])) $param['star']=false; //stars=0

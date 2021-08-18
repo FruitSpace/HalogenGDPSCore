@@ -22,7 +22,7 @@ class CLevelFilter{
 	 * + (b) isFeatured - obv
 	 * + (b) isOrig - where origid=0
 	 * + (b) is2p - straightforward
-	 * + (b) coins - if not set then all, else only coins/nocoins
+	 * + (b) coins - should we search coins only
 	 * + (b) isEpic - also obv
 	 * + (b) star - if not set then all, else star/nostar
 	 * + (i) songid - official song id or custom song id
@@ -58,13 +58,7 @@ class CLevelFilter{
 		if(isset($params['is2p'])) $whereq.=" AND is2p=1"; //2 Players
 		if(isset($params['isOrig'])) $whereq.=" AND original_id=0"; //Original only
 		if(isset($params['isEpic'])) $whereq.=" AND isEpic=1"; //Epic
-		if(isset($params['coins'])){
-			if($params['coins']===false){
-				$whereq.=" AND coins=0";
-			}else{
-				$whereq.=" AND coins>0";
-			}
-		} //coin stuff
+		if(isset($params['coins'])) $whereq.=" AND coins>0"; //coin stuff
 		if(isset($params['star'])){
 			if($params['star']===false){
 				$whereq.=" AND starsGot=0";
