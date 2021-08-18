@@ -146,6 +146,8 @@ switch($type){
 	case 10:
 		//list levels from str comma-sep
 		if(empty($_POST['str'])) die("-1");
+		$param['sterm']=preg_replace("/[^0-9,]/", '',$param['sterm']);
+		$levels=$filter->searchListLevels($page,$param);
 		break;
 	case 11:
 		$param['star']=true;
@@ -154,6 +156,8 @@ switch($type){
 	case 12:
 		//follow who level
 		if(empty($_POST['followed'])) die("-1");
+		$param['followList']=preg_replace("/[^0-9,]/", '',exploitPatch_remove($_POST['followed']));
+		$levels=$filter->searchUserLevels($page,$param,true);
 		break;
 	case 13:
 		//friend-ish

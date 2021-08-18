@@ -128,15 +128,40 @@ class CLevelFilter{
 		return $lvls;
 	}
 
-	function searchUserLevels(int $page,$params){
+	function searchUserLevels(int $page,$params, bool $followmode=false){
 		$suffix=$this->generateQueryString($params);
 		$query="SELECT id FROM levels WHERE versionGame<=? AND isUnlisted=0";
 		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
-		if(isset($params['sterm'])){
-			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii",
-				$params['versionGame'],$params['sterm']);
+		if(isset($params['sterm']) and $followmode===false){
+			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii", $params['versionGame'],$params['sterm']);
+		}elseif($followmode==true){
+			if(isset($params['sterm'])) {
+				$req = $this->db->preparedQuery($query . " AND uid IN (" . $params['followList'] . ") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
+			}else{
+				$req = $this->db->preparedQuery($query . " AND uid IN (" . $params['followList'] . $suffix . $sortstr, "ii", $params['versionGame']);
+			}
 		}else{
 			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
+		}
+		if($this->db->isEmpty($req)) return array();
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
+		$lvls=array();
+		foreach($reqm as $sreq){
+			array_push($lvls,$sreq['id']);
+		}
+		return $lvls;
+	}
+
+	function searchListLevels(int $page,$params){
+		$query="SELECT id FROM levels WHERE versionGame<=? AND isUnlisted=0";
+		$sortstr=" LIMIT 10 OFFSET $page";
+		if(isset($params['sterm'])){
+			$luid=" AND id IN (".$params['sterm'].")";
+			$req=$this->db->preparedQuery($query.$luid.$sortstr,"ii",
+				$params['versionGame'],$params['sterm']);
+		}else{
+			return array();
 		}
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
