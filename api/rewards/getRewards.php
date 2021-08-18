@@ -52,6 +52,7 @@ if(isset($_POST['accountID']) and isset($_POST['udid']) and isset($_POST['gjp'])
 			}
 		}
 		$output="1:".$uid.":".$chk.":".$udid.":".$uid.":".$chestSmallLeft.":".$chestSmallRewards.":".$acc->chestSmallCount.":".$chestBigLeft.":".$chestBigRewards.":".$acc->chestBigCount.":".$type;
+		err_handle("TMP","verbose",$output);
 		$output=str_replace("+","-",str_replace("/","_",base64_encode(doXOR($output,59182))));
 		echo "SaKuJ".$output."|".genhash_genSolo4($output);
 	}else{
