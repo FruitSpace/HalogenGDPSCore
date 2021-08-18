@@ -69,8 +69,8 @@ class CComment{
 		$this->percent=$req['percent'];
 	}
 
-	function getAllLvlComments($lvl_id){
-		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=?","i",$lvl_id);
+	function getAllLvlComments(int $lvl_id, bool $sort_mode=false){
+		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=? ORDER BY ".($sort_mode?"likes":"postedTime")." DESC","i",$lvl_id);
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;

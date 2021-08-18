@@ -22,8 +22,9 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$dbm = new DBManagement();
 	$cc=new CComment($dbm);
 	$cl=new CLevel($dbm);
+	$sortmode=(empty($_POST['mode'])?false:true);
 	if(!$cl->exists($id)) die("-1");
-	$comments=$cc->getAllLvlComments($id);
+	$comments=$cc->getAllLvlComments($id,$sortmode);
 	if(empty($comments)) {
 		echo "#0:0:0"; //No comments lol
 	}else{
