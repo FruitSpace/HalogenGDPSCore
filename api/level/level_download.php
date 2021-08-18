@@ -53,7 +53,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 		$auto=1;
 		$cl->difficulty=0;
 	}
-	if($cl->suggestDifficultyCnt>0){
+	if($cl->suggestDifficultyCnt>0 and $cl->starsGot==0){
 		$diffCount=round($cl->suggestDifficulty);
 		switch ($diffCount){
 			case 1:
