@@ -28,8 +28,8 @@ if(isset($_POST['accountID']) and isset($_POST['udid']) and isset($_POST['gjp'])
 		$chk=doXOR(base64_decode(substr($chk,5)),59182);
 		$acc->uid=$uid;
 		$acc->loadChests();
-		$chestSmallLeft=max(0,CHEST_SMALL_WAIT-time()+$acc->chestSmallTime);
-		$chestBigLeft=max(0,CHEST_BIG_WAIT-time()+$acc->chestBigTime);
+		$chestSmallLeft=max(0,CHEST_SMALL_WAIT-time()-100+$acc->chestSmallTime);
+		$chestBigLeft=max(0,CHEST_BIG_WAIT-time()-100+$acc->chestBigTime);
 		//GenContent: Orbs,Diamonds,Shards,Keys
 		$chestSmallRewards=rand(CHEST_SMALL_ORBS_MIN,CHEST_SMALL_ORBS_MAX).",".rand(CHEST_SMALL_DIAMONDS_MIN,CHEST_SMALL_DIAMONDS_MAX);
 		$chestSmallRewards.=",".rand(CHEST_SMALL_SHARDS_MIN,CHEST_SMALL_SHARDS_MAX).",".rand(CHEST_SMALL_KEYS_MIN,CHEST_SMALL_KEYS_MAX);
