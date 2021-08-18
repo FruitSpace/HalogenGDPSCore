@@ -50,6 +50,7 @@ essential: done
 - [X] essential/getSongInfo
 - [X] essential/getTopArtists
 - [X] essential/likeItem
+- [X] essential/requestMod
 ---
 
 level:
@@ -58,7 +59,7 @@ level:
 - [X] level/level_delete
 - [X] level/level_download
 - [ ] level/level_getDaily
-- [ ] level/level_getLevels
+- [X] level/level_getLevels
 - [ ] level/level_report
 - [X] level/level_updateDescription
 - [X] level/level_upload
