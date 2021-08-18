@@ -13,6 +13,8 @@ define("CLEADERBOARD_BY_CPOINTS",14);
 define("CLEADERBOARD_BY_STARS",15);
 define("CLEADERBOARD_GLOBAL",21);
 define("CLEADERBOARD_FRIENDS",22);
+define("CREWARD_CHEST_BIG",500);
+define("CREWARD_CHEST_SMALL",501);
 
 class CAccount{
 
@@ -76,6 +78,17 @@ class CAccount{
 		$this->chestBigCount=$reqd['big_count'];
 		$this->chestSmallTime=$reqd['small_time'];
 		$this->chestBigTime=$reqd['big_time'];
+	}
+
+	function pushChests(int $type){
+		$chests=array(
+			"small_count"=>$this->chestSmallCount,
+			"big_count"=>$this->chestBigCount,
+			"small_time"=>($type==CREWARD_CHEST_SMALL?time():$this->chestSmallTime),
+			"big_time"=>($type==CREWARD_CHEST_BIG?time():$this->chestBigTime)
+		);
+		$chests=json_encode($chests);
+		$this->db->preparedQuery("UPDATE users SET chests=? WHERE uid=$this->uid","s",$chests);
 	}
 
 	function loadVessels(){
