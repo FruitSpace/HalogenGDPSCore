@@ -53,6 +53,39 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 		$auto=1;
 		$cl->difficulty=0;
 	}
+	if($cl->suggestDifficultyCnt>0){
+		$diffCount=round($cl->suggestDifficulty);
+		switch ($diffCount){
+			case 1:
+				$diffName="Auto";
+				break;
+			case 2:
+				$diffName="Easy";
+				break;
+			case 3:
+				$diffName="Normal";
+				break;
+			case 4:
+			case 5:
+				$diffName="Hard";
+				break;
+			case 6:
+			case 7:
+				$diffName="Harder";
+				break;
+			case 8:
+			case 9:
+				$diffName="Insane";
+				break;
+			case 10:
+				$diffName="Demon";
+				break;
+			default:
+				$diffName="Unspecipied";
+		}
+		$suggestDiffText=" [Suggest: $diffName ($diffCount)]";
+		$cl->description=base64_encode(base64_decode($cl->description).$suggestDiffText);
+	}
 	$output="1:".$cl->id.":2:".$cl->name.":3:".$cl->description.":4:".$cl->stringLevel.":5:".$cl->version.":6:".$cl->uid.":8:".($cl->difficulty>0?10:0).":9:".$cl->difficulty;
 	$output.=":10:".$cl->downloads.":12:".$cl->track_id.":13:".$cl->versionGame.":14:".$cl->likes.":15:".$cl->length.":17:".($cl->demonDifficulty>=0?"1":"0");
 	$output.=":18:".$cl->starsGot.":19:".$cl->isFeatured.":25:".$auto.":27:".$password.":28:".getDateAgo(strtotime($cl->uploadDate)).":29:".getDateAgo(strtotime($cl->updateDate));
