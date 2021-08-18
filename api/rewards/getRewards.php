@@ -40,6 +40,7 @@ if(isset($_POST['accountID']) and isset($_POST['udid']) and isset($_POST['gjp'])
 			if($chestSmallLeft==0) {
 				$acc->chestSmallCount++;
 				$acc->pushChests(CREWARD_CHEST_SMALL);
+				$chestSmallLeft=CHEST_SMALL_WAIT;
 			}else{
 				die("-1");
 			}
@@ -47,12 +48,12 @@ if(isset($_POST['accountID']) and isset($_POST['udid']) and isset($_POST['gjp'])
 			if($chestBigLeft==0){
 				$acc->chestBigCount++;
 				$acc->pushChests(CREWARD_CHEST_BIG);
+				$chestBigLeft=CHEST_BIG_WAIT;
 			}else{
 				die("-1");
 			}
 		}
 		$output="1:".$uid.":".$chk.":".$udid.":".$uid.":".$chestSmallLeft.":".$chestSmallRewards.":".$acc->chestSmallCount.":".$chestBigLeft.":".$chestBigRewards.":".$acc->chestBigCount.":".$type;
-		err_handle("TMP","verbose",$output);
 		$output=str_replace("+","-",str_replace("/","_",base64_encode(doXOR($output,59182))));
 		echo "SaKuJ".$output."|".genhash_genSolo4($output);
 	}else{
