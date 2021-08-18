@@ -109,6 +109,7 @@ class CLevelFilter{
 		$sortstr=" ORDER BY $orderitem DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
 			if(!is_numeric($page['sterm'])) $query.=" AND isUnlisted=0";
+			err_handle("RMD","verbose",json_encode(array(is_numeric($page['sterm']),$page['sterm'],gettype($page['sterm']))));
 			$req=$this->db->preparedQuery($query." AND (id=? OR name LIKE ?)".$suffix.$sortstr,"iis",
 				$params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 		}else{
