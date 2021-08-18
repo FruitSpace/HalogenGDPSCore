@@ -19,7 +19,7 @@ if(isset($_POST['accountID']) and isset($_POST['commentID']) and isset($_POST['g
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cc=new CComment($dbm);
-		$cc->deleteComment($id, $uid);
+		$cc->deleteLvlComment($id, $uid);
 		echo "1";
 	}else{
 		echo "-1";
