@@ -294,7 +294,7 @@ class CAccount{
 	function getLeaderboardRank(){
 		$req=$this->db->query("SELECT count(*) as cnt FROM users WHERE stars>= $this->stars AND isBanned=0");
 		if($this->db->isEmpty($req)) return 0;
-		return $req->fetch_assoc()['cnt']+1;
+		return $req->fetch_assoc()['cnt'];
 	}
 
 	function getLeaderboard(int $type=CLEADERBOARD_BY_STARS, $grep_uids=array(), int $global_stars=0){
