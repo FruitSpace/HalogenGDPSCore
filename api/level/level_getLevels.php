@@ -88,7 +88,7 @@ if(!(empty($_POST['diff']) or preg_replace("/[^0-9,-]/", '',$_POST['diff'])=="-"
 
 $page=(empty($_POST['page'])?0:((int)$_POST['page'])*10);
 
-if(isset($_POST['len'])){
+if(isset($_POST['len']) and !(preg_replace("/[^0-9,-]/", '',$_POST['len'])=="-") and !(preg_replace("/[^0-9,-]/", '',$_POST['len'])==",")){
 	$len=explode(",",$_POST['len']);
 	$xlen=array();
 	foreach ($len as $ln){
@@ -100,7 +100,7 @@ if(isset($_POST['len'])){
 if(!empty($_POST['uncompleted'])) $param['completed']=false;
 if(!empty($_POST['onlyCompleted'])) $param['completed']=true;
 if(!empty($_POST['completedLevels'])){
-	$lvls=explode(",",$_POST['completedLevels']);
+	$lvls=explode(",",preg_replace("/[^0-9,-]/", '',$_POST['completedLevels']));
 	$xlvls=array();
 	foreach ($lvls as $lv){
 		array_push($xlvls,(int)$lv);
