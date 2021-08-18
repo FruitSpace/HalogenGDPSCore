@@ -150,6 +150,8 @@ CREATE  TABLE levels (
     length tinyint(1) NOT NULL DEFAULT 0,
     difficulty tinyint(2) NOT NULL DEFAULT 0,
     demonDifficulty tinyint(2) NOT NULL DEFAULT -1,
+    suggestDifficulty float(2,1) NOT NULL DEFAULT 0,
+    suggestDifficultyCnt int(11) NOT NULL DEFAULT 0,
 
     track_id mediumint(7) NOT NULL DEFAULT 0,
     song_id mediumint(7) NOT NULL DEFAULT 0,

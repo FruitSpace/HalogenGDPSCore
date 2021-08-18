@@ -7,6 +7,7 @@ class CLevel{
 	public $db; //REMOVE DBM!!
 
 	public $id, $name, $description, $uid, $password, $version, $length, $difficulty, $demonDifficulty;
+	public $suggestDifficulty, $suggestDifficultyCnt; //fetched with Main
 	public $track_id, $song_id, $versionGame, $versionBinary, $stringExtra, $stringLevel, $stringLevelInfo, $origId;
 	public $objects, $starsRequested, $starsGot, $ucoins, $coins, $downloads, $likes, $reports;
 	public $is2p, $isVerified, $isFeatured, $isHall, $isEpic, $isUnlisted, $isLDM;
@@ -70,7 +71,7 @@ class CLevel{
 	}
 
 	function loadMain(){
-		$req=$this->db->query("SELECT name,description,uid,password,versionBinary,length,difficulty,demonDifficulty FROM levels WHERE id=$this->id")->fetch_assoc();
+		$req=$this->db->query("SELECT name,description,uid,password,versionBinary,length,difficulty,demonDifficulty,suggestDifficulty FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->name=$req['name'];
 		$this->description=$req['description'];
 		$this->uid=$req['uid'];
@@ -79,6 +80,8 @@ class CLevel{
 		$this->length=$req['length'];
 		$this->difficulty=$req['difficulty'];
 		$this->demonDifficulty=$req['demonDifficulty'];
+		$this->suggestDifficulty=$req['suggestDifficulty'];
+		$this->suggestDifficultyCnt=$req['suggestDifficultyCnt'];
 	}
 
 	function loadAll(){
@@ -91,6 +94,8 @@ class CLevel{
 		$this->length=$req['length'];
 		$this->difficulty=$req['difficulty'];
 		$this->demonDifficulty=$req['demonDifficulty'];
+		$this->suggestDifficulty=$req['suggestDifficulty'];
+		$this->suggestDifficultyCnt=$req['suggestDifficultyCnt'];
 		$this->track_id=$req['track_id'];
 		$this->song_id=$req['song_id'];
 		$this->versionGame=$req['versionGame'];
@@ -168,6 +173,12 @@ class CLevel{
 		if(strlen($this->description)>256) return -1;
 		$this->db->preparedQuery("UPDATE levels SET description=? WHERE id=$this->id","s",$desc);
 		return 1;
+	}
+
+	function doSuggestDifficulty($difficulty){
+		$this->suggestDifficulty=($this->suggestDifficulty*$this->suggestDifficultyCnt+$difficulty)/($this->suggestDifficultyCnt+1);
+		$this->suggestDifficultyCnt++;
+		$this->db->preparedQuery("UPDATE levels SET suggestDifficulty=?,suggestDifficultyCnt=?","di",$this->suggestDifficulty,$this->suggestDifficultyCnt);
 	}
 
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
