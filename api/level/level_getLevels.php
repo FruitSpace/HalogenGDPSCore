@@ -88,7 +88,7 @@ if(!(empty($_POST['diff']) or preg_replace("/[^0-9,-]/", '',$_POST['diff'])=="-"
 	$param['diff']=implode(",",$xdiff);
 }
 
-$page=(empty($_POST['page'])?0:((int)$_POST['page'])*10);
+$page=abs((empty($_POST['page'])?0:((int)$_POST['page'])*10))%10000;
 
 if(isset($_POST['len']) and !(preg_replace("/[^0-9,-]/", '',$_POST['len'])=="-") and !(preg_replace("/[^0-9,-]/", '',$_POST['len'])==",")){
 	$len=explode(",",$_POST['len']);
