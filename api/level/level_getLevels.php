@@ -82,7 +82,7 @@ if(!(empty($_POST['diff']) or preg_replace("/[^0-9,-]/", '',$_POST['diff'])=="-"
 				array_push($xdiff,"50"); //INSANE
 				break;
 			default:
-				array_push($xdiff,"-1")
+				array_push($xdiff,"-1"); //NOPE EM OUT
 		}
 	}
 	$param['diff']=implode(",",$xdiff);
