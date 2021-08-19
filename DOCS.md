@@ -64,7 +64,7 @@ level:
 - [X] level/level_updateDescription
 - [X] level/level_upload
 - [ ] level/rateDemon
-- [ ] level/rateStar
+- [X] level/rateStar
 - [ ] level/suggestStar
 ---
 
@@ -77,7 +77,7 @@ profile: done
 
 rewards:
 - [ ] rewards/getChallenges
-- [ ] rewards/getRewards
+- [X] rewards/getRewards
 ---
 
 score: done
