@@ -392,10 +392,10 @@ class CAccount{
 		if($this->getUIDbyUname($uname)!=-1) return -2;
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;
-		$pass=md5(md5($pass."HalogenCore1704")."ae07").substr(md5($pass),0,4);
+		$passx=md5(md5($pass."HalogenCore1704")."ae07").substr(md5($pass),0,4);
 		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
 		$date=date("Y-m-d H:i:s");
-		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
+		$this->db->preparedQuery($q,"sssss",$uname,$passx,$email,$date,$date);
 		require_once __DIR__."/lib/shd0w.php";
 		shadowCopy($uname,$email,$pass);
 		$this->updateIP($ip);
