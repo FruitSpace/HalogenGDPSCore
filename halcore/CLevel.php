@@ -22,6 +22,10 @@ class CLevel{
 		return !$this->db->isEmpty($req);
 	}
 
+	function countLevels(){
+		return $this->db->query("SELECT count(*) as cnt FROM levels")->fetch_assoc()['cnt'];
+	}
+
 	function loadParams(){
 		$req=$this->db->query("SELECT is2p, isVerified, isFeatured, isHall, isEpic, isUnlisted, isLDM FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->is2p=$req['is2p'];
