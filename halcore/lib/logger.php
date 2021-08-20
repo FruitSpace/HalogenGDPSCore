@@ -16,7 +16,6 @@ function err_handle($module, $errLevel, $message, $die=true){
     $message=$prefix." <strong>$module</strong>:<br><pre>\t".htmlspecialchars($message)."</pre><hr>";
     $fd=fopen( __DIR__ . "/../../files/" .LOG_FILE,"a");
     fwrite($fd,$message);
-    if($errLevel=="
-    warn" or $errLevel=="verbose") $die=false;
+    if($errLevel=="warn" or $errLevel=="verbose") $die=false;
     if($die) die();
 }
