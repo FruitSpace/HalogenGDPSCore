@@ -213,7 +213,7 @@ class CLevel{
 			default:
 				$diff=0; //unspecified
 		}
-		$this->db->query("UPDATE levels SET difficulty=$diff".$postfix." WHERE id=$this->id");
+		$this->db->query("UPDATE levels SET difficulty=$diff,starsGot=$stars".$postfix." WHERE id=$this->id");
 	}
 
 	function featureLevel(bool $feature=false){
