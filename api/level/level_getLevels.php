@@ -178,6 +178,8 @@ if(empty($levels)) die("-2");
 $output="";
 $userstring="";
 $hashstr="";
+$xcl=new CLevel($dbm);
+$count=$xcl->countLevels();
 foreach($levels as $slevel){
 	$cl=new CLevel($dbm);
 	$cl->id=$slevel;
@@ -199,4 +201,4 @@ foreach($levels as $slevel){
 
 	$hashstr.=((string)$cl->id)[0].((string)$cl->id)[strlen(((string)$cl->id))-1].$cl->starsGot.$cl->coins;
 }
-echo substr($output,0,-1)."#".substr($userstring,0,-1)."##".count($levels).":".$page.":10#".genhash_genSolo2($hashstr);
+echo substr($output,0,-1)."#".substr($userstring,0,-1)."##".$count.":".$page.":10#".genhash_genSolo2($hashstr);
