@@ -29,7 +29,7 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			if ($cl->exists($id)) {
 				$cl->id=$id;
 					$cl->rateLevel($stars);
-					if($feature) $cl->featureLevel(true)
+					if($feature) $cl->featureLevel(true);
 					echo "1";
 			} else {
 				echo "-1";
