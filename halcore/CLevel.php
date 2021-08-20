@@ -181,6 +181,45 @@ class CLevel{
 		$this->db->preparedQuery("UPDATE levels SET suggestDifficulty=?,suggestDifficultyCnt=? WHERE id=$this->id","di",$this->suggestDifficulty,$this->suggestDifficultyCnt);
 	}
 
+	function rateLevel(int $stars){
+		$this->starsGot=$stars;
+		$postfix="";
+		switch ($stars){
+			case 1:
+				$diff=-1; //Auto
+				break;
+			case 2:
+				$diff=10; //Easy
+				break;
+			case 3:
+				$diff=20; //Normal
+				break;
+			case 4:
+			case 5:
+				$diff=30; //Hard
+				break;
+			case 6:
+			case 7:
+				$diff=40; //Harder
+				break;
+			case 8:
+			case 9:
+				$diff=50; //Insane
+				break;
+			case 10:
+				$diff=50; //Demon
+				$postfix=",demonDifficulty=3";
+				break;
+			default:
+				$diff=0; //unspecified
+		}
+		$this->db->query("UPDATE levels SET difficulty=$diff".$postfix." WHERE id=$this->id");
+	}
+
+	function featureLevel(bool $feature=false){
+		$this->db->query("UPDATE levels SET isFeatured=".($feature?"1":"0")." WHERE id=$this->id")
+	}
+
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
 		$this->db->query("UPDATE levels SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
 	}

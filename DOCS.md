@@ -341,7 +341,9 @@ Notes:
  - uid=0 if server made action
  - type (0->register, 1->login, 2->delete, 3->banEvent(Ban/Unban), 4->levelEvent(Upload/Delete/Update),
    5->panelEvents(addGauntlet/deleteGauntlet/editGauntlet/addMapPack/deleteMapPack/editMapPack/addQuest/
-   deleteQuest/editQuest))
+   deleteQuest/editQuest), 6->likeLevelEvent(like/dislike), 7->likeAccCommentEvent(like/dislike),
+   8->likeCommentEvent(like/dislike)
+ - events 6,7,8 are used to avoid subbot
  - data (wtf will the panel support who caress)
 
 
