@@ -217,7 +217,7 @@ class CLevel{
 	}
 
 	function featureLevel(bool $feature=false){
-		$this->db->query("UPDATE levels SET isFeatured=".($feature?"1":"0")." WHERE id=$this->id")
+		$this->db->query("UPDATE levels SET isFeatured=".($feature?"1":"0")." WHERE id=$this->id");
 	}
 
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
