@@ -216,6 +216,10 @@ class CLevel{
 		$this->db->query("UPDATE levels SET difficulty=$diff,starsGot=$stars".$postfix." WHERE id=$this->id");
 	}
 
+	function rateDemon(int $diff){
+		$this->db->query("UPDATE levels SET demonDifficulty=$diff WHERE id=$this->id");
+	}
+
 	function featureLevel(bool $feature=false){
 		$this->db->query("UPDATE levels SET isFeatured=".($feature?"1":"0")." WHERE id=$this->id");
 	}
