@@ -65,7 +65,7 @@ level:
 - [X] level/level_upload
 - [ ] level/rateDemon
 - [X] level/rateStar
-- [ ] level/suggestStar
+- [X] level/suggestStar
 ---
 
 profile: done
