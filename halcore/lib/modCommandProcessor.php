@@ -90,7 +90,7 @@ function invokeCommands(DBManagement $dbm,int $lvl_id,$comment, bool $isOwner=fa
 					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
 					if(!isset($command[2])) return -1;
 					if(strlen(str_replace("!lvl rename ","",$comment))>32) return -1;
-					$dbm->preparedQuery("UPDATE levels SET name=? WHERE id=$lvl_id","s",base64_encode(str_replace("!lvl rename ","",$comment)));
+					$dbm->preparedQuery("UPDATE levels SET name=? WHERE id=$lvl_id","s",str_replace("!lvl rename ","",$comment));
 					return 1;
 				case "copy":
 					if(!$isOwner) return -1;
@@ -121,7 +121,7 @@ function invokeCommands(DBManagement $dbm,int $lvl_id,$comment, bool $isOwner=fa
 				case "desc":
 					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
 					if(!isset($command[2]) or strlen(str_replace("!lvl desc ","",$comment))>256) return -1;
-					$dbm->preparedQuery("UPDATE levels SET description=? WHERE id=$lvl_id","s",str_replace("!lvl desc ","",$comment));
+					$dbm->preparedQuery("UPDATE levels SET description=? WHERE id=$lvl_id","s",base64_encode(str_replace("!lvl desc ","",$comment)));
 					return 1;
 				case "list":
 					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
