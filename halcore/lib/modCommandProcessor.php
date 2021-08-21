@@ -21,14 +21,13 @@ function invokeCommands(DBManagement $dbm,int $lvl_id,$comment, bool $isOwner=fa
 			return 1;
 		case "!coins":
 			if($isOwner or $privs['cVerCoins']!=1) return -1;
-			err_handle("x","verbose","cVerCoins Have: ".$command[1]);
-			if(!isset($command[1]) or $command[1]!="verify" or $command!="reset") return -1;
+			if(!isset($command[1])) return -1;
 			if($command[1]=="verify"){
 				$dbm->query("UPDATE levels SET coins=ucoins WHERE id=$lvl_id");
 			}elseif($command[1]=="reset"){
 				$dbm->query("UPDATE levels SET coins=0 WHERE id=$lvl_id");
 			}else{
-				err_handle("modCP","err","!coins were not verify or reset and avoided filters: ".json_encode($command[1]));
+				return -1;
 			}
 			return 1;
 		case "!daily":
