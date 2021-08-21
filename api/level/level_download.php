@@ -47,6 +47,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	if(!$cl->exists($id)) die("-1");
 	$cl->id=$id;
 	$cl->loadAll();
+	$cl->onDownloadLevel();
 	$auto=0;
 	$password=($cl->password==0?"0":base64_encode(doXOR($cl->password,26364)));
 	if($cl->difficulty<0){
