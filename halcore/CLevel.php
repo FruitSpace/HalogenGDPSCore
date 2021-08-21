@@ -186,6 +186,7 @@ class CLevel{
 	function doSuggestDifficulty($difficulty){
 		$this->suggestDifficulty=($this->suggestDifficulty*$this->suggestDifficultyCnt+$difficulty)/($this->suggestDifficultyCnt+1);
 		$this->suggestDifficultyCnt++;
+		err_handle("TMP_X","verbose",json_encode(array($difficulty,$this->suggestDifficulty,$this->suggestDifficultyCnt)));
 		$this->db->preparedQuery("UPDATE levels SET suggestDifficulty=?,suggestDifficultyCnt=? WHERE id=$this->id","di",$this->suggestDifficulty,$this->suggestDifficultyCnt);
 	}
 
