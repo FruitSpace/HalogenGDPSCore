@@ -74,6 +74,10 @@ class CLevel{
 		$this->reports=$req['reports'];
 	}
 
+	function onDownloadLevel(){
+		$this->db->query("UPDATE levels SET downloads=downloads+1 WHERE id=$this->id");
+	}
+
 	function loadMain(){
 		$req=$this->db->query("SELECT name,description,uid,password,versionBinary,length,difficulty,demonDifficulty,suggestDifficulty,suggestDifficultyCnt FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->name=$req['name'];
