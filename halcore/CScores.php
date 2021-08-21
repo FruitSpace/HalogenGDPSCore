@@ -46,7 +46,7 @@ class CScores{
 
 	function updateLevelScore(){
 		$this->db->preparedQuery("UPDATE scores SET postedTime=?,percent=?,attempts=?,coins=? WHERE lvl_id=? AND uid=?",
-		"siiiii",time("Y-m-d H:i:s"),$this->percent,$this->attempts,$this->coins,$this->lvl_id,$this->uid);
+		"siiiii",date("Y-m-d H:i:s"),$this->percent,$this->attempts,$this->coins,$this->lvl_id,$this->uid);
 	}
 
 	function uploadLevelScore(){
