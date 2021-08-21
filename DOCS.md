@@ -213,7 +213,7 @@ CREATE TABLE roles (
     roleName varchar(64) NOT NULL DEFAULT 'Moderator',
     commentColor varchar(11) NOT NULL DEFAULT '0,0,255',
     modLevel tinyint(1) NOT NULL DEFAULT 1,
-    privs text  NOT NULL DEFAULT '{"cRate":0,"cFeature":0,"cEpic":0,"cUnepic":0,"cVerCoins":0,"cDaily":0,"cWeekly":0,"cDelete":0,"cSetacc":0,"aRateDemon":0,"aRateStars":0,"aReqMod":0,"dashboardMod":0,"dashboardCreatePack":0}'
+    privs text  NOT NULL DEFAULT '{"cRate":0,"cFeature":0,"cEpic":0,"cVerCoins":0,"cDaily":0,"cWeekly":0,"cDelete":0,"cLvlAccess":0,"aRateDemon":0,"aRateStars":0,"aReqMod":0,"dashboardMod":0,"dashboardBan":0,"dashboardCreatePack":0}'
 );
 ```
 
