@@ -27,7 +27,7 @@ class CScores{
 	}
 
 	function getScoresForLevelId(int $lvl_id){
-		$req=$this->db->query("SELECT * FROM scores WHERE lvl_id=$lvl_id");
+		$req=$this->db->query("SELECT * FROM scores WHERE lvl_id=$lvl_id ORDER BY percent DESC");
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
