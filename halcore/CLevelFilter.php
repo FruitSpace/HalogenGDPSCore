@@ -90,7 +90,7 @@ class CLevelFilter{
 				break;
 			case CLEVELFILTER_TRENDING:
 				$uploadDate = date("Y-m-d H:i:s",time()-(7*24*60*60));
-				$query.=" AND uploadDate>$uploadDate";
+				$query.=" AND uploadDate>'$uploadDate'";
 				$orderitem="likes";
 				break;
 			case CLEVELFILTER_LATEST:

@@ -45,7 +45,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 			$output="";
 			foreach ($scores as $score){
 				$acc=new CAccount($dbm);
-				$acc->uid=$scores['uid'];
+				$acc->uid=$score['uid'];
 				$acc->loadAuth();
 				$acc->loadVessels();
 				//Ignore Glow/Special here
