@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CComment.php";
+require_once __DIR__ . "/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
@@ -21,13 +22,40 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 	$gjp=exploitPatch_remove($_POST['gjp']);
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
-		$cc = new CComment($dbm);
-		if(checkPosts($cc->countLevelComments())) {
-			$cc->uid = $uid;
-			$cc->lvl_id=$id;
-			$cc->comment = $comment;
-			$cc->percent=$percent;
-			echo $cc->postLvlComment();
+		$cl=new CLevel($dbm);
+		if($cl->exists($id)) {
+			$cl->id=$id;
+			$acc = new CAccount($dbm);
+			$acc->uid = $uid;
+			$acc->loadAuth();
+			$role = $acc->getRoleObj();
+			$own=$cl->isOwnedBy($uid);
+			if (!empty($role) or $own) {
+				$modComment = base64_decode($comment);
+				if ($modComment[0] == "!") {
+					require_once __DIR__ . "/../../halcore/lib/modCommandProcessor.php";
+					if($own){
+						$state=invokeCommands($dbm,$id,$modComment,true);
+					}
+					$state=invokeCommands($dbm,$id,$modComment, false, $role['privs']);
+					if($state>0){
+						echo "1";
+					}else{
+						echo "-1";
+					}
+				}
+			}else {
+				$cc = new CComment($dbm);
+				if (checkPosts($cc->countLevelComments())) {
+					$cc->uid = $uid;
+					$cc->lvl_id = $id;
+					$cc->comment = $comment;
+					$cc->percent = $percent;
+					echo $cc->postLvlComment();
+				} else {
+					echo "-1";
+				}
+			}
 		}else{
 			echo "-1";
 		}
