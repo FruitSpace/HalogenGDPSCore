@@ -16,6 +16,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 	$uid=(int)$_POST['accountID'];
 	$gjp=exploitPatch_remove($_POST['gjp']);
 	$id=(int)$_POST['levelID'];
+	$mode=abs(empty($_POST['type'])?0:(int)$_POST['type'])%4;
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cs = new CScores($dbm);
@@ -38,7 +39,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 			}
 		}
 		//Now the retrival part
-		$scores=$cs->getScoresForLevelId($id);
+		$scores=$cs->getScoresForLevelId($id,$mode+400);
 		if(empty($scores)){
 			echo "";
 		}else{
