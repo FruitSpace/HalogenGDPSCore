@@ -15,7 +15,7 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 	$uid=(int)$_POST['accountID'];
 	$id=(int)$_POST['levelID'];
 	$gjp=exploitPatch_remove($_POST['gjp']);
-	$stars=((int)$_POST['stars'])%11;
+	$stars=abs((int)$_POST['stars'])%11;
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cl=new CLevel($dbm);
