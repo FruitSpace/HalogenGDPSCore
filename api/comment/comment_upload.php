@@ -28,7 +28,7 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 			$acc = new CAccount($dbm);
 			$acc->uid = $uid;
 			$acc->loadAuth();
-			$role = $acc->getRoleObj();
+			$role = $acc->getRoleObj(true);
 			$own=$cl->isOwnedBy($uid);
 			if (!empty($role) or $own) {
 				$modComment = base64_decode($comment);
