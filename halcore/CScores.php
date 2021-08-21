@@ -1,5 +1,9 @@
 <?php
 
+define("CSCORE_TYPE_FRIENDS",400);
+define("CSCORE_TYPE_TOP",401);
+define("CSCORE_TYPE_WEEK",402);
+
 class CScores{
 	public $db; //!  Remove dbm
 
@@ -26,8 +30,18 @@ class CScores{
 		return 1;
 	}
 
-	function getScoresForLevelId(int $lvl_id){
-		$req=$this->db->query("SELECT * FROM scores WHERE lvl_id=$lvl_id ORDER BY percent DESC");
+	function getScoresForLevelId(int $lvl_id, int $type=CSCORE_TYPE_TOP){
+		switch ($type){
+			case CSCORE_TYPE_TOP:
+				$suffix="";
+				break;
+			case CSCORE_TYPE_WEEK:
+				$suffix="AND postedTime>=".date("Y-m-d H:i:s",strtotime("this week midnight"));
+				break;
+			case CSCORE_TYPE_FRIENDS:
+				$suffix="AND 1=0";
+		}
+		$req=$this->db->query("SELECT * FROM scores WHERE lvl_id=$lvl_id ".$suffix." ORDER BY percent DESC");
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
