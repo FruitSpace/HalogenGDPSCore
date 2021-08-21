@@ -68,6 +68,9 @@ function invokeCommands(DBManagement $dbm,int $lvl_id,$comment, bool $isOwner=fa
 				case "insane":
 					$diff="50";
 					break;
+				case "reset":
+					$diff="0";
+					break;
 				default:
 					return -1;
 			}
