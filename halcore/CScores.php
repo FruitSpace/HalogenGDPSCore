@@ -36,7 +36,7 @@ class CScores{
 				$suffix="";
 				break;
 			case CSCORE_TYPE_WEEK:
-				$suffix="AND postedTime>=".date("Y-m-d H:i:s",strtotime("this week midnight"));
+				$suffix="AND postedTime>='".date("Y-m-d H:i:s",strtotime("this week midnight"))."'";
 				break;
 			case CSCORE_TYPE_FRIENDS:
 				$suffix="AND 1=0";
