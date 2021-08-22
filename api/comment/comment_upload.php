@@ -35,9 +35,9 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 				if ($modComment[0] == "!") {
 					require_once __DIR__ . "/../../halcore/lib/modCommandProcessor.php";
 					if($own){
-						$state=invokeCommands($dbm,$id,$modComment,true);
+						$state=invokeCommands($dbm,$id,$acc,$modComment,true);
 					}
-					$state=invokeCommands($dbm,$id,$modComment, false, $role['privs']);
+					$state=invokeCommands($dbm,$id,$acc,$modComment, false, $role['privs']);
 					if($state>0){
 						echo "1";
 					}else{
