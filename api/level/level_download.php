@@ -95,7 +95,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$output.=":48:1".($dailylvl?":41:".$mid['id']:""); //GD 2.2 and daily/weekly
 
 	//2.1 hashing
-	$solo_str=$cl->uid.",".$cl->starsGot.",".($cl->demonDifficulty>0?1:0).",".$cl->id.",".$cl->coins.",".$cl->isFeatured.",".$cl->password.",".($dailylvl?$mid['id']:0);
+	$solo_str=$cl->uid.",".$cl->starsGot.",".($cl->demonDifficulty>0?1:0).",".$cl->id.",".($cl->coins>0?1:0).",".$cl->isFeatured.",".$cl->password.",".($dailylvl?$mid['id']:0);
 	$output.="#".genhash_genSolo($cl->stringLevel)."#".genhash_genSolo2($solo_str);
 	//! Maybe need to add uid:uname:uid for Weekly/Daily
 	echo $output;
