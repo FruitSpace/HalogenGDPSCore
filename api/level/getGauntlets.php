@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
-require_once __DIR__ . "/../../halcore/CLevelPack.php";
+require_once __DIR__ . "/../../halcore/CLevelFilter.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 
 $ip=$_SERVER['REMOTE_ADDR'];
@@ -10,7 +10,8 @@ if ($lsec->isIPBlacklisted($ip)){
 	die('This IP is banned for security reasons');
 }
 $dbm=new DBManagement();
-echo getGauntletString($dbm);
+$filter=new CLevelFilter($dbm);
+echo $filter->getGauntletString();
 if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);

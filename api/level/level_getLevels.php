@@ -123,57 +123,60 @@ if(!empty($_POST['customSong'])) $param['songCustom']=true; //Track if not else 
 
 $dbm=new DBManagement();
 $filter=new CLevelFilter($dbm);
-switch($type){
-	case 1:
-		$levels=$filter->searchLevels($page,$param, CLEVELFILTER_MOSTDOWNLOADED); //most downloaded
-		break;
-	case 3:
-		$levels=$filter->searchLevels($page,$param,CLEVELFILTER_TRENDING); //Trending
-		break;
-	case 4:
-		$levels=$filter->searchLevels($page,$param,CLEVELFILTER_LATEST); //latest
-		break;
-	case 5:
-		$levels=$filter->searchUserLevels($page,$param); //user level (uid in str)
-		break;
-	case 6:
-	case 17:
-		$param['isFeatured']=true;
-		$levels=$filter->searchLevels($page,$param, CLEVELFILTER_LATEST); //featured
-		break;
-	case 7:
-		$levels=$filter->searchLevels($page,$param, CLEVELFILTER_MAGIC); //magic banana (10k+obj and long)
-		break;
+if(empty($_POST['gauntlet']) or !is_numeric($_POST['gauntlet'])) {
+	switch ($type) {
+		case 1:
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_MOSTDOWNLOADED); //most downloaded
+			break;
+		case 3:
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_TRENDING); //Trending
+			break;
+		case 4:
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_LATEST); //latest
+			break;
+		case 5:
+			$levels = $filter->searchUserLevels($page, $param); //user level (uid in str)
+			break;
+		case 6:
+		case 17:
+			$param['isFeatured'] = true;
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_LATEST); //featured
+			break;
+		case 7:
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_MAGIC); //magic banana (10k+obj and long)
+			break;
 //MOD LEVELD DISABLED
-	case 10:
-		//list levels from str comma-sep
-		if(empty($_POST['str'])) die("-1");
-		$param['sterm']=preg_replace("/[^0-9,]/", '',$param['sterm']);
-		$levels=$filter->searchListLevels($page,$param);
-		break;
-	case 11:
-		$param['star']=true;
-		$levels=$filter->searchLevels($page,$param,CLEVELFILTER_LATEST); //awarded order by date desc
-		break;
-	case 12:
-		//follow who level
-		if(empty($_POST['followed'])) die("-1");
-		$param['followList']=preg_replace("/[^0-9,]/", '',exploitPatch_remove($_POST['followed']));
-		$levels=$filter->searchUserLevels($page,$param,true);
-		break;
-	case 13:
-		//friend-ish
-		break;
-	case 16:
-		$levels=$filter->searchLevels($page,$param, CLEVELFILTER_HALL); //Hall of fame order by stars desc
-		break;
-	case 0:
-	case 2:
-	case 15:
-	default:
-		$levels=$filter->searchLevels($page,$param, CLEVELFILTER_MOSTLIKED); //most liked
+		case 10:
+			//list levels from str comma-sep
+			if (empty($_POST['str'])) die("-1");
+			$param['sterm'] = preg_replace("/[^0-9,]/", '', $param['sterm']);
+			$levels = $filter->searchListLevels($page, $param);
+			break;
+		case 11:
+			$param['star'] = true;
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_LATEST); //awarded order by date desc
+			break;
+		case 12:
+			//follow who level
+			if (empty($_POST['followed'])) die("-1");
+			$param['followList'] = preg_replace("/[^0-9,]/", '', exploitPatch_remove($_POST['followed']));
+			$levels = $filter->searchUserLevels($page, $param, true);
+			break;
+		case 13:
+			//friend-ish
+			break;
+		case 16:
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_HALL); //Hall of fame order by stars desc
+			break;
+		case 0:
+		case 2:
+		case 15:
+		default:
+			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_MOSTLIKED); //most liked
+	}
+}else{
+$levels=$filter->getGauntletLevels(abs((int)$_POST['gauntlet']));
 }
-
 if(empty($levels)) die("-2");
 $output="";
 $userstring="";
