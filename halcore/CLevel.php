@@ -191,7 +191,7 @@ class CLevel{
 
 	function rateLevel(int $stars){
 		$this->starsGot=$stars;
-		$postfix="";
+		$postfix=",demonDifficulty=-1";
 		switch ($stars){
 			case 1:
 				$diff=-1; //Auto
