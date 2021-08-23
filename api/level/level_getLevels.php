@@ -124,6 +124,7 @@ if(!empty($_POST['customSong'])) $param['songCustom']=true; //Track if not else 
 $dbm=new DBManagement();
 $filter=new CLevelFilter($dbm);
 if(empty($_POST['gauntlet']) or !is_numeric($_POST['gauntlet'])) {
+	$isGau=false;
 	switch ($type) {
 		case 1:
 			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_MOSTDOWNLOADED); //most downloaded
@@ -175,6 +176,7 @@ if(empty($_POST['gauntlet']) or !is_numeric($_POST['gauntlet'])) {
 			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_MOSTLIKED); //most liked
 	}
 }else{
+	$isGau=true;
 $levels=$filter->getGauntletLevels(abs((int)$_POST['gauntlet']));
 }
 if(empty($levels)) die("-2");
@@ -200,7 +202,7 @@ foreach($levels as $slevel){
 	$output.="1:".$cl->id.":2:".$cl->name.":3:".$cl->description.":5:".$cl->version.":6:".$cl->uid.":8:".($cl->difficulty>0?10:0).":9:".$cl->difficulty.":10:".$cl->downloads;
 	$output.=":12:".$cl->track_id.":13:".$cl->versionGame.":14:".$cl->likes.":15:".$cl->length.":17:".($cl->demonDifficulty>=0?"1":"0").":18:".$cl->starsGot;
 	$output.=":19:".$cl->isFeatured.":25:".$auto.":30:".$cl->origId.":31:".$cl->is2p.":35:".$cl->song_id.":37:".$cl->ucoins.":38:".($cl->coins>0?1:0);
-	$output.=":39:".$cl->starsRequested.":42:".$cl->isEpic.":43:".((int)$cl->demonDifficulty>=0?$cl->demonDifficulty:"3").":45:".$cl->objects.":46:1:47:2|";
+	$output.=":39:".$cl->starsRequested.":42:".$cl->isEpic.":43:".((int)$cl->demonDifficulty>=0?$cl->demonDifficulty:"3").($isGau?":44:1":"").":45:".$cl->objects.":46:1:47:2|";
 
 	$hashstr.=((string)$cl->id)[0].((string)$cl->id)[strlen(((string)$cl->id))-1].$cl->starsGot.($cl->coins>0?1:0);
 }
