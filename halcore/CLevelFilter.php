@@ -214,7 +214,7 @@ class CLevelFilter{
 			if(count($lvls)!=3) continue;
 			$pack.="1:".$sreq['id'].":2:".$sreq['packName'].":3:".$sreq['levels'].":4:".$sreq['packStars'].":5:".$sreq['packCoins'];
 			$pack.=":6:".$sreq['packDifficulty'].":7:".$sreq['packColor'].":8:".$sreq['packColor']."|";
-			$hashstr.=$sreq['id'][0].$sreq['id'][strlen($sreq['id'])-1].$sreq['packStars'].$sreq['packCoins'];
+			$hashstr.=((string)$sreq['id'])[0].((string)$sreq['id'])[strlen(((string)$sreq['id']))-1].$sreq['packStars'].$sreq['packCoins'];
 		}
 		if(empty($pack)) return "-2";
 		return substr($pack,0,-1)."#".genhash_genSolo2($hashstr);
