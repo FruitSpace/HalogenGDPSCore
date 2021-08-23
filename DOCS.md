@@ -54,8 +54,8 @@ essential: done
 ---
 
 level:
-- [ ] level/getGauntlets
-- [ ] level/getMapPacks
+- [X] level/getGauntlets
+- [X] level/getMapPacks
 - [X] level/level_delete
 - [X] level/level_download
 - [ ] level/level_getDaily
