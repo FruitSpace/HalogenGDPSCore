@@ -53,12 +53,12 @@ essential: done
 - [X] essential/requestMod
 ---
 
-level:
+level: done
 - [X] level/getGauntlets
 - [X] level/getMapPacks
 - [X] level/level_delete
 - [X] level/level_download
-- [ ] level/level_getDaily
+- [X] level/level_getDaily
 - [X] level/level_getLevels
 - [X] level/level_report
 - [X] level/level_updateDescription
