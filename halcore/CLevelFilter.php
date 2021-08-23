@@ -160,8 +160,8 @@ class CLevelFilter{
 		$sortstr=" LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
 			$luid=" AND id IN (".$params['sterm'].")";
-			$req=$this->db->preparedQuery($query.$luid.$sortstr,"ii",
-				$params['versionGame'],$params['sterm']);
+			$req=$this->db->preparedQuery($query.$luid.$sortstr,"i",
+				$params['versionGame']);
 		}else{
 			return array();
 		}
