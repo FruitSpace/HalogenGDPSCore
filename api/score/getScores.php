@@ -44,7 +44,7 @@ switch($type){
 			foreach ($friendships as $frid){
 				$ids=$cf->getFriendByFID($frid);
 				$fid=($ids['uid1']==$uid?$ids['uid2']:$ids['uid1']);
-				array_push($friendships,$fid);
+				array_push($friend_ids,$fid);
 			}
 			$users = $acc->getLeaderboard(CLEADERBOARD_FRIENDS,$friend_ids);
 		}else{
