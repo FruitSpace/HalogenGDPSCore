@@ -222,4 +222,18 @@ class CLevelFilter{
 		if(empty($pack)) return "-2";
 		return substr($pack,0,-1)."#".$this->countMapPacks().":$page:10"."#".genhash_genSolo2($hashstr);
 	}
+
+	function getDailyLevel(bool $weekly){
+		if($weekly){
+			$timeLeft=strtotime("next week midnight")-time();
+			$lvl_id=100001; //Why the fuck robtop did this?
+		}else{
+			$timeLeft=strtotime("tommorow midnight")-time();
+			$lvl_id=0;
+		}
+		$req=$this->db->query("SELECT id,lvl_id FROM quests WHERE type=".($weekly?"1":"0")." AND timeExpire<SYSDATE() ORDER BY timeExpire DESC");
+		if($this->db->isEmpty($req)) return "-2";
+		$sreq=$req->fetch_assoc();
+		return $lvl_id+$sreq['lvl_id']."|$timeLeft";
+	}
 }
