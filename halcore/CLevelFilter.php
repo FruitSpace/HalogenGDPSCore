@@ -140,7 +140,7 @@ class CLevelFilter{
 				if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 				$req = $this->db->preparedQuery($query." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
 			}else{
-				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".$params['followList'].")".$suffix . $sortstr, "ii", $params['versionGame']);
+				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".$params['followList'].")".$suffix . $sortstr, "i", $params['versionGame']);
 			}
 		}else{
 			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
