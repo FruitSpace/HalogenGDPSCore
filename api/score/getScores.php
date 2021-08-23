@@ -41,6 +41,7 @@ switch($type){
 			if($acc->friendsCount==0){$users=array();break;}
 			$friendships=explode(",",$acc->friendshipIds);
 			$friend_ids=array();
+			array_push($friend_ids,$uid);
 			foreach ($friendships as $frid){
 				$ids=$cf->getFriendByFID($frid);
 				$fid=($ids['uid1']==$uid?$ids['uid2']:$ids['uid1']);
