@@ -9,6 +9,10 @@ define("QUEST_TYPE_STARS",204);
 class CQuests{
 	public $db;
 
+	function __construct($db){
+		$this->db=$db;
+	}
+
 	function exists(int $type=QUEST_TYPE_DAILY){
 		$type=$type-200;
 		return $this->db->query("SELECT count(*) as cnt FROM quests WHERE type=$type")->fetch_assoc()['cnt']>0;
@@ -39,5 +43,19 @@ class CQuests{
 		if(strlen($name)>64) return -1;
 		$this->db->preparedQuery("INSERT INTO quests (type,needed,reward,name) VALUES (?,?,?,?)","iiis",$type,$needed,$reward,$name);
 		return $this->db->getDB()->insert_id;
+	}
+
+	function getDailyLevel(bool $weekly){
+		if($weekly){
+			$timeLeft=strtotime("next week midnight")-time();
+			$lvl_id=100001; //Why the fuck robtop did this?
+		}else{
+			$timeLeft=strtotime("tommorow midnight")-time();
+			$lvl_id=0;
+		}
+		$req=$this->db->query("SELECT id,lvl_id FROM quests WHERE type=".($weekly?"1":"0")." AND timeExpire<now() ORDER BY timeExpire DESC");
+		if($this->db->isEmpty($req)) return "-2";
+		$sreq=$req->fetch_assoc();
+		return $lvl_id+$sreq['lvl_id']."|$timeLeft";
 	}
 }

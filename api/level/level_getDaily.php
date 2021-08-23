@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
-require_once __DIR__ . "/../../halcore/CLevelFilter.php";
+require_once __DIR__ . "/../../halcore/CQuests.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 
 $ip=$_SERVER['REMOTE_ADDR'];
@@ -11,8 +11,8 @@ if ($lsec->isIPBlacklisted($ip)){
 }
 $weekly=(empty($_POST['weekly'])?false:true);
 $dbm=new DBManagement();
-$filter=new CLevelFilter($dbm);
-echo $filter->getDailyLevel($weekly);
+$cq=new CQuests($dbm);
+echo $cq->getDailyLevel($weekly);
 if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
