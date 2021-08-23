@@ -201,6 +201,10 @@ class CLevelFilter{
 		return array($lvls[0],$lvls[1],$lvls[2],$lvls[3],$lvls[4]);
 	}
 
+	function countMapPacks(){
+		return $this->db->query("SELECT count(*) as cnt FROM levelpacks WHERE packType=0")->fetch_assoc()['cnt'];
+	}
+
 	function getMapPackString(int $page){
 		require_once __DIR__."/lib/legacy.php";
 		$req=$this->db->query("SELECT * FROM levelpacks WHERE packType=0 LIMIT 10 OFFSET $page");
@@ -217,6 +221,6 @@ class CLevelFilter{
 			$hashstr.=((string)$sreq['id'])[0].((string)$sreq['id'])[strlen(((string)$sreq['id']))-1].$sreq['packStars'].$sreq['packCoins'];
 		}
 		if(empty($pack)) return "-2";
-		return substr($pack,0,-1)."#".genhash_genSolo2($hashstr);
+		return substr($pack,0,-1)."#".$this->countMapPacks().":$page:10"."#".genhash_genSolo2($hashstr);
 	}
 }
