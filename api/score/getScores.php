@@ -46,7 +46,7 @@ switch($type){
 				$fid=($ids['uid1']==$uid?$ids['uid2']:$ids['uid1']);
 				array_push($friendships,$fid);
 			}
-			$users = $acc->getLeaderboard(CLEADERBOARD_GLOBAL,$friend_ids);
+			$users = $acc->getLeaderboard(CLEADERBOARD_FRIENDS,$friend_ids);
 		}else{
 			$users=array();
 		}
