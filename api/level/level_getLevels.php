@@ -165,6 +165,33 @@ if(empty($_POST['gauntlet']) or !is_numeric($_POST['gauntlet'])) {
 			break;
 		case 13:
 			//friend-ish
+			if(empty($_POST['accountID']) or empty($_POST['gjp'])) die("-1");
+			$uid=(int)$_POST['accountID'];
+			$gjp=exploitPatch_remove($_POST['gjp']);
+			if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
+				require_once __DIR__."/../../halcore/CFriendship.php";
+				$lacc=new CAccount($dbm);
+				$lacc->uid=$uid;
+				$lacc->loadSocial();
+				$cf=new CFriendship($dbm);
+				if($lacc->friendsCount==0){
+					$levels=array();
+				}else{
+					$friendships=explode(",",$lacc->friendshipIds);
+					$friend_ids=array();
+					array_push($friend_ids,$uid);
+					foreach ($friendships as $frid){
+						$ids=$cf->getFriendByFID($frid);
+						$fid=($ids['uid1']==$uid?$ids['uid2']:$ids['uid1']);
+						array_push($friend_ids,$fid);
+					}
+					$param['followList']=implode(",",$friend_ids);
+					$levels = $filter->searchUserLevels($page, $param, true);
+				}
+
+			}else{
+				die("-1");
+			}
 			break;
 		case 16:
 			$levels = $filter->searchLevels($page, $param, CLEVELFILTER_HALL); //Hall of fame order by stars desc
