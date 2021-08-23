@@ -200,4 +200,23 @@ class CLevelFilter{
 		$lvls=explode(",",$req->fetch_assoc()['levels']);
 		return array($lvls[0],$lvls[1],$lvls[2],$lvls[3],$lvls[4]);
 	}
+
+	function getMapPackString(int $page){
+		require_once __DIR__."/lib/legacy.php";
+		$req=$this->db->query("SELECT * FROM levelpacks WHERE packType=0 LIMIT 10 OFFSET $page");
+		if($this->db->isEmpty($req)) return "-2";
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
+		$pack="";
+		$hashstr="";
+		foreach ($reqm as $sreq){
+			$lvls=explode(",",$sreq['levels']);
+			if(count($lvls)!=3) continue;
+			$pack.="1:".$sreq['id'].":2:".$sreq['packName'].":3:".$sreq['levels'].":4:".$sreq['packStars'].":5:".$sreq['packCoins'];
+			$pack.=":6:".$sreq['packDifficulty'].":7:".$sreq['packColor'].":8:".$sreq['packColor']."|";
+			$hashstr.=$sreq['id'][0].$sreq['id'][strlen($sreq['id'])-1].$sreq['packStars'].$sreq['packCoins'];
+		}
+		if(empty($pack)) return "-2";
+		return substr($pack,0,-1)."#".genhash_genSolo2($hashstr);
+	}
 }
