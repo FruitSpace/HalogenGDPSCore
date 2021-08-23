@@ -82,7 +82,7 @@ function invokeCommands(DBManagement $dbm,int $lvl_id, CAccount $acc, $comment, 
 					$diff="50";
 					break;
 				case "reset":
-					$diff="0";
+					$diff="0 AND starsGot=0";
 					break;
 				default:
 					return -1;
