@@ -36,11 +36,23 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 					require_once __DIR__ . "/../../halcore/lib/modCommandProcessor.php";
 					if($own){
 						$state=invokeCommands($dbm,$id,$acc,$modComment,true);
+					}else {
+						$state = invokeCommands($dbm, $id, $acc, $modComment, false, $role['privs']);
 					}
-					$state=invokeCommands($dbm,$id,$acc,$modComment, false, $role['privs']);
 					if($state>0){
 						echo "1";
 					}else{
+						echo "-1";
+					}
+				}else{
+					$cc = new CComment($dbm);
+					if (checkPosts($cc->countLevelComments())) {
+						$cc->uid = $uid;
+						$cc->lvl_id = $id;
+						$cc->comment = $comment;
+						$cc->percent = $percent;
+						echo $cc->postLvlComment();
+					} else {
 						echo "-1";
 					}
 				}
