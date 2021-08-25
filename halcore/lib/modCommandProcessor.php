@@ -87,7 +87,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 				default:
 					return -1;
 			}
-			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Rate:".ucfirst(strtolower($command.[1]))." (Mod)"),$dbm);
+			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Rate:".ucfirst(strtolower($command[1]))." (Mod)"),$dbm);
 			$dbm->query("UPDATE levels SET difficulty=$diff WHERE id=$cl->id");
 			return 1;
 
