@@ -32,6 +32,9 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 				$cl->rateLevel($stars);
 				$cl->featureLevel($feature);
 				$cl->recalculateCPoints($cl->uid);
+				require_once __DIR__."/../../halcore/lib/actions.php";
+				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"StarRate:".$stars." (Mod)"),$dbm);
+				if($feature) registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Feature (Mod)"),$dbm);
 				echo "1";
 			} else {
 				echo "-1";
