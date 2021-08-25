@@ -23,6 +23,7 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			$cl->id=$id;
 			$cl->loadMain();
 			$cl->doSuggestDifficulty($stars);
+			$cl->recalculateCPoints($cl->uid);
 			echo "1";
 		}else{
 			echo "-1";

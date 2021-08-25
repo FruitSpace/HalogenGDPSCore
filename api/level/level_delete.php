@@ -20,7 +20,9 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 		$cl=new CLevel($dbm);
 		$cl->id=$id;
 		if($cl->isOwnedBy($uid)){
+			$cl->loadBase();
 			$cl->deleteLevel();
+			$cl->recalculateCPoints($cl->uid);
 			require_once __DIR__."/../../halcore/lib/actions.php";
 			require_once __DIR__."/../../halcore/CAccount.php";
 			$acc=new CAccount($dbm);
