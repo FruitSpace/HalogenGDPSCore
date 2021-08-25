@@ -28,9 +28,11 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			$cl = new CLevel($dbm);
 			if ($cl->exists($id)) {
 				$cl->id=$id;
-					$cl->rateLevel($stars);
-					$cl->featureLevel($feature);
-					echo "1";
+				$cl->loadBase();
+				$cl->rateLevel($stars);
+				$cl->featureLevel($feature);
+				$cl->recalculateCPoints($cl->uid);
+				echo "1";
 			} else {
 				echo "-1";
 			}

@@ -222,6 +222,7 @@ class CLevel{
 				$diff=0; //unspecified
 		}
 		$this->db->query("UPDATE levels SET difficulty=$diff,starsGot=$stars".$postfix." WHERE id=$this->id");
+		$this->recalculateCPoints($this->uid);
 	}
 
 	function rateDemon(int $diff){
@@ -230,13 +231,37 @@ class CLevel{
 
 	function featureLevel(bool $feature=false){
 		$this->db->query("UPDATE levels SET isFeatured=".($feature?"1":"0")." WHERE id=$this->id");
+		$this->recalculateCPoints($this->uid);
+	}
+
+	function epicLevel(bool $epic=false){
+		$this->db->query("UPDATE levels SET isEpic=".($epic?"1":"0")." WHERE id=$this->id");
+		$this->recalculateCPoints($this->uid);
 	}
 
 	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
 		$this->db->query("UPDATE levels SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
 	}
 
+	function verifyCoins(bool $verify=false){
+		$this->db->query("UPDATE levels SET coins=".($verify?"ucoins":"0")." WHERE id=$this->id");
+	}
+
 	function reportLevel(){
 		$this->db->query("UPDATE levels SET reports=reports+1 WHERE id=$this->id");
+	}
+
+	function recalculateCPoints(int $uid){
+		$req=$this->db->query("SELECT starsGot,isFeatured,isEpic FROM levels WHERE uid=$uid");
+		if($this->db->isEmpty($req)) return -2;
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
+		$cpoints=0;
+		foreach ($reqm as $sreq){
+			if($sreq['starsGot']>0) $cpoints++;
+			if($sreq['isFeatured']==1) $cpoints++;
+			if($sreq['isEpic']==1) $cpoints++;
+		}
+		$this->db->query("UPDATE users SET cpoints=$cpoints WHERE uid=$uid");
 	}
 }
