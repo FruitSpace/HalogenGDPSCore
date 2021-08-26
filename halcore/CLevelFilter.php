@@ -83,30 +83,30 @@ class CLevelFilter{
 		$query="SELECT id FROM levels WHERE versionGame<=?";
 		switch($type){
 			case CLEVELFILTER_MOSTLIKED:
-				$orderitem="likes";
+				$orderitem="likes DESC downloads DESC";
 				break;
 			case CLEVELFILTER_MOSTDOWNLOADED:
-				$orderitem="downloads";
+				$orderitem="downloads DESC likes DESC";
 				break;
 			case CLEVELFILTER_TRENDING:
 				$uploadDate = date("Y-m-d H:i:s",time()-(7*24*60*60));
 				$query.=" AND uploadDate>'$uploadDate'";
-				$orderitem="likes";
+				$orderitem="likes DESC downloads DESC";
 				break;
 			case CLEVELFILTER_LATEST:
-				$orderitem="uploadDate";
+				$orderitem="uploadDate DESC downloads DESC";
 				break;
 			case CLEVELFILTER_MAGIC:
 				$query.=" AND objects>9999 AND length>=3 AND original_id=0";
-				$orderitem="uploadDate";
+				$orderitem="uploadDate DESC downloads DESC";
 				break;
 			case CLEVELFILTER_HALL:
 				$query.=" AND isHall=1";
-				$orderitem="likes";
+				$orderitem="likes DESC downloads DESC";
 				break;
 
 		}
-		$sortstr=" ORDER BY $orderitem DESC LIMIT 10 OFFSET $page";
+		$sortstr=" ORDER BY $orderitem LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
 			if(is_numeric($params['sterm'])){
 				$req=$this->db->preparedQuery($query." AND id=?".$suffix.$sortstr,"ii",
