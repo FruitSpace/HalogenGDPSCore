@@ -50,7 +50,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 				if($dbm->isEmpty($req)){
 					$date=date("Y-m-d H:i:s",strtotime("today midnight"));
 				}else{
-					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire'])." +1 day midnight");
+					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire']." +1 day midnight"));
 				}
 				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(0,$cl->id,'$date')");
 			}
@@ -66,7 +66,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 				if($dbm->isEmpty($req)){
 					$date=date("Y-m-d H:i:s",strtotime("today midnight"));
 				}else{
-					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire'])." +1 week midnight");
+					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire']." +1 week midnight"));
 				}
 				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(1,$cl->id,'$date')");
 			}
