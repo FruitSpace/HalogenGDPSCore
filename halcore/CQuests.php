@@ -19,12 +19,12 @@ class CQuests{
 	}
 
 	function getDaily(){
-		$req = $this->db->query("SELECT id, lvl_id FROM quests WHERE type=0 ORDER BY timeExpire DESC LIMIT 1");
+		$req = $this->db->preparedQuery("SELECT id, lvl_id FROM quests WHERE type=0 AND timeExpire<? ORDER BY timeExpire DESC LIMIT 1","s",date("Y-m-d H:i:s"));
 		return $req->fetch_assoc();
 	}
 
 	function getWeekly(){
-		$req = $this->db->query("SELECT id, lvl_id FROM quests WHERE type=1 ORDER BY timeExpire DESC LIMIT 1");
+		$req = $this->db->preparedQuery("SELECT id, lvl_id FROM quests WHERE type=1 AND timeExpire<? ORDER BY timeExpire DESC LIMIT 1","s"."Y-m-d H:i:s");
 		return $req->fetch_assoc();
 	}
 
@@ -41,7 +41,7 @@ class CQuests{
 	function publishQuest(int $type, int $needed, int $reward, $name){
 		$type=$type-200;
 		if(strlen($name)>64) return -1;
-		$this->db->preparedQuery("INSERT INTO quests (type,needed,reward,name) VALUES (?,?,?,?)","iiis",$type,$needed,$reward,$name);
+		$this->db->preparedQuery("INSERT INTO quests (type,needed,reward,name,timeExpire) VALUES (?,?,?,?,?)","iiiss",$type,$needed,$reward,$name,date("Y-m-d H:i:s"));
 		return $this->db->getDB()->insert_id;
 	}
 
@@ -53,7 +53,7 @@ class CQuests{
 			$timeLeft=strtotime("tommorow midnight")-time();
 			$lvl_id=0;
 		}
-		$req=$this->db->query("SELECT id,lvl_id FROM quests WHERE type=".($weekly?"1":"0")." AND timeExpire<now() ORDER BY timeExpire DESC");
+		$req=$this->db->query("SELECT id,lvl_id FROM quests WHERE type=".($weekly?"1":"0")." AND timeExpire<now() ORDER BY timeExpire DESC LIMIT 1");
 		if($this->db->isEmpty($req)) return "-2";
 		$sreq=$req->fetch_assoc();
 		return $lvl_id+$sreq['lvl_id']."|$timeLeft";
