@@ -116,12 +116,17 @@ class CComment{
 		$this->db->query("DELETE FROM comments WHERE id=$id AND uid=$uid");
 	}
 
-	function likeAccComment(int $comm_id, int $action=CCOMMENT_ACTION_LIKE){
+	function likeAccComment(int $comm_id, int $uid, int $action=CCOMMENT_ACTION_LIKE){
+		if(isLiked(ITEMTYPE_ACCCOMMENT,$uid,$comm_id,$this->db)) return -1;
 		$this->db->query("UPDATE acccomments SET likes=likes".($action==CCOMMENT_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
+		registerAction(ACTION_ACCCOMMENT_LIKE,$uid,$comm_id,array("type"=>($action==CCOMMENT_ACTION_DISLIKE?"Dislike":"Like")),$this->db);
 	}
 
-	function likeLvlComment(int $comm_id, int $action=CCOMMENT_ACTION_LIKE){
+	function likeLvlComment(int $comm_id, int $uid, int $action=CCOMMENT_ACTION_LIKE){
+		if(isLiked(ITEMTYPE_COMMENT,$uid,$comm_id,$this->db)) return -1;
 		$this->db->query("UPDATE comments SET likes=likes".($action==CCOMMENT_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
+		registerAction(ACTION_COMMENT_LIKE,$uid,$comm_id,array("type"=>($action==CCOMMENT_ACTION_DISLIKE?"Dislike":"Like")),$this->db);
+
 	}
 
 	function clean(){

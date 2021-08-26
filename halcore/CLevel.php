@@ -239,8 +239,11 @@ class CLevel{
 		$this->recalculateCPoints($this->uid);
 	}
 
-	function likeLevel(int $lvl_id, int $action=CLEVEL_ACTION_LIKE){
+	function likeLevel(int $lvl_id, int $uid, int $action=CLEVEL_ACTION_LIKE){
+		require_once __DIR__."/../../halcore/lib/actions.php";
+		if(isLiked(ITEMTYPE_LEVEL,$uid,$lvl_id,$this->db)) return -1;
 		$this->db->query("UPDATE levels SET likes=likes".($action==CLEVEL_ACTION_DISLIKE?"-":"+")."1 WHERE id=$lvl_id");
+		registerAction(ACTION_LEVEL_LIKE,$uid,$lvl_id,array("type"=>($action==CLEVEL_ACTION_DISLIKE?"Dislike":"Like")),$this->db);
 	}
 
 	function verifyCoins(bool $verify=false){
