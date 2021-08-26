@@ -46,7 +46,13 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 				$dbm->query("DELETE FROM quests WHERE lvl_id=$cl->id");
 			}else{
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Daily:Publish (Mod)"),$dbm);
-				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(0,$cl->id,'". date("Y-m-d H:i:s")."')");
+				$req=$dbm->query("SELECT timeExpire FROM quests WHERE type=0 ORDER BY timeExpire DESC LIMIT 1");
+				if($dbm->isEmpty($req)){
+					$date=date("Y-m-d H:i:s",strtotime("today midnight"));
+				}else{
+					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire'])." +1 day midnight");
+				}
+				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(0,$cl->id,'$date')");
 			}
 			return 1;
 		case "!weekly":
@@ -56,7 +62,13 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 				$dbm->query("DELETE FROM quests WHERE lvl_id=$cl->id");
 			}else{
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Weekly:Publish (Mod)"),$dbm);
-				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(1,$cl->id,'".date("Y-m-d H:i:s")."')");
+				$req=$dbm->query("SELECT timeExpire FROM quests WHERE type=1 ORDER BY timeExpire DESC LIMIT 1");
+				if($dbm->isEmpty($req)){
+					$date=date("Y-m-d H:i:s",strtotime("today midnight"));
+				}else{
+					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire'])." +1 week midnight");
+				}
+				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(1,$cl->id,'$date')");
 			}
 			return 1;
 		case "!rate":
