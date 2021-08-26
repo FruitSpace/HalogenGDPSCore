@@ -83,26 +83,26 @@ class CLevelFilter{
 		$query="SELECT id FROM levels WHERE versionGame<=?";
 		switch($type){
 			case CLEVELFILTER_MOSTLIKED:
-				$orderitem="likes DESC downloads DESC";
+				$orderitem="likes DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_MOSTDOWNLOADED:
-				$orderitem="downloads DESC likes DESC";
+				$orderitem="downloads DESC, likes DESC";
 				break;
 			case CLEVELFILTER_TRENDING:
 				$uploadDate = date("Y-m-d H:i:s",time()-(7*24*60*60));
 				$query.=" AND uploadDate>'$uploadDate'";
-				$orderitem="likes DESC downloads DESC";
+				$orderitem="likes DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_LATEST:
-				$orderitem="uploadDate DESC downloads DESC";
+				$orderitem="uploadDate DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_MAGIC:
 				$query.=" AND objects>9999 AND length>=3 AND original_id=0";
-				$orderitem="uploadDate DESC downloads DESC";
+				$orderitem="uploadDate DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_HALL:
 				$query.=" AND isHall=1";
-				$orderitem="likes DESC downloads DESC";
+				$orderitem="likes DESC, downloads DESC";
 				break;
 
 		}
