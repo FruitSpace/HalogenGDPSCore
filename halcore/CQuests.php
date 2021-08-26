@@ -24,7 +24,7 @@ class CQuests{
 	}
 
 	function getWeekly(){
-		$req = $this->db->preparedQuery("SELECT id, lvl_id FROM quests WHERE type=1 AND timeExpire<? ORDER BY timeExpire DESC LIMIT 1","s"."Y-m-d H:i:s");
+		$req = $this->db->preparedQuery("SELECT id, lvl_id FROM quests WHERE type=1 AND timeExpire<? ORDER BY timeExpire DESC LIMIT 1","s",date("Y-m-d H:i:s"));
 		return $req->fetch_assoc();
 	}
 
