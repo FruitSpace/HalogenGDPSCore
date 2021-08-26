@@ -50,7 +50,7 @@ class CQuests{
 			$timeLeft=strtotime("next week midnight")-time();
 			$lvl_id=100001; //Why the fuck robtop did this?
 		}else{
-			$timeLeft=strtotime("tommorow midnight")-time();
+			$timeLeft=strtotime("tomorrow midnight")-time();
 			$lvl_id=0;
 		}
 		$req=$this->db->query("SELECT id,lvl_id FROM quests WHERE type=".($weekly?"1":"0")." AND timeExpire<now() ORDER BY timeExpire DESC LIMIT 1");
