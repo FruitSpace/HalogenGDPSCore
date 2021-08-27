@@ -23,7 +23,7 @@ if(isset($_POST['udid']) and isset($_POST['chk'])  and $_POST['udid']!="" and $_
 	if($cq->exists(QUEST_TYPE_CHALLENGE)) {
 		$chk = doXOR(base64_decode(substr($chk, 5)), 19847);
 		$quests = $cq->getQuests();
-		$output = "SaKuJ:" . $uid . ":" . $chk . ":" . $udid . ":" . $uid . ":" . strtotime("tomorrow midnight") . ":" . $quests;
+		$output = "SaKuJ:" . $uid . ":" . $chk . ":" . $udid . ":" . $uid . ":" . (strtotime("tomorrow midnight")-time()) . ":" . $quests;
 		$output = str_replace("+", "-", str_replace("/", "_", base64_encode(doXOR($output, 19847))));
 		echo "SaKuJ" . $output . "|" . genhash_genSolo3($output);
 	}else{
