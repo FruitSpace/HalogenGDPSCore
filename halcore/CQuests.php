@@ -12,7 +12,7 @@ class CQuests{
 	}
 
 	function exists(int $type=QUEST_TYPE_DAILY){
-		$type="=".$type-200;
+		$type="=".($type-200);
 		if($type=2) $type=">1";
 		return $this->db->query("SELECT count(*) as cnt FROM quests WHERE type$type")->fetch_assoc()['cnt']>0;
 	}
@@ -45,7 +45,7 @@ class CQuests{
 	}
 
 	function getQuests(){
-		$req=$this->db->query("SELECT id,type,needed,reward,name,timeExpire FROM quests AS r1
+		$req=$this->db->query("SELECT r1.id,type,needed,reward,name,timeExpire FROM quests AS r1
     		JOIN (SELECT CEIL(RAND() * (SELECT MAX(id) FROM quests)) AS id) AS r2
  			WHERE r1.id >= r2.id AND r1.timeExpire<now() AND r1.type>1 ORDER BY r1.id ASC LIMIT 3");
 		$reqm=array();
