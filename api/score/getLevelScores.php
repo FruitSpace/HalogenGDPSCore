@@ -23,7 +23,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 		if (!empty($_POST['percent']) and !empty($_POST['s1'])) {
 			$percent = abs((int)$_POST['percent']);
 			$attempts = abs(((int)$_POST['s1'] < 8355 ? 1 : (int)$_POST['s1'] - 8354));
-			$coins = abs(((int)$_POST['s9'] < 5820 ? 1 : (int)$_POST['s1'] - 5819));
+			$coins = abs(((int)$_POST['s9'] < 5820 ? 0 : (int)$_POST['s1'] - 5819));
 			//cancel buff
 			$coins = ($coins > 3 ? 3 : $coins);
 			$percent=($percent>100?100:$percent);
