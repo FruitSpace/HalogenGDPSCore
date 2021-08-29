@@ -57,7 +57,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 			echo substr($output,0,-1);
 		}
 	}else{
-		echo "";
+		echo "-1";
 	}
 	$r=0;
 }else{
