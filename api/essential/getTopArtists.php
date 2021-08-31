@@ -1,4 +1,5 @@
 <?php
+if(!isset($_POST['secret'])) die();
 //We just redirect everything to robtob's site/ Who cares
 $request = "page=".(($_POST['page']."0")*2)."&secret=Wmfd2893gb7";
 parse_str($request, $post);

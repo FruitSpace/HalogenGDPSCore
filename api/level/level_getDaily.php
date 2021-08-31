@@ -9,6 +9,7 @@ if ($lsec->isIPBlacklisted($ip)){
 	header('HTTP/1.1 403 Forbidden');
 	die('This IP is banned for security reasons');
 }
+if(!isset($_POST['secret'])) die();
 $weekly=(empty($_POST['weekly'])?false:true);
 $dbm=new DBManagement();
 $cq=new CQuests($dbm);

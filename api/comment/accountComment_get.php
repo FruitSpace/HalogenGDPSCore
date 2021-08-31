@@ -10,6 +10,7 @@ if ($lsec->isIPBlacklisted($ip)){
 	header('HTTP/1.1 403 Forbidden');
 	die('This IP is banned for security reasons');
 }
+if(!isset($_POST['secret'])) die();
 if(isset($_POST['accountID']) and isset($_POST['page']) and $_POST['accountID']!="" and $_POST['page']!=""){
 	$uid=(int)$_POST['accountID'];
 	$page=(int)$_POST['page'];
