@@ -10,11 +10,12 @@ if ($lsec->isIPBlacklisted($ip)){
 	header('HTTP/1.1 403 Forbidden');
 	die('This IP is banned for security reasons');
 }
+if(!isset($_POST['secret'])) die();
 if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
-if(!isset($_POST['secret'])) die();
+
 $type=(empty($_POST['type'])?"top":$_POST['type']);
 $dbm=new DBManagement();
 $acc=new CAccount($dbm);
