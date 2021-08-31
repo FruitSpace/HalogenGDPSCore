@@ -14,6 +14,7 @@ if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
+if(!isset($_POST['secret'])) die();
 $type=(empty($_POST['type'])?"top":$_POST['type']);
 $dbm=new DBManagement();
 $acc=new CAccount($dbm);
