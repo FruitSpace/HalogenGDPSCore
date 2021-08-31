@@ -1,5 +1,5 @@
 <?php
-
+if(!isset($_POST['secret'])) die();
 $data = array('songID' => $_POST['songID'], 'secret' => 'Wmfd2893gb7');
 $options = array(
 	'http' => array(

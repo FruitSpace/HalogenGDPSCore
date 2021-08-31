@@ -12,11 +12,11 @@ if ($lsec->isIPBlacklisted($ip)){
 	header('HTTP/1.1 403 Forbidden');
 	die('This IP is banned for security reasons');
 }
+if(!isset($_POST['secret'])) die();
 if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
-if(!isset($_POST['gameVersion'])) die("Nope");
 $versionGame=(empty($_POST['gameVersion'])?30:(int)$_POST['gameVersion']);
 if($versionGame == 20){
 	$versionBinary = (int)$_POST["binaryVersion"];
