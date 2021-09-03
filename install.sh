@@ -64,4 +64,9 @@ sed -i -e "s/XDB_USERX/halgd_${gdps_id}/g" conf/dbconfig.php
 sed -i -e "s/XDB_PASSX/${gdps_pass}/g" conf/dbconfig.php
 sed -i -e "s/XDB_NAMEX/gdps_${gdps_id}/g" conf/dbconfig.php
 
+echo "Making paths..."
+mkdir -p files/savedata
+touch files/ban_ip.txt
+touch files/log.html
+
 echo -e "DB Info:\n\tLogin: halgd_${gdps_id}\n\tPass: ${gdps_pass}"
