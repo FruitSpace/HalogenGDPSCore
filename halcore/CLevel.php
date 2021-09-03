@@ -79,7 +79,7 @@ class CLevel{
 	}
 
 	function loadMain(){
-		$req=$this->db->query("SELECT name,description,uid,password,versionBinary,length,difficulty,demonDifficulty,suggestDifficulty,suggestDifficultyCnt FROM levels WHERE id=$this->id")->fetch_assoc();
+		$req=$this->db->query("SELECT name,description,uid,password,version,length,difficulty,demonDifficulty,suggestDifficulty,suggestDifficultyCnt FROM levels WHERE id=$this->id")->fetch_assoc();
 		$this->name=$req['name'];
 		$this->description=$req['description'];
 		$this->uid=$req['uid'];
