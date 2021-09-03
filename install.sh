@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -n "$1" ]; then
+if [ -z ${1+x} ]; then
 echo -e "Usage: $0 <gdps_id> [plan]\nPlans: press_start (default), continue, boss_fight, final_stage"
 exit
 fi
