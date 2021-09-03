@@ -14,7 +14,7 @@ mysql -e "CREATE DATABASE gdps_${gdps_id};"
 mysql -e "GRANT ALL PRIVILEGES ON gdps_${gdps_id}.* TO 'halgd_${gdps_id}'@'localhost';"
 mysql gdps_${gdps_id} < database.sql
 rm database.sql
-if [ -n "$2" ]; then
+if [ -z ${2+x} ]; then
   gdps_plan="press_start"
 else
   gdps_plan=$2
