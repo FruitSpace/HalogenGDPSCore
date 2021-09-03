@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-sudo apt install php php-fpm php-curl php-mysql
-rm DOCS.md README.md
+
 if [ -n "$1" ]; then
 echo -e "Usage: $0 <gdps_id> [plan]\nPlans: press_start (default), continue, boss_fight, final_stage"
 exit
 fi
 gdps_id=$1
 gdps_pass=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 12 | head -n 1)"*"
-
+sudo apt install php php-fpm php-curl php-mysql
+rm DOCS.md README.md
 echo "Making DB..."
 mysql -e "CREATE USER 'halgd_${gdps_id}'@'localhost' IDENTIFIED BY '${gdps_pass}';"
 mysql -e "CREATE DATABASE gdps_${gdps_id};"
