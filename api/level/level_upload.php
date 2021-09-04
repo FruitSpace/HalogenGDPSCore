@@ -42,7 +42,18 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
 		if(!empty($_POST['levelID'])){
 			$cl->id=(int)$_POST['levelID'];
 			if($cl->isOwnedBy($uid)>0){
-				//UPD
+				$res=$cl->updateLevel();
+				echo $res;
+				if($res>0) {
+					$xdata = array(
+						"name" => $cl->name,
+						"version" => $cl->version,
+						"objects" => $cl->objects,
+						"starsReq" => $cl->starsRequested
+					);
+					require_once __DIR__ . "/../../halcore/lib/actions.php";
+					registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+				}
 			}else{
 				echo "-1";
 			}
