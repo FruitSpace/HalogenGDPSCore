@@ -30,7 +30,6 @@ $param=array();
 err_handle("TMPR","verbose",json_encode($_POST));
 
 $param['versionGame']=$versionGame;
-if(empty($_POST['type'])) die("Request reqjected");
 $type=(empty($_POST['type'])?0:(int)$_POST['type']);
 if(!empty($_POST['str'])){
 	$param["sterm"]=exploitPatch_remove($_POST['str']);
