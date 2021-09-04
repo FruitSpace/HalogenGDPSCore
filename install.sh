@@ -69,8 +69,8 @@ mkdir -p files/savedata
 touch files/ban_ip.txt
 touch files/log.html
 chmod -R www-data:www-data .
-git update-index --skip-worktree conf
-git update-index --skip-worktree files
+git update-index --skip-worktree conf/
+git update-index --skip-worktree files/
 
 echo -e "DB Info:\n\tLogin: halgd_${gdps_id}\n\tPass: ${gdps_pass}"
 rm install.sh

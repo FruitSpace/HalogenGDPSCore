@@ -391,8 +391,8 @@ class CAccount{
 		if(strlen($uname)>16) return -1;
 		$semail=explode("@",$email);
 		if(count($semail)!=2) return -1;
-		if($semail[1]!="yandex.ru" or $semail[1]!="ya.ru" or $semail[1]!="mail.ru" or $semail[1]!="gmail.com"
-			or $semail[1]!="aol.com" or $semail[1]!="rambler.ru" or $semail[1]!="bk.ru") return -1;
+		if($semail[1]!="yandex.ru" and $semail[1]!="ya.ru" and $semail[1]!="mail.ru" and $semail[1]!="gmail.com"
+			and $semail[1]!="aol.com" and $semail[1]!="rambler.ru" and $semail[1]!="bk.ru") return -1;
 		if($this->getUIDbyUname($uname)!=-1) return -2;
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;
