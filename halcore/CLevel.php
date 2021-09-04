@@ -177,6 +177,14 @@ class CLevel{
 		return $this->db->getDB()->insert_id;
 	}
 
+	function updateLevel(){
+		if(!$this->checkParams()) return -1;
+		$query="UPDATE levels SET name=?, description=?, password=?, version=?, length=?, track_id=?, song_id=?, versionGame=?, versionBinary=?, stringExtra=?, stringLevel=?, stringLevelInfo=?, original_id=?, objects=?, starsRequested=?, ucoins=?, is2p=?, isVerified=?, isUnlisted=?, isLDM=?, updateDate=? WHERE id=$this->id";
+		$this->db->preparedQuery($query,"ssiiiiiiisssiiiiiiiis",$this->name,$this->description,$this->password,$this->version,$this->length,$this->track_id,$this->song_id,$this->versionGame,$this->versionBinary,$this->stringExtra,$this->stringLevel,$this->stringLevelInfo,$this->origId,$this->objects,
+			$this->starsRequested,$this->ucoins,$this->is2p,$this->isVerified,$this->isUnlisted,$this->isLDM,date("Y-m-d H:i:s"));
+		return $this->id;
+	}
+
 	function updateDescription($desc){
 		if(strlen($this->description)>256) return -1;
 		$this->db->preparedQuery("UPDATE levels SET description=? WHERE id=$this->id","s",$desc);
