@@ -94,7 +94,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 					$diff="50";
 					break;
 				case "reset":
-					$diff="0 AND starsGot=0";
+					$diff="0,starsGot=0";
 					break;
 				default:
 					return -1;
