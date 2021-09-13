@@ -46,7 +46,7 @@ class CQuests{
 
 	function getQuests(){
 		$req=$this->db->query("SELECT r1.id,type,needed,reward,name,timeExpire FROM quests AS r1
-    		JOIN (SELECT CEIL(RAND() * (SELECT MAX(id) FROM quests)) AS id) AS r2
+    		JOIN (SELECT CEIL(RAND() * (SELECT MAX(id) FROM quests WHERE type>1)) AS id) AS r2
  			WHERE r1.id >= r2.id AND r1.timeExpire<now() AND r1.type>1 ORDER BY r1.id ASC LIMIT 3");
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
