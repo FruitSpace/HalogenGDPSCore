@@ -113,17 +113,17 @@ class CLevelFilter{
 			if(is_numeric($params['sterm'])){
 				$req=$this->db->preparedQuery($query." AND id=?".$suffix.$sortstr,"ii",
 					$params['versionGame'],$params['sterm']);
-				$this->count=$this->db->preparedQuery($cntquery." AND id=?".$suffix.$sortstr,"ii",
+				$this->count=$this->db->preparedQuery($cntquery." AND id=?".$suffix,"ii",
 					$params['versionGame'],$params['sterm'])->fetch_assoc()['cnt'];
 			}else{
 				$req=$this->db->preparedQuery($query." AND (id=? OR name LIKE ?) AND isUnlisted=0".$suffix.$sortstr,"iis",
 					$params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
-				$this->count=$this->db->preparedQuery($cntquery." AND (id=? OR name LIKE ?) AND isUnlisted=0".$suffix.$sortstr,"iis",
+				$this->count=$this->db->preparedQuery($cntquery." AND (id=? OR name LIKE ?) AND isUnlisted=0".$suffix,"iis",
 					$params['versionGame'],$params['sterm'],"%".$params['sterm']."%")->fetch_assoc()['cnt'];
 			}
 		}else{
 			$req=$this->db->preparedQuery($query." AND isUnlisted=0".$suffix.$sortstr,"i",$params['versionGame']);
-			$this->count=$this->db->preparedQuery($cntquery." AND isUnlisted=0".$suffix.$sortstr,"i",$params['versionGame'])->fetch_assoc()['cnt'];
+			$this->count=$this->db->preparedQuery($cntquery." AND isUnlisted=0".$suffix,"i",$params['versionGame'])->fetch_assoc()['cnt'];
 		}
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
