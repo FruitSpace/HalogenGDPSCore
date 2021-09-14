@@ -80,7 +80,7 @@ class CLevelFilter{
 	function searchLevels(int $page,$params, int $type=CLEVELFILTER_MOSTLIKED){
 		$suffix=$this->generateQueryString($params);
 		$unlisted=true;
-		$query="SELECT id FROM levels WHERE versionGame<=?";
+		$query="SELECT id, count(*) as cnt FROM levels WHERE versionGame<=?";
 		switch($type){
 			case CLEVELFILTER_MOSTLIKED:
 				$orderitem="likes DESC, downloads DESC";
@@ -125,6 +125,7 @@ class CLevelFilter{
 		foreach($reqm as $sreq){
 			array_push($lvls,$sreq['id']);
 		}
+		$lvls['cnt']=$reqm[0]['cnt'];
 		return $lvls;
 	}
 
