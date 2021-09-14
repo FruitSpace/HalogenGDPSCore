@@ -63,12 +63,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			}else{
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Weekly:Publish (Mod)"),$dbm);
 				$req=$dbm->query("SELECT timeExpire FROM quests WHERE type=1 ORDER BY timeExpire DESC LIMIT 1");
-				if($dbm->isEmpty($req)){
-					$date=date("Y-m-d H:i:s",strtotime("today midnight"));
-				}else{
-					$date=date("Y-m-d H:i:s",strtotime($req->fetch_assoc()['timeExpire']." +1 week midnight"));
-				}
-				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(1,$cl->id,'$date')");
+				$dbm->query("INSERT INTO quests (type,lvl_id,timeExpire) VALUES(1,$cl->id,NOW())");
 			}
 			return 1;
 		case "!rate":
