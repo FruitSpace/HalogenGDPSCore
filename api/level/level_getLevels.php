@@ -211,8 +211,7 @@ if(empty($levels)) die("-2");
 $output="";
 $userstring="";
 $hashstr="";
-$count=$levels['cnt'];
-unset($levels['cnt']);
+$count=$filter->count;
 foreach($levels as $slevel){
 	$cl=new CLevel($dbm);
 	$cl->id=$slevel;

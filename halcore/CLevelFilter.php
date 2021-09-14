@@ -9,6 +9,7 @@ define("CLEVELFILTER_HALL",705);
 
 class CLevelFilter{
 	public $db; //!Remove dbm
+	public $count;
 
 	/*
 	 * --- [PARAMS] Object ---
@@ -125,7 +126,7 @@ class CLevelFilter{
 		foreach($reqm as $sreq){
 			array_push($lvls,$sreq['id']);
 		}
-		$lvls['cnt']=$reqm[0]['cnt'];
+		$this->count=$reqm[0]['cnt'];
 		return $lvls;
 	}
 
