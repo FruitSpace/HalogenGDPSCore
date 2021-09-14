@@ -81,7 +81,8 @@ class CLevelFilter{
 	function searchLevels(int $page,$params, int $type=CLEVELFILTER_MOSTLIKED){
 		$suffix=$this->generateQueryString($params);
 		$unlisted=true;
-		$query="SELECT id, count(*) as cnt FROM levels WHERE versionGame<=?";
+		$query="SELECT id FROM levels WHERE versionGame<=?";
+		$cntquery="SELECT count(*) as cnt FROM levels WHERE versionGame<=?";
 		switch($type){
 			case CLEVELFILTER_MOSTLIKED:
 				$orderitem="likes DESC, downloads DESC";
@@ -112,12 +113,17 @@ class CLevelFilter{
 			if(is_numeric($params['sterm'])){
 				$req=$this->db->preparedQuery($query." AND id=?".$suffix.$sortstr,"ii",
 					$params['versionGame'],$params['sterm']);
+				$this->count=$this->db->preparedQuery($cntquery." AND id=?".$suffix.$sortstr,"ii",
+					$params['versionGame'],$params['sterm'])->fetch_assoc()['cnt'];
 			}else{
 				$req=$this->db->preparedQuery($query." AND (id=? OR name LIKE ?) AND isUnlisted=0".$suffix.$sortstr,"iis",
 					$params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
+				$this->count=$this->db->preparedQuery($cntquery." AND (id=? OR name LIKE ?) AND isUnlisted=0".$suffix.$sortstr,"iis",
+					$params['versionGame'],$params['sterm'],"%".$params['sterm']."%")->fetch_assoc()['cnt'];
 			}
 		}else{
 			$req=$this->db->preparedQuery($query." AND isUnlisted=0".$suffix.$sortstr,"i",$params['versionGame']);
+			$this->count=$this->db->preparedQuery($cntquery." AND isUnlisted=0".$suffix.$sortstr,"i",$params['versionGame'])->fetch_assoc()['cnt'];
 		}
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
@@ -126,7 +132,6 @@ class CLevelFilter{
 		foreach($reqm as $sreq){
 			array_push($lvls,$sreq['id']);
 		}
-		$this->count=$reqm[0]['cnt'];
 		return $lvls;
 	}
 
