@@ -138,19 +138,25 @@ class CLevelFilter{
 	function searchUserLevels(int $page,$params, bool $followmode=false){
 		$suffix=$this->generateQueryString($params);
 		$query="SELECT id FROM levels WHERE versionGame<=?";
+		$cntquery="SELECT count(*) as cnt FROM levels WHERE versionGame<=?";
 		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm']) and $followmode===false){
 			if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii", $params['versionGame'],$params['sterm']);
+			$this->count=$this->db->preparedQuery($cntquery." AND uid=?".$suffix,"ii", $params['versionGame'],$params['sterm'])->fetch_assoc()['cnt'];
 		}elseif($followmode==true){
 			if(isset($params['sterm'])) {
 				if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 				$req = $this->db->preparedQuery($query." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
+				$this->count=$this->db->preparedQuery($cntquery." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%")->fetch_assoc()['cnt'];
 			}else{
 				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".$params['followList'].")".$suffix . $sortstr, "i", $params['versionGame']);
+				$this->count = $this->db->preparedQuery($cntquery." AND isUnlisted=0 AND uid IN (".$params['followList'].")".$suffix, "i", $params['versionGame'])->fetch_assoc()['cnt'];
+
 			}
 		}else{
 			$req=$this->db->preparedQuery($query.$suffix.$sortstr,"i",$params['versionGame']);
+			$this->count=$this->db->preparedQuery($cntquery.$suffix,"i",$params['versionGame'])->fetch_assoc()['cnt'];
 		}
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
@@ -163,11 +169,13 @@ class CLevelFilter{
 	}
 
 	function searchListLevels(int $page,$params){
-		$query="SELECT id FROM levels WHERE versionGame<=? AND isUnlisted=0";
+		$query="SELECT id FROM levels WHERE versionGame<=?";
+		$cntquery="SELECT count(*) as cnt FROM levels WHERE versionGame<=?";
 		$sortstr=" LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
 			$luid=" AND id IN (".$params['sterm'].")";
 			$req=$this->db->preparedQuery($query.$luid.$sortstr,"i", $params['versionGame']);
+			$this->count=$this->db->preparedQuery($cntquery.$luid,"i", $params['versionGame'])->fetch_assoc()['cnt'];
 		}else{
 			return array();
 		}
