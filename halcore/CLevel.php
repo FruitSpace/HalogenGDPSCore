@@ -234,7 +234,24 @@ class CLevel{
 	}
 
 	function rateDemon(int $diff){
-		$this->db->query("UPDATE levels SET demonDifficulty=$diff WHERE id=$this->id");
+		switch($diff){
+			case 5:
+				$xdiff=6;
+				break;
+			case 4:
+				$xdiff=5;
+				break;
+			case 3:
+				$xdiff=0;
+				break;
+			case 2:
+				$xdiff=4;
+				break;
+			case 1:
+			default:
+				$xdiff=3;
+		}
+		$this->db->query("UPDATE levels SET demonDifficulty=$xdiff WHERE id=$this->id");
 	}
 
 	function featureLevel(bool $feature=false){
