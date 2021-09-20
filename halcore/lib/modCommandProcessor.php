@@ -3,31 +3,29 @@
 function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, bool $isOwner=false, $privs=null){
 	$command=explode(" ",$comment);
 	require_once __DIR__."/../../halcore/lib/actions.php";
-	require_once __DIR__."/../../halcore/CAccount.php";
-	$acc->loadAuth();
 	switch($command[0]){
 		case "!feature":
-			if($isOwner or $privs['cFeature']!=1) return -1;
+			if(is_null($privs) or $privs['cFeature']!=1) return -1;
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Feature (Mod)"),$dbm);
 			$cl->featureLevel(true);
 			return 1;
 		case "!unfeature":
-			if($isOwner or $privs['cFeature']!=1) return -1;
+			if(is_null($privs) or $privs['cFeature']!=1) return -1;
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Unfeature (Mod)"),$dbm);
 			$cl->featureLevel(false);
 			return 1;
 		case "!epic":
+			if(is_null($privs) or $privs['cEpic']!=1) return -1;
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Epic (Mod)"),$dbm);
-			if($isOwner or $privs['cEpic']!=1) return -1;
 			$cl->epicLevel(true);
 			return 1;
 		case "!unepic":
-			if($isOwner or $privs['cEpic']!=1) return -1;
+			if(is_null($privs) or $privs['cEpic']!=1) return -1;
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Unepic (Mod)"),$dbm);
 			$cl->epicLevel(false);
 			return 1;
 		case "!coins":
-			if($isOwner or $privs['cVerCoins']!=1) return -1;
+			if(is_null($privs) or $privs['cVerCoins']!=1) return -1;
 			if(!isset($command[1])) return -1;
 			if($command[1]=="verify"){
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Coins:Verify (Mod)"),$dbm);
@@ -40,7 +38,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			}
 			return 1;
 		case "!daily":
-			if($isOwner or $privs['cDaily']!=1) return -1;
+			if(is_null($privs) or $privs['cDaily']!=1) return -1;
 			if(isset($command[1]) and $command[1]=="reset"){
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Daily:Reswt (Mod)"),$dbm);
 				$dbm->query("DELETE FROM quests WHERE lvl_id=$cl->id");
@@ -56,7 +54,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			}
 			return 1;
 		case "!weekly":
-			if($isOwner or $privs['cWeekly']!=1) return -1;
+			if(is_null($privs) or $privs['cWeekly']!=1) return -1;
 			if(isset($command[1]) and $command[1]=="reset"){
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Weekly:Reset (Mod)"),$dbm);
 				$dbm->query("DELETE FROM quests WHERE lvl_id=$cl->id");
@@ -72,7 +70,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			}
 			return 1;
 		case "!rate":
-			if($privs['cRate']!=1) return -1;
+			if(is_null($privs) or $privs['cRate']!=1) return -1;
 			if(!isset($command[1])) return -1;
 			switch(strtolower($command[1])){
 				case "auto":
@@ -108,13 +106,13 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			if(!isset($command[1])) return -1;
 			switch ($command[1]){
 				case "delete":
-					if($isOwner or $privs['cDelete']!=1) return -1;
+					if(is_null($privs) or $privs['cDelete']!=1) return -1;
 					if(!isset($command[2]) or $command[2]!=$cl->id) return -1;
 					registerAction(ACTION_LEVEL_DELETE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Delete (".($isOwner?"Owner":"Mod").")"),$dbm);
 					$dbm->query("DELETE FROM levels WHERE id=$cl->id");
 					return 1;
 				case "rename":
-					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
+					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					if(!isset($command[2])) return -1;
 					registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Rename (".($isOwner?"Owner":"Mod").")"),$dbm);
 					if(strlen(str_replace("!lvl rename ","",$comment))>32) return -1;
@@ -141,7 +139,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 							return -1;
 					}
 				case "chown":
-					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
+					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					if(!isset($command[2]) or !isset($command[3]) or ($command[2])!=$cl->id) return -1;
 					require_once __DIR__."/../CAccount.php";
 					$acc=new CAccount($dbm);
@@ -151,23 +149,23 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 					$dbm->query("UPDATE levels SET uid=$uid WHERE id=$cl->id");
 					return 1;
 				case "desc":
-					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
+					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					if(!isset($command[2]) or strlen(str_replace("!lvl desc ","",$comment))>256) return -1;
 					registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"UpdDescription (".($isOwner?"Owner":"Mod").")"),$dbm);
 					$dbm->preparedQuery("UPDATE levels SET description=? WHERE id=$cl->id","s",base64_encode(str_replace("!lvl desc ","",$comment)));
 					return 1;
 				case "list":
-					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
+					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"List (".($isOwner?"Owner":"Mod").")"),$dbm);
 					$dbm->query("UPDATE levels SET isUnlisted=0 WHERE id=$cl->id");
 					return 1;
 				case "unlist":
-					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
+					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Unlist (".($isOwner?"Owner":"Mod").")"),$dbm);
 					$dbm->query("UPDATE levels SET isUnlisted=1 WHERE id=$cl->id");
 					return 1;
 				case "ldm":
-					if(!$isOwner and $privs['cLvlAccess']!=1) return -1;
+					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					if(!isset($command[2])) return -1;
 					switch ($command[2]){
 						case "on":
