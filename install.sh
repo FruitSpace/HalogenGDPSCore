@@ -68,7 +68,7 @@ echo "Making paths..."
 mkdir -p files/savedata
 touch files/ban_ip.txt
 touch files/log.html
-chmod -R www-data:www-data .
+chown -R www-data:www-data .
 git update-index --skip-worktree conf/
 git update-index --skip-worktree files/
 
