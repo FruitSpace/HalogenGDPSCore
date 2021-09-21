@@ -28,9 +28,10 @@ class LibSec{
 	}
 
 	function verifySession(DBManagement $db, int $uid, $ip, $gjp){
-		$req=$db->query("SELECT accessDate, lastIP FROM users WHERE uid=$uid");
+		$req=$db->query("SELECT accessDate, lastIP, isBanned FROM users WHERE uid=$uid");
 		if($db->isEmpty($req)) return 0;
 		$req=$req->fetch_assoc();
+		if($req['isBanned']>0) return 0;
 		if($ip==$req['lastIP'] and (time()-strtotime($req['accessDate']))<3600) return 1;
 		require_once __DIR__ . "/legacy.php";
 		require_once __DIR__ . "/../CAccount.php";
