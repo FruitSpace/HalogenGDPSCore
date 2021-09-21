@@ -364,10 +364,30 @@ class CAccount{
 	}
 
 	function banUser($action=CBAN_BAN){
-		if ($action==CBAN_BAN) $ban=1;
+		if ($action==CBAN_BAN) $ban=2;
 		if ($action==CBAN_UNBAN) $ban=0;
 		$this->isBanned=$ban;
 		$this->db->query("UPDATE users SET isBanned=$ban WHERE uid=$this->uid");
+	}
+
+	function verifyAccount($uname, $pass){ //returns UID on success and -1 on failure
+		$uid=$this->getUIDbyUname($uname, true);
+		$this->uid=$uid;
+		if ($uid>0) {
+			$this->loadAuth(CAUTH_UID);
+			if($this->isBanned==0){
+				return 2;
+			}
+			if($this->isBanned==2){
+				return 3;
+			}
+			$pass=md5(md5($pass."HalogenCore1704")."ae07").substr(md5($pass),0,4);
+			if ($this->passhash == $pass) {
+				$this->banUser(CBAN_UNBAN);
+				return 1;
+			}
+		}
+		return -1;
 	}
 
 	function logIn($uname, $pass, $ip, $uid=null){ //returns UID on success and -1 on failure
@@ -375,7 +395,7 @@ class CAccount{
 		$this->uid=$uid;
 		if ($uid>0) {
 			$this->loadAuth(CAUTH_UID);
-			if($this->isBanned==1){
+			if($this->isBanned>0){
 				return -12;
 			}
 			$pass=md5(md5($pass."HalogenCore1704")."ae07").substr(md5($pass),0,4);
@@ -397,7 +417,7 @@ class CAccount{
 		$req=$this->db->preparedQuery("SELECT uid FROM users WHERE email=?","s",$email);
 		if(!$this->db->isEmpty($req)) return -3;
 		$passx=md5(md5($pass."HalogenCore1704")."ae07").substr(md5($pass),0,4);
-		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate) VALUES (?,?,?,?,?)";
+		$q="INSERT INTO users (uname,passhash,email,regDate,accessDate,isBanned) VALUES (?,?,?,?,?,1)";
 		$date=date("Y-m-d H:i:s");
 		$this->db->preparedQuery($q,"sssss",$uname,$passx,$email,$date,$date);
 		require_once __DIR__."/lib/shd0w.php";

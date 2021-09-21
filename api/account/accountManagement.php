@@ -1,3 +1,3 @@
 <?php
-header("Location: http://s.halhost.cc/userpanel/");
+header("Location: http://s.halhost.cc/userpanel.php");
 ?>
