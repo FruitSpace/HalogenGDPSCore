@@ -3,7 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CLevelFilter.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 
-$ip=$_SERVER['REMOTE_ADDR'];
+$ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
 if ($lsec->isIPBlacklisted($ip)){
 	header('HTTP/1.1 403 Forbidden');
