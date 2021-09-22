@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CComment.php";
+require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 
@@ -19,7 +20,13 @@ if(isset($_POST['accountID']) and isset($_POST['commentID']) and isset($_POST['g
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cc=new CComment($dbm);
-		$cc->deleteLvlComment($id, $uid);
+		$cl=new CLevel($dbm);
+		$cl->id=$lvl_id;
+		if($cl->isOwnedBy($uid)) {
+			$cc->deleteOwnerLvlComment($id, $lvl_id);
+		}else{
+			$cc->deleteLvlComment($id, $uid);
+		}
 		echo "1";
 	}else{
 		echo "-1";
