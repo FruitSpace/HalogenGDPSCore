@@ -116,6 +116,12 @@ class CComment{
 		$this->db->query("DELETE FROM comments WHERE id=$id AND uid=$uid");
 	}
 
+	function deleteOwnerLvlComment($id=null, $lvl_id=null){
+		$id=($id==null?$this->id:(int)$id);
+		$lvl_id=($lvl_id==null?$this->id:(int)$lvl_id);
+		$this->db->query("DELETE FROM comments WHERE id=$id AND lvl_id=$lvl_id");
+	}
+
 	function likeAccComment(int $comm_id, int $uid, int $action=CCOMMENT_ACTION_LIKE){
 		require_once __DIR__."/lib/actions.php";
 		if(isLiked(ITEMTYPE_ACCCOMMENT,$uid,$comm_id,$this->db)) return -1;
