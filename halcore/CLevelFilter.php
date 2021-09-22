@@ -103,7 +103,7 @@ class CLevelFilter{
 				$orderitem="uploadDate DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_HALL:
-				$query.=" AND isHall=1";
+				$query.=" AND isEpic=1"; //!HALL OF FAME OVERRIDE
 				$orderitem="likes DESC, downloads DESC";
 				break;
 
