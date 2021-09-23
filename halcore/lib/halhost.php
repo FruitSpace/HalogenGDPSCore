@@ -51,7 +51,7 @@ function callHalogenTrigger($trigger){
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	$chout=curl_exec($ch);
 	if($chout!="ok"){
-		$former="Could not reach trigger for server ".SRV_ID."  trigger $trigger\n\tOUTPUT: $chout";
-		err_handle("HAL_LIMIT","error", $former, false);
+		$former="Could not reach trigger for server ".SRV_ID." trigger $trigger\n\tOUTPUT: $chout";
+		err_handle("HAL_LIMIT","err", $former, false);
 	}
 }
