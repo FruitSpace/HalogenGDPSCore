@@ -98,7 +98,7 @@ class CLevelFilter{
 				$orderitem="uploadDate DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_MAGIC:
-				$query.=" AND objects>9999 AND length>=3 AND original_id=0";
+				$query.=" AND objects>9999 AND length>=3 AND original_id=0 AND starsGot>0";
 				$orderitem="uploadDate DESC, downloads DESC";
 				break;
 			case CLEVELFILTER_HALL:
