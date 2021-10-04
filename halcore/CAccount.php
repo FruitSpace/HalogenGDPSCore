@@ -251,7 +251,7 @@ class CAccount{
 		return $this->db->preparedQuery("SELECT count(*) as cnt FROM users WHERE lastIP=?","s",$ip)->fetch_assoc()['cnt'];
 	}
 
-	function updateBlacklist($action=CBLACKLIST_BLOCK, $uid){
+	function updateBlacklist($action, $uid){
 		$this->loadSocial();
 		$blacklist=explode(",",$this->blacklist);
 		if($action==CBLACKLIST_BLOCK and !in_array($uid,$blacklist)) array_push($blacklist,$uid);

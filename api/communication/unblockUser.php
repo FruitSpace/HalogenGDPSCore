@@ -13,7 +13,7 @@ if ($lsec->isIPBlacklisted($ip)){
 if(isset($_POST['accountID']) and isset($_POST['targetAccountID']) and isset($_POST['gjp']) and $_POST['accountID']!=""
 	and $_POST['targetAccountID']!="" and $_POST['gjp']!=""){
 	$uid=(int)$_POST['accountID'];
-	$uid_dest=(int)$_POST['accountID'];
+	$uid_dest=(int)$_POST['targetAccountID'];
 	$gjp=exploitPatch_remove($_POST['gjp']);
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
