@@ -36,7 +36,6 @@ if(isset($_POST['userID']) and $_POST['userID']!=""){
 		$commentcount=$cc->countCommentHistory($id);
 		foreach($comments as $comm){
 			$age=getDateAgo(strtotime($comm->postedDate));
-			if(!$acc->exists($comm->uid)) continue; //! Fix That temp deleted acc filter
 			$output.="2~".$comm->comment."~3~".$id."~4~".$comm->likes."~5~0~7~".$comm->isSpam."~9~".$age."~10~".$comm->percent;
 			$output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
 			//user part, Force No glow
