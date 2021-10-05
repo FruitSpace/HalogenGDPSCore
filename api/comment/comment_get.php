@@ -34,6 +34,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 		foreach($comments as $comm){
 			$age=getDateAgo(strtotime($comm->postedDate));
 			$acc=new CAccount($dbm);
+			if(!$acc->exists($comm->uid)) continue; //! Fix That temp deleted acc filter
 			$acc->uid=$comm->uid;
 			$acc->loadAuth();
 			$acc->loadVessels();
