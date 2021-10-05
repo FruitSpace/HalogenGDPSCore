@@ -29,6 +29,10 @@ class CComment{
 		return $this->db->query("SELECT count(*) as cnt FROM comments $postfix")->fetch_assoc()['cnt'];
 	}
 
+	function countCommentHistory(int $id){
+		return $this->db->query("SELECT count(*) as cnt FROM comments WHERE uid=$id")->fetch_assoc()['cnt'];
+	}
+
 	function loadAccComment(){
 		$req=$this->db->query("SELECT uid,comment,postedTime,likes,isSpam FROM acccomments WHERE id=$this->id")->fetch_assoc();
 		$this->uid=$req['uid'];
@@ -69,8 +73,8 @@ class CComment{
 		$this->percent=$req['percent'];
 	}
 
-	function getAllLvlComments(int $lvl_id, bool $sort_mode=false){
-		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=? ORDER BY ".($sort_mode?"likes":"postedTime")." DESC","i",$lvl_id);
+	function getAllLvlComments(int $lvl_id, int $page, bool $sort_mode=false){
+		$req=$this->db->preparedQuery("SELECT id,uid,comment,postedTime,likes,isSpam,percent FROM comments WHERE lvl_id=? ORDER BY ".($sort_mode?"likes":"postedTime")." DESC OFFSET $page LIMIT 10","i",$lvl_id);
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
@@ -79,6 +83,26 @@ class CComment{
 			$ccObj= new CComment($this->db);
 			$ccObj->lvl_id=$this->lvl_id;
 			$ccObj->uid=$sreq['uid'];
+			$ccObj->id=$sreq['id'];
+			$ccObj->comment=$sreq['comment'];
+			$ccObj->postedDate=$sreq['postedTime'];
+			$ccObj->likes=$sreq['likes'];
+			$ccObj->isSpam=$sreq['isSpam'];
+			$ccObj->percent=$sreq['percent'];
+			array_push($lvl,$ccObj);
+		}
+		return $lvl;
+	}
+
+	function getAllCommentsHistory(int $uid, int $page, bool $sort_mode=false){
+		$req=$this->db->preparedQuery("SELECT id,comment,postedTime,likes,isSpam,percent FROM comments WHERE uid=? ORDER BY ".($sort_mode?"likes":"postedTime")." DESC OFFSET $page LIMIT 10","i",$uid);
+		if($this->db->isEmpty($req)) return array();
+		$reqm=array();
+		while($res=$req->fetch_assoc()) $reqm[]=$res;
+		$lvl=array();
+		foreach($reqm as $sreq){
+			$ccObj= new CComment($this->db);
+			$ccObj->lvl_id=$this->lvl_id;
 			$ccObj->id=$sreq['id'];
 			$ccObj->comment=$sreq['comment'];
 			$ccObj->postedDate=$sreq['postedTime'];

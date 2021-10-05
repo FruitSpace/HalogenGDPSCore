@@ -1,3 +1,3 @@
 <?php
-include "../api/comment/comment_get.php";
+include "../api/comment/comment_getHistory.php";
 ?>
