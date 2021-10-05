@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CComment.php";
-require_once __DIR__."/../../halcore/CLevel.php";
 require_once __DIR__."/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
@@ -17,29 +16,28 @@ if(LOG_ENDPOINT_ACCESS){
 	$former="$ip accessed endpoint ".__FILE__;
 	err_handle("ENDPOINT","verbose",$former);
 }
-if(isset($_POST['levelID']) and $_POST['levelID']!=""){
-	$id=(int)$_POST['levelID'];
+if(isset($_POST['userID']) and $_POST['userID']!=""){
+	$id=(int)$_POST['userID'];
 	$page=(empty($_POST['page'])?0:((int)$_POST['page'])*10);
 	$dbm = new DBManagement();
 	$cc=new CComment($dbm);
-	$cl=new CLevel($dbm);
+	$acc=new CAccount($dbm);
 	$sortmode=(empty($_POST['mode'])?false:true);
-	if(!$cl->exists($id)) die("-1");
-	$comments=$cc->getAllLvlComments($id,$page,$sortmode);
+	if(!$acc->exists($id)) die("-1");
+	$acc->uid=$id;
+	$acc->loadAuth();
+	$acc->loadVessels();
+	$roleObj=$acc->getRoleObj();
+	$comments=$cc->getAllCommentsHistory($id,$page,$sortmode);
 	if(empty($comments)) {
 		echo "#0:0:0"; //No comments lol
 	}else{
 		$output="";
-		$commentcount=$cc->countlevelComments($id);
+		$commentcount=$cc->countCommentHistory($id);
 		foreach($comments as $comm){
 			$age=getDateAgo(strtotime($comm->postedDate));
-			$acc=new CAccount($dbm);
 			if(!$acc->exists($comm->uid)) continue; //! Fix That temp deleted acc filter
-			$acc->uid=$comm->uid;
-			$acc->loadAuth();
-			$acc->loadVessels();
-			$roleObj=$acc->getRoleObj();
-			$output.="2~".$comm->comment."~3~".$comm->uid."~4~".$comm->likes."~5~0~7~".$comm->isSpam."~9~".$age."~10~".$comm->percent;
+			$output.="2~".$comm->comment."~3~".$id."~4~".$comm->likes."~5~0~7~".$comm->isSpam."~9~".$age."~10~".$comm->percent;
 			$output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
 			//user part, Force No glow
 			$output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~0~16~".$acc->uid."|";
