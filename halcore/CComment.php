@@ -95,7 +95,7 @@ class CComment{
 	}
 
 	function getAllCommentsHistory(int $uid, int $page, bool $sort_mode=false){
-		$req=$this->db->preparedQuery("SELECT id,comment,postedTime,likes,isSpam,percent FROM comments WHERE uid=? ORDER BY ".($sort_mode?"likes":"postedTime")." DESC LIMIT 10 OFFSET $page","i",$uid);
+		$req=$this->db->preparedQuery("SELECT id,lvl_id,comment,postedTime,likes,isSpam,percent FROM comments WHERE uid=? ORDER BY ".($sort_mode?"likes":"postedTime")." DESC LIMIT 10 OFFSET $page","i",$uid);
 		if($this->db->isEmpty($req)) return array();
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
@@ -104,6 +104,7 @@ class CComment{
 			$ccObj= new CComment($this->db);
 			$ccObj->lvl_id=$this->lvl_id;
 			$ccObj->id=$sreq['id'];
+			$ccObj->lvl_id=$sreq['lvl_id'];
 			$ccObj->comment=$sreq['comment'];
 			$ccObj->postedDate=$sreq['postedTime'];
 			$ccObj->likes=$sreq['likes'];
