@@ -422,6 +422,7 @@ class CAccount{
 		$this->db->preparedQuery($q,"sssss",$uname,$passx,$email,$date,$date);
 		require_once __DIR__."/lib/shd0w.php";
 		shadowCopy($uname,$email,$pass);
+		$this->uid=$this->db->getDB()->insert_id;
 		$this->updateIP($ip);
 		return 1;
 	}
