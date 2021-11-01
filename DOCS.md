@@ -75,8 +75,8 @@ profile: done
 - [X] profile/updateAccountSettings
 ---
 
-rewards:
-- [ ] rewards/getChallenges
+rewards: done
+- [X] rewards/getChallenges
 - [X] rewards/getRewards
 ---
 

