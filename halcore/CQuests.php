@@ -12,8 +12,9 @@ class CQuests{
 	}
 
 	function exists(int $type=QUEST_TYPE_DAILY){
-		$type="=".($type-200);
-		if($type=2) $type=">1";
+		$type=$type-200;
+		if($type==2) $type=">1";
+        else $type="=$type";
 		return $this->db->query("SELECT count(*) as cnt FROM quests WHERE type$type")->fetch_assoc()['cnt']>0;
 	}
 
