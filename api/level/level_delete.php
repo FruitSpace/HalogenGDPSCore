@@ -3,6 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__ . "/../../halcore/CHalogen.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -20,9 +21,11 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 		$cl=new CLevel($dbm);
 		$cl->id=$id;
 		if($cl->isOwnedBy($uid)){
+            $ch=new CHalogen($dbm);
 			$cl->loadBase();
 			$cl->deleteLevel();
 			$cl->recalculateCPoints($cl->uid);
+            $ch->onLevel();
 			require_once __DIR__."/../../halcore/lib/actions.php";
 			require_once __DIR__."/../../halcore/CAccount.php";
 			$acc=new CAccount($dbm);

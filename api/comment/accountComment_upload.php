@@ -3,7 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CComment.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
-require_once __DIR__ . "/../../halcore/lib/halhost.php";
+require_once __DIR__ . "/../../halcore/CHalogen.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -19,7 +19,8 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 	$dbm=new DBManagement();
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cc = new CComment($dbm);
-		if(checkPosts($cc->countAccComments())) {
+        $ch=new CHalogen($dbm);
+		if($ch->onPost()>0) {
 			$cc->uid = $uid;
 			$cc->comment = $comment;
 			echo $cc->postAccComment();

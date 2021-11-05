@@ -3,6 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__ . "/../../halcore/CHalogen.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -58,18 +59,23 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
 				echo "-1";
 			}
 		}else{
-			$res=$cl->uploadLevel();
-			echo $res;
-			if($res>0){
-				$xdata=array(
-					"name"=>$cl->name,
-					"version"=>$cl->version,
-					"objects"=>$cl->objects,
-					"starsReq"=>$cl->starsRequested
-				);
-				require_once __DIR__."/../../halcore/lib/actions.php";
-				registerAction(ACTION_LEVEL_UPLOAD,$uid,$res,$xdata,$dbm);
-			}
+            $ch=new CHalogen($dbm);
+            if($ch->onLevel()>0) {
+                $res = $cl->uploadLevel();
+                echo $res;
+                if ($res > 0) {
+                    $xdata = array(
+                        "name" => $cl->name,
+                        "version" => $cl->version,
+                        "objects" => $cl->objects,
+                        "starsReq" => $cl->starsRequested
+                    );
+                    require_once __DIR__ . "/../../halcore/lib/actions.php";
+                    registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+                }
+            }else{
+                echo "-1";
+            }
 		}
 
 	}else{

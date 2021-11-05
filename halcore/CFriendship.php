@@ -54,7 +54,7 @@ class CFriendship{
 	}
 
 	function deleteFriendship(int $uid, int $uid_dest){
-		require_once __DIR__ . "/../../halcore/CAccount.php";
+		require_once __DIR__ . "/CAccount.php";
 		$id=$this->getFriendshipId($uid, $uid_dest);
 		$this->db->query("DELETE FROM friendships WHERE (uid1=$uid AND uid2=$uid_dest) OR (uid2=$uid AND uid1=$uid_dest)");
 		$acc1=new CAccount($this->db);

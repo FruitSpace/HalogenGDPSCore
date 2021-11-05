@@ -3,7 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
-require_once __DIR__ . "/../../halcore/lib/halhost.php";
+require_once __DIR__ . "/../../halcore/CHalogen.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -18,7 +18,8 @@ if(isset($_POST['userName']) and isset($_POST['password']) and isset($_POST['ema
 	$email=exploitPatch_remove($_POST['email']);
 	$dbm=new DBManagement();
 	$acc=new CAccount($dbm);
-	if(checkRegister($acc->countUsers())){
+    $ch=new CHalogen($dbm);
+	if($ch->onRegister()>0){
 		$resp=$acc->register($uname,$pass,$email,$ip);
 		if($resp>0) {
 			echo "1";
