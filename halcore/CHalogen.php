@@ -3,7 +3,7 @@ require_once __DIR__ . "/../conf/halhost.php";
 require_once __DIR__ . "/../conf/mainconfig.php";
 
 class CHalogen{
-    public DBManagement $db;
+    public $db;
 
     function __construct($dbm){
         $this->db=$dbm;
