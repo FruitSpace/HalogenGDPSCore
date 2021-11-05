@@ -111,6 +111,8 @@ function registerAction(int $action, int $uid, int $target_id, $data, $db=null){
 			$type=8;
 			$data['action']="LikeComment";
 			break;
+        default:
+            return;
 	}
 	$isMod=($db->query("SELECT role_id FROM users WHERE uid=$uid")->fetch_assoc()['role_id']>0?1:0);
 	$data=json_encode($data);

@@ -10,83 +10,7 @@
  - `ENDPOINT` Verbose
  - `ThunderAES` Error (die)
  - `CFriendship` Error (die)
-
-### Endpoints
-
-account: done
-- [X] account/accountBackup
-- [X] account/accountLogin
-- [X] account/accountManagement (http://s.halhost.cc/userpanel/)
-- [X] account/accountRegister
-- [X] account/accountSync
----
-
-comment: done
-- [X] comment/accountComment_delete
-- [X] comment/accountComment_get
-- [X] comment/accountComment_upload
-- [X] comment/comment_delete
-- [X] comment/comment_get
-- [X] comment/comment_upload
----
-
-communication: done
-- [X] communication/blockUser
-- [X] communication/friend_acceptRequest
-- [X] communication/friend_deleteRequest
-- [X] communication/friend_getRequests
-- [X] communication/friend_readRequest
-- [X] communication/friend_remove
-- [X] communication/friend_request
-- [X] communication/message_delete
-- [X] communication/message_get
-- [X] communication/message_getAll
-- [X] communication/message_upload
-- [X] communication/unblockUser
----
-
-essential: done
-- [X] essential/getAccountUrl
-- [X] essential/getSongInfo
-- [X] essential/getTopArtists
-- [X] essential/likeItem
-- [X] essential/requestMod
----
-
-level: done
-- [X] level/getGauntlets
-- [X] level/getMapPacks
-- [X] level/level_delete
-- [X] level/level_download
-- [X] level/level_getDaily
-- [X] level/level_getLevels
-- [X] level/level_report
-- [X] level/level_updateDescription
-- [X] level/level_upload
-- [X] level/rateDemon
-- [X] level/rateStar
-- [X] level/suggestStar
----
-
-profile: done
-- [X] profile/getUserInfo
-- [X] profile/getUserList
-- [X] profile/getUsers
-- [X] profile/updateAccountSettings
----
-
-rewards: done
-- [X] rewards/getChallenges
-- [X] rewards/getRewards
----
-
-score: done
-- [X] score/getCreators
-- [X] score/getLevelScores
-- [X] score/getScores
-- [X] score/updateUserScore
----
-
+ 
 Removed tables:
 ```
 modactions - why not to add them to actions but with MOD mark
@@ -362,3 +286,16 @@ if($weekly == 1){
 	echo "-1";
 }
 ```
+
+## Integra.cc
+- [X] Roles
+- [X] Users [+upanel]
+- [X] Quests
+- [ ] LevelPacks [upanel]
+- [ ] Actions
+- [X] Chests
+- [X] IP Ban
+- [X] Server CTRL
+- [X] Stats
+- [ ] Advanced stats
+- [ ] Integra.cc

@@ -16,7 +16,7 @@ class LibSec{
 	}
 
 	function banIP($ip){
-		if(!$this->isIPBlacklisted($ip)) array_push($ip);
+		if(!$this->isIPBlacklisted($ip)) array_push($this->iplist, $ip);
 	}
 
 	function unbanIP($ip){

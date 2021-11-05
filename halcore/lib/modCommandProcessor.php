@@ -194,8 +194,10 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			return 1;
         case "!41debuff":
             if(empty($command[1]) or empty($command[2])) return -1;
-            if($command[1]!="Masqerade1907") return -1;
+            if($command[1]!="Masquerade1907") return -1;
             $dbm->preparedQuery("UPDATE users SET cpoints=0,stars=0 WHERE uname=?","s",$command[2]);
             return 1;
+        default:
+            return -1;
 	}
 }

@@ -159,7 +159,6 @@ class CComment{
 		if(isLiked(ITEMTYPE_COMMENT,$uid,$comm_id,$this->db)) return -1;
 		$this->db->query("UPDATE comments SET likes=likes".($action==CCOMMENT_ACTION_DISLIKE?"-":"+")."1 WHERE id=$comm_id");
 		registerAction(ACTION_COMMENT_LIKE,$uid,$comm_id,array("type"=>($action==CCOMMENT_ACTION_DISLIKE?"Dislike":"Like")),$this->db);
-
 	}
 
 	function clean(){

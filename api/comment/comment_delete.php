@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../halcore/CComment.php";
 require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__ . "/../../halcore/CHalogen.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -21,12 +22,14 @@ if(isset($_POST['accountID']) and isset($_POST['commentID']) and isset($_POST['g
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cc=new CComment($dbm);
 		$cl=new CLevel($dbm);
+        $ch=new CHalogen($dbm);
 		$cl->id=$lvl_id;
 		if($cl->isOwnedBy($uid)) {
 			$cc->deleteOwnerLvlComment($id, $lvl_id);
 		}else{
 			$cc->deleteLvlComment($id, $uid);
 		}
+        $ch->onComment();
 		echo "1";
 	}else{
 		echo "-1";

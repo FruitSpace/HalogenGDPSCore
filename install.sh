@@ -23,38 +23,32 @@ fi
 echo "Making Config... [${gdps_plan}]"
 if [ $2 == "press_start" ]; then
   c_umax=110
-  c_utrig=100
   c_lvlmax=500
   c_commmax=1000
   c_postmax=250
 elif [ $2 == "continue" ]; then
   c_umax=550
-  c_utrig=500
   c_lvlmax=2000
   c_commmax=20000
   c_postmax=2000
 elif [ $2 == "boss_fight" ]; then
   c_umax=2200
-  c_utrig=2000
   c_lvlmax=4000
   c_commmax=50000
   c_postmax=10000
 elif [ $2 == "final_stage" ]; then
   c_umax=1000000
-  c_utrig=50000
   c_lvlmax=1000000
   c_commmax=3000000
   c_postmax=5000000
 else
   c_umax=550
-  c_utrig=500
   c_lvlmax=2000
   c_commmax=20000
   c_postmax=2000
 fi
 
 sed -i -e "s/C_UMAX/${c_umax}/g" conf/limits.php
-sed -i -e "s/C_UTRIG/${c_utrig}/g" conf/limits.php
 sed -i -e "s/C_LVLMAX/${c_lvlmax}/g" conf/limits.php
 sed -i -e "s/C_COMMMAX/${c_commmax}/g" conf/limits.php
 sed -i -e "s/C_POSTMAX/${c_postmax}/g" conf/limits.php

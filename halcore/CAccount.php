@@ -364,6 +364,7 @@ class CAccount{
 	}
 
 	function banUser($action=CBAN_BAN){
+        $ban=1;
 		if ($action==CBAN_BAN) $ban=2;
 		if ($action==CBAN_UNBAN) $ban=0;
 		$this->isBanned=$ban;
