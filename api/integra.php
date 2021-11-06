@@ -43,7 +43,7 @@ switch($_GET['action']){
         die('{"status":"ok","count":'.$ch->countLevels().'}');
     case "stats.levels_uid":
         if(empty($params['uid'])) die('{"status":"error","error":"Method rejects provided data"}');
-        die('{"status":"ok","count":'.$ch->countLevels().'}');
+        die('{"status":"ok","count":'.$ch->countLevels($params['uid']).'}');
     case "stats.posts":
         die('{"status":"ok","count":'.$ch->countPosts().'}');
     case "stats.posts_uid":
@@ -146,4 +146,6 @@ switch($_GET['action']){
         if(empty($params['id'])) die('{"status":"error","error":"Method rejects provided data"}');
         $ch->deleteQuest($params['id']);
         die('{"status":"ok"}');
+    default:
+        die('{"status":"error","error":"No valid method provided"}');
 }
