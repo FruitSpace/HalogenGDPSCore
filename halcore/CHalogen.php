@@ -149,11 +149,11 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
         $roles=array();
         foreach ($reqm as $sreq) {
             $roleObj = array(
-                "id"=>$req['id'],
-                "name"=>$req['roleName'],
-                "color"=>$req['commentColor'],
-                "level"=>$req['modLevel'],
-                "privs"=>($privs?$req['privs']:"")
+                "id"=>$sreq['id'],
+                "name"=>$sreq['roleName'],
+                "color"=>$sreq['commentColor'],
+                "level"=>$sreq['modLevel'],
+                "privs"=>($privs?$sreq['privs']:"")
             );
             array_push($roles, $roleObj);
         }
