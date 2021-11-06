@@ -73,26 +73,26 @@ define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
     function configureChests($chests){
         $conf='<?php
 //----- SMALL CHEST -----
-define("CHEST_SMALL_ORBS_MIN", '.$chests['small']['orbs']['min'].');
-define("CHEST_SMALL_ORBS_MAX", '.$chests['small']['orbs']['max'].');
-define("CHEST_SMALL_DIAMONDS_MIN", '.$chests['small']['diamonds']['min'].');
-define("CHEST_SMALL_DIAMONDS_MAX", '.$chests['small']['diamonds']['max'].');
-define("CHEST_SMALL_SHARDS_MIN", '.$chests['small']['shards']['min'].');
-define("CHEST_SMALL_SHARDS_MAX", '.$chests['small']['shards']['max'].');
-define("CHEST_SMALL_KEYS_MIN",'.$chests['small']['keys']['min'].');
-define("CHEST_SMALL_KEYS_MAX",'.$chests['small']['orbs']['max'].');
-define("CHEST_SMALL_WAIT", '.$chests['small']['timeout'].'); //sec
+define("CHEST_SMALL_ORBS_MIN", '.(int)$chests['small']['orbs']['min'].');
+define("CHEST_SMALL_ORBS_MAX", '.(int)$chests['small']['orbs']['max'].');
+define("CHEST_SMALL_DIAMONDS_MIN", '.(int)$chests['small']['diamonds']['min'].');
+define("CHEST_SMALL_DIAMONDS_MAX", '.(int)$chests['small']['diamonds']['max'].');
+define("CHEST_SMALL_SHARDS_MIN", '.(int)$chests['small']['shards']['min'].');
+define("CHEST_SMALL_SHARDS_MAX", '.(int)$chests['small']['shards']['max'].');
+define("CHEST_SMALL_KEYS_MIN",'.(int)$chests['small']['keys']['min'].');
+define("CHEST_SMALL_KEYS_MAX",'.(int)$chests['small']['orbs']['max'].');
+define("CHEST_SMALL_WAIT", '.(int)$chests['small']['timeout'].'); //sec
 
 //----- BIG CHEST -----
-define("CHEST_BIG_ORBS_MIN", '.$chests['big']['orbs']['min'].');
-define("CHEST_BIG_ORBS_MAX", '.$chests['big']['orbs']['max'].');
-define("CHEST_BIG_DIAMONDS_MIN", '.$chests['big']['diamonds']['min'].');
-define("CHEST_BIG_DIAMONDS_MAX", '.$chests['big']['diamonds']['max'].');
-define("CHEST_BIG_SHARDS_MIN", '.$chests['big']['shards']['min'].');
-define("CHEST_BIG_SHARDS_MAX", '.$chests['big']['shards']['max'].');
-define("CHEST_BIG_KEYS_MIN",'.$chests['big']['keys']['min'].');
-define("CHEST_BIG_KEYS_MAX",'.$chests['big']['keys']['max'].');
-define("CHEST_BIG_WAIT", '.$chests['big']['timeout'].'); //sec';
+define("CHEST_BIG_ORBS_MIN", '.(int)$chests['big']['orbs']['min'].');
+define("CHEST_BIG_ORBS_MAX", '.(int)$chests['big']['orbs']['max'].');
+define("CHEST_BIG_DIAMONDS_MIN", '.(int)$chests['big']['diamonds']['min'].');
+define("CHEST_BIG_DIAMONDS_MAX", '.(int)$chests['big']['diamonds']['max'].');
+define("CHEST_BIG_SHARDS_MIN", '.(int)$chests['big']['shards']['min'].');
+define("CHEST_BIG_SHARDS_MAX", '.(int)$chests['big']['shards']['max'].');
+define("CHEST_BIG_KEYS_MIN",'.(int)$chests['big']['keys']['min'].');
+define("CHEST_BIG_KEYS_MAX",'.(int)$chests['big']['keys']['max'].');
+define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
         file_put_contents(__DIR__."/../conf/chests.php",$conf);
     }
     function getChests(){
