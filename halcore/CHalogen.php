@@ -344,7 +344,7 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
             if(empty($ip)) continue;
             $d=array("ip"=>$ip);
             if($fetchUsers){
-                $req=$this->db->preparedQuery("SELECT FROM users uid,uname WHERE lastIP=?","s",$ip);
+                $req=$this->db->preparedQuery("SELECT uid,uname FROM users WHERE lastIP=?","s",$ip);
                 if($this->db->isEmpty($req)) $d['users']=array();
                 else{
                     $reqm=array();
