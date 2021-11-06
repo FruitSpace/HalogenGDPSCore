@@ -283,6 +283,7 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
                     );
                 }
                 if($params['rank']){
+                    $acc->loadStats();
                     $ndat['rank']=$acc->getLeaderboardRank()+1;
                 }
                 if($params['role']){
