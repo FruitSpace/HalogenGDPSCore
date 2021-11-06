@@ -14,7 +14,7 @@ if ($lsec->isIPBlacklisted($ip)){
 $dbm=new DBManagement();
 $cm=new CMusic($dbm);
 if($cm->getSong((int)$_POST['songID'])>0){
-    echo "1~|~".$cm->id."~|~2~|~".$cm->name."~|~3~|~1~|~4~|~".$cm->artist."~|~5~|".$cm->size."~|~6~|~~|~10~|~".$cm->url;
+    echo "1~|~".$cm->id."~|~2~|~".$cm->name."~|~3~|~1~|~4~|~".$cm->artist."~|~5~|~".$cm->size."~|~6~|~~|~10~|~".$cm->url;
 }else{
     echo "-1";
 }
