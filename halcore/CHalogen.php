@@ -210,14 +210,14 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
                     $req=$this->db->query("SELECT uid FROM users WHERE isBanned=2");
                     if($this->db->isEmpty($req)) return array();
                     $reqm=array();
-                    while($res=$req->fetch_assoc()) $reqm[]=$res;
+                    while($res=$req->fetch_assoc()) $reqm[]=$res['uid'];
                     $params['uids']=$reqm;
                     break;
                 default:
                     $req=$this->db->preparedQuery("SELECT uid FROM users WHERE uid=? OR uname LIKE ? ORDER BY stars LIMIT 5","is",$params['search'],$params['search']."%");
                     if($this->db->isEmpty($req)) return array();
                     $reqm=array();
-                    while($res=$req->fetch_assoc()) $reqm[]=$res;
+                    while($res=$req->fetch_assoc()) $reqm[]=$res['uid'];
                     $params['uids']=$reqm;
             }
         }
