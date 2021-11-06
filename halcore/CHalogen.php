@@ -22,12 +22,36 @@ define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
     function lockServer(bool $lock=true){
         $f=file_get_contents(__DIR__."/../conf/mainconfig.php");
         $f=explode("//[LOCK]",$f)[0];
+        $x=explode("//[MUSIC]",$f)[1];
         if($lock){
-            $f=$f."//[LOCK]\n"."define(\"LOCK\",true);";
+            $f=$f."//[LOCK]\ndefine(\"LOCK\",true);\n//[MUSIC]\n$x";
         }else{
-            $f=$f."//[LOCK]\n"."define(\"LOCK\",false);";
+            $f=$f."//[LOCK]\ndefine(\"LOCK\",false);\n//[MUSIC]\n$x";
         }
         file_put_contents(__DIR__."/../conf/mainconfig.php",$f);
+    }
+
+    function toggleMusic(bool $toggle=true){
+        $f=file_get_contents(__DIR__."/../conf/mainconfig.php");
+        $f=explode("//[MUSIC]",$f)[0];
+        if($toggle){
+            $f=$f."//[MUSIC]\ndefine(\"MUS_NG\",true);";
+        }else{
+            $f=$f."//[MUSIC]\ndefine(\"MUS_NG\",false);";
+        }
+        file_put_contents(__DIR__."/../conf/mainconfig.php",$f);
+    }
+    function uploadMusic($params){
+        require_once __DIR__."/CMusic.php";
+        $cm=new CMusic($this->db);
+        return $cm->uploadSong($params);
+    }
+    function banMusic(int $id, bool $ban=false){
+        require_once __DIR__."/CMusic.php";
+        $cm=new CMusic($this->db);
+        if(!$cm->exists($id)) return -1;
+        $cm->banMusic($id, $ban);
+        return 1;
     }
 
     function countUsers(){
