@@ -19,6 +19,24 @@ switch($_GET['action']){
         $ch->lockServer(false);
         die('{"status":"ok"}');
 
+    case "music.lock":
+        $ch->toggleMusic();
+        die('{"status":"ok"}');
+    case "music.unlock":
+        $ch->toggleMusic(false);
+        die('{"status":"ok"}');
+    case "music.add":
+        if(empty($params['song'])) die('{"status":"error","error":"Method rejects provided data"}');
+        die('{"status":"ok","id":'.$ch->uploadMusic($params['song']).'}');
+    case "music.ban":
+        if(empty($params['song_id'])) die('{"status":"error","error":"Method rejects provided data"}');
+        if($ch->banMusic($params['song_id'],true)>0) die('{"status":"ok"}');
+        else die('{"status":"error","error":"No song"}');
+    case "music.unban":
+        if(empty($params['song_id'])) die('{"status":"error","error":"Method rejects provided data"}');
+        if($ch->banMusic($params['song_id'],false)>0) die('{"status":"ok"}');
+        else die('{"status":"error","error":"No song"}');
+
     case "stats.users":
         die('{"status":"ok","count":'.$ch->countUsers().'}');
     case "stats.levels":

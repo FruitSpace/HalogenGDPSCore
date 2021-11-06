@@ -11,3 +11,5 @@ define("SRV_KEY","<SRV_KEY>");
 
 //[LOCK]
 define("LOCK",false);
+//[MUSIC]
+define("MUS_NG",true);

@@ -145,10 +145,9 @@ CREATE TABLE roles (
 ```mysql
 CREATE TABLE songs (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    author_id int(11) NOT NULL DEFAULT 0,
     name varchar(128) NOT NULL DEFAULT 'Unnamed',
-    author_name varchar(128) NOT NULL DEFAULT 'Unknown',
-    size varchar(5) NOT NULL,
+    artist varchar(128) NOT NULL DEFAULT 'Unknown',
+    size float(5,2) NOT NULL,
     url varchar(1024) NOT NULL,
     isBanned tinyint(1) NOT NULL DEFAULT 0
 );
