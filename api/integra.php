@@ -49,7 +49,7 @@ switch($_GET['action']){
     case "stats.posts_uid":
         if(empty($params['uid'])) die('{"status":"error","error":"Method rejects provided data"}');
         die('{"status":"ok","count":'.$ch->countPosts($params['uid']).'}');
-    case "stats.commants":
+    case "stats.comments":
         die('{"status":"ok","count":'.$ch->countComments().'}');
     case "stats.comments_lvlid":
         if(empty($params['lvlid'])) die('{"status":"error","error":"Method rejects provided data"}');
