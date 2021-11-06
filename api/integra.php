@@ -132,7 +132,7 @@ switch($_GET['action']){
         die(json_encode($resp));
 
     case "quests.get":
-        if(empty($params['type'])) die('{"status":"error","error":"Method rejects provided data"}');
+        if(!isset($params['type'])) die('{"status":"error","error":"Method rejects provided data"}');
         $resp=array(
             "status"=>"ok",
             "roles"=>$ch->getQuests($params['type'])
