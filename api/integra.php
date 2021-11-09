@@ -4,7 +4,7 @@ require_once __DIR__."/../halcore/CHalogen.php";
 
 if(empty($_GET['key']) or empty($_GET['action']) or empty($_POST['params'])) die('{"status":"error","error":"Incorrect API request"}');
 if($_GET['key']!=SRV_KEY) die('{"status":"error","error":"Unauthorized"}');
-$dbm=new DBManagement();
+$dbm=new DBManagement(true);
 $ch=new CHalogen($dbm);
 $params=json_decode($_POST['params'],true);
 switch($_GET['action']){
@@ -13,7 +13,7 @@ switch($_GET['action']){
         $ch->upgradePlan($params['plan']);
         die('{"status":"ok"}');
     case "srv.lock":
-        $ch->lockServer();
+        $ch->lockServer(true);
         die('{"status":"ok"}');
     case "srv.unlock":
         $ch->lockServer(false);

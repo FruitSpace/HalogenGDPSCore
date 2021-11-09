@@ -20,9 +20,9 @@ define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
         file_put_contents(__DIR__ . "/../conf/halhost.php",$limits);
     }
     function lockServer(bool $lock=true){
-        $f=file_get_contents(__DIR__."/../conf/mainconfig.php");
-        $f=explode("//[LOCK]",$f)[0];
-        $x=explode("//[MUSIC]",$f)[1];
+        $m=file_get_contents(__DIR__."/../conf/mainconfig.php");
+        $f=explode("//[LOCK]",$m)[0];
+        $x=explode("//[MUSIC]",$m)[1];
         if($lock){
             $f=$f."//[LOCK]\ndefine(\"LOCK\",true);\n//[MUSIC]\n$x";
         }else{

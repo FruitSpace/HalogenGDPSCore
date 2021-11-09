@@ -5,8 +5,8 @@ require_once __DIR__ . "/logger.php";
 class DBManagement{
     private $db;
 
-    function __construct(){
-        if(LOCK) err_handle("DBM","fatal", "CONF::LOCKED");
+    function __construct($keepalive=false){
+        if(LOCK) err_handle("DBM","fatal", "CONF::LOCKED",!$keepalive);
         $this->db=new mysqli(DB_SERVER, DB_USER, DB_PASS, DB_NAME, DB_PORT);
         if($this->db->connect_errno){
             $former="Connection error #".$this->db->connect_errno."\n\tMySQLi Thrown: ".$this->db->connect_error;
