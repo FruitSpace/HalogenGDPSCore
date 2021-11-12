@@ -43,7 +43,7 @@ class CProtect{
     }
 
     function resetUserLimits(){
-        $this->db->query("UPDATE users SET protect_levelsToday=0,protect_todayStars=0");
+        $this->db->query("UPDATE users SET protect_levelsToday=0");
         $this->db->query("UPDATE users SET protect_todayStars=stars");
     }
 
