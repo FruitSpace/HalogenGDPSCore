@@ -51,7 +51,7 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 						$cc->comment = $comment;
 						$cc->percent = $percent;
                         $protect=new CProtect($dbm);
-                        if($protect->detectComments($uid)) {
+                        if($protect->detectComments($uid)>0) {
                             echo $cc->postLvlComment();
                         }else{
                             echo "-1";
@@ -69,7 +69,7 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 					$cc->comment = $comment;
 					$cc->percent = $percent;
                     $protect=new CProtect($dbm);
-                    if($protect->detectComments($uid)) {
+                    if($protect->detectComments($uid)>0) {
                         echo $cc->postLvlComment();
                     }else{
                         echo "-1";

@@ -26,7 +26,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['toAccou
 		$cm->subject=$subject;
 		$cm->message=$body;
         $protect=new CProtect($dbm);
-        if($protect->detectMessages($uid)) {
+        if($protect->detectMessages($uid)>0) {
             echo $cm->sendMessageObj();
         }else{
             echo "-1";
