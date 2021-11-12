@@ -73,7 +73,7 @@ class CProtect{
     }
 
     function detectMessages($uid){
-        $meta=json_decode($this->db->preparedQuery("SELECT protect_meta as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['protect_meta'],true);
+        $meta=json_decode($this->db->preparedQuery("SELECT protect_meta FROM users WHERE uid=?","i",$uid)->fetch_assoc()['protect_meta'],true);
         $time=time();
         if($time-$meta['msg_time']<120) return -1;
         $meta['msg_time']=$time;
@@ -82,7 +82,7 @@ class CProtect{
     }
 
     function detectPosts($uid){
-        $meta=json_decode($this->db->preparedQuery("SELECT protect_meta as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['protect_meta'],true);
+        $meta=json_decode($this->db->preparedQuery("SELECT protect_meta FROM users WHERE uid=?","i",$uid)->fetch_assoc()['protect_meta'],true);
         $time=time();
         if($time-$meta['post_time']<900) return -1;
         $meta['post_time']=$time;
@@ -91,7 +91,7 @@ class CProtect{
     }
 
     function detectComments($uid){
-        $meta=json_decode($this->db->preparedQuery("SELECT protect_meta as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['protect_meta'],true);
+        $meta=json_decode($this->db->preparedQuery("SELECT protect_meta FROM users WHERE uid=?","i",$uid)->fetch_assoc()['protect_meta'],true);
         $time=time();
         if($time-$meta['comm_time']<120) return -1;
         $meta['comm_time']=$time;
