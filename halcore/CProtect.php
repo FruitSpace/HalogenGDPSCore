@@ -36,7 +36,7 @@ class CProtect{
         //Calc total stars
         $stars=200;
         $stars+=$this->db->query("SELECT SUM(starsGot) as stars FROM levels")->fetch_assoc()['stars'];
-        $stars+=$this->db->query("SELECT SUM(packStars) as stars FROM")->fetch_assoc()['stars'];
+        $stars+=$this->db->query("SELECT SUM(packStars) as stars FROM levelpacks")->fetch_assoc()['stars'];
         $model['maxStars']=$stars;
 
         file_put_contents(__DIR__."/../files/levelModel.json",json_encode($model));
