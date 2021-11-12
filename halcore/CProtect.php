@@ -59,6 +59,8 @@ class CProtect{
     function detectStats(int $uid,$stars, $diamonds, $demons, $coins, $ucoins){
         if($stars<0 or $diamonds<0 or $demons<0 or $coins<0 or $ucoins<0){
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
+            $this->db->preparedQuery("DELETE FROM levels WHERE uid=?","i",$uid);
+            $this->db->preparedQuery("DELETE FROM actions WHERE type=4 AND uid=?","i",$uid);
             return -1;
         }
         $scnt=$this->db->preparedQuery("SELECT protect_todayStars as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['cnt'];
