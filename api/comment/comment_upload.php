@@ -6,6 +6,7 @@ require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 require_once __DIR__ . "/../../halcore/CHalogen.php";
+require_once __DIR__ . "/../../halcore/CProtect.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -49,7 +50,12 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 						$cc->lvl_id = $id;
 						$cc->comment = $comment;
 						$cc->percent = $percent;
-						echo $cc->postLvlComment();
+                        $protect=new CProtect($dbm);
+                        if($protect->detectComments($uid)) {
+                            echo $cc->postLvlComment();
+                        }else{
+                            echo "-1";
+                        }
 					} else {
 						echo "-1";
 					}
@@ -62,7 +68,12 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 					$cc->lvl_id = $id;
 					$cc->comment = $comment;
 					$cc->percent = $percent;
-					echo $cc->postLvlComment();
+                    $protect=new CProtect($dbm);
+                    if($protect->detectComments($uid)) {
+                        echo $cc->postLvlComment();
+                    }else{
+                        echo "-1";
+                    }
 				} else {
 					echo "-1";
 				}

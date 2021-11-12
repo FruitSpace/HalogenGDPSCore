@@ -3,6 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__ . "/../../halcore/CProtect.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -36,9 +37,14 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 		$acc->spider=(empty($_POST['accSpider'])?0:(int)$_POST['accSpider']);
 		$acc->trace=(empty($_POST['accGlow'])?0:(int)$_POST['accGlow']);
 		$acc->death=(empty($_POST['accExplosion'])?0:(int)$_POST['accExplosion']);
-		$acc->pushStats();
-		$acc->pushVessels();
-		echo $uid;
+        $protect=new CProtect($dbm);
+        if($protect->detectStats($uid,$acc->stars,$acc->diamonds,$acc->demons,$acc->coins,$acc->ucoins)>0) {
+            $acc->pushStats();
+            $acc->pushVessels();
+            echo $uid;
+        }else{
+            echo "-1";
+        }
 	}else{
 		echo "0";
 	}
