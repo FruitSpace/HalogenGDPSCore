@@ -22,7 +22,7 @@ class CProtect{
         $time=time();
         for($i=0;$i<7;$i++){
             $c=$time-$i*86400; $c2=$time-($i+1)*86400;
-            $cnt=$this->db->query("SELECT count(*) as cnt FROM actions WHERE type=4 AND date<'".date("Y-m-d 00:00:00",$c)."' AND date>'".date("Y-m-d 00:00:00",$c2)."'")->fetch_assoc()['cnt'];
+            $cnt=$this->db->query("SELECT count(*) as cnt FROM actions WHERE type=4 AND date<'".date("Y-m-d 00:00:00",$c)."' AND date>'".date("Y-m-d 00:00:00",$c2)."' AND data LIKE %Upload%")->fetch_assoc()['cnt'];
             $model['stats'][date("Y-m-d",$c2)]=$cnt;
             $model['peakLevelUpload']=($cnt>$model['peakLevelUpload']?$cnt:$model['peakLevelUpload']);
             $total+=$cnt;
