@@ -3,6 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CMessage.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__ . "/../../halcore/CProtect.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -24,7 +25,12 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['toAccou
 		$cm->uid_dest=$uid_dest;
 		$cm->subject=$subject;
 		$cm->message=$body;
-		echo $cm->sendMessageObj();
+        $protect=new CProtect($dbm);
+        if($protect->detectMessages($uid)) {
+            echo $cm->sendMessageObj();
+        }else{
+            echo "-1";
+        }
 	}else{
 		echo "-1";
 	}

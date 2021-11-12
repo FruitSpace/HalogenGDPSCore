@@ -13,6 +13,12 @@ class CFriendship{
 		return 0;
 	}
 
+    function isAlreadySentFriend(int $uid_dest, int $uid){
+        $req=$this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE uid_src=$uid AND uid_dest=$uid_dest")->fetch_assoc();
+        if($req['cnt']>0) return 1;
+        return 0;
+    }
+
 	function countFriendRequests(int $uid, bool $new=false){
 		return $this->db->query("SELECT count(*) as cnt FROM friendreqs WHERE uid_dest=$uid".($new?" AND isNew=1":""))->fetch_assoc()['cnt'];
 	}
@@ -88,6 +94,7 @@ class CFriendship{
 	function requestFriend(int $uid, int $uid_dest, $comment=null){
 		if($uid==$uid_dest) return -1;
 		if($this->isAlreadyFriend($uid, $uid_dest)) return -1;
+        if($this->isAlreadySentFriend($uid_dest,$uid)) return -1;
 		$comment=($comment==null?'':$comment);
 		if(strlen($comment)>512) return -1;
 		require_once __DIR__."/CAccount.php";

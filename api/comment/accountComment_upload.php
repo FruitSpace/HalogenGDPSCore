@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../halcore/CComment.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 require_once __DIR__ . "/../../halcore/CHalogen.php";
+require_once __DIR__ . "/../../halcore/CProtect.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -23,7 +24,12 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 		if($ch->onPost()>0) {
 			$cc->uid = $uid;
 			$cc->comment = $comment;
-			echo $cc->postAccComment();
+            $protect=new CProtect($dbm);
+            if($protect->detectPosts($uid)>0) {
+                echo $cc->postAccComment();
+            }else{
+                echo "-1";
+            }
 		}else{
 			echo "-1";
 		}

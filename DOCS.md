@@ -1,8 +1,66 @@
-## Ignore this
+   ## Ignore this
 
 ###Important
 **Security GJP Check:**
  - Sessions->get ip&lastAccessDate (1Hr Limit) or request password
+
+Security:
+```mysql
+ALTER TABLE users ADD COLUMN protect_meta JSON NOT NULL DEFAULT '{"comm_time":0,"post_time":0,"msg_time":0}';
+ALTER TABLE users ADD COLUMN protect_levelsToday int(10) NOT NULL DEFAULT 0;
+ALTER TABLE users ADD COLUMN protect_todayStars int(10) NOT NULL DEFAULT 0;
+```
+- Levels (statistic)
+```json
+{
+   "maxLevelUpload": 8,
+   "peakLevelUpload": 6,
+   "stats": {
+      "2021-11-03": 1,
+      "2021-11-04": 0,
+      "2021-11-05": 6,
+      ...
+   }
+}
+```
+```json
+{
+   "maxLevelUpload": 8,
+   "stats": [
+      {
+         "date": "2021-11-11",
+         "levels": 3,
+         "users": 0,
+         "posts": 12,
+         "comments": 15
+      },
+      {
+         "date": "2021-11-10",
+         "levels": 6,
+         "users": 2,
+         "posts": 2,
+         "comments": 8
+      },
+      ...
+   ],
+   "heatmap": {
+      "endpoints": {
+         "endpointName.php": 12,
+         "another.php": 18,
+         ...
+      },
+      "ip": {
+         "127.0.0.1": 500,
+         "228.228.69.69": 400
+      },
+      "users": {
+         "UNAME": 31,
+         "mash": 89
+      }
+   }
+   
+}
+```
 
 **Logging**
  - `DBM` Verbose, Fatal (die)
@@ -48,6 +106,10 @@ CREATE TABLE users (
     gameVer int(4) DEFAULT 20,
     lvlsCompleted int(11) DEFAULT 0,
     special int(11) NOT NULL DEFAULT 0,
+    protect_meta JSON NOT NULL DEFAULT '{"comm_time":0,"post_time":0,"msg_time":0}',
+    protect_levelsToday int(10) NOT NULL DEFAULT 0,
+    protect_todayStars int(10) NOT NULL DEFAULT 0,
+    
     
     isBanned tinyint(1) NOT NULL DEFAULT 0,
     blacklist text NOT NULL DEFAULT '',

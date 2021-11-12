@@ -386,25 +386,25 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
     //TRIGGERS
     function onRegister(){
         $cnt=$this->countUsers();
-        if($cnt>=HALHOST_MAX_USERS) return -1;
+        if($cnt>HALHOST_MAX_USERS) return -1;
         file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.users&value=$cnt");
         return 1;
     }
     function onLevel(){
         $cnt=$this->countLevels();
-        if($cnt>=HALHOST_MAX_LEVELS) return -1;
+        if($cnt>HALHOST_MAX_LEVELS) return -1;
         file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.levels&value=$cnt");
         return 1;
     }
     function onPost(){
         $cnt=$this->countPosts();
-        if($cnt>=HALHOST_MAX_POSTS) return -1;
+        if($cnt>HALHOST_MAX_POSTS) return -1;
         file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.posts&value=$cnt");
         return 1;
     }
     function onComment(){
         $cnt=$this->countComments();
-        if($cnt>=HALHOST_MAX_USERS) return -1;
+        if($cnt>HALHOST_MAX_USERS) return -1;
         file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.comments&value=$cnt");
         return 1;
     }
