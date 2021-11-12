@@ -44,6 +44,7 @@ class CProtect{
 
     function resetUserLimits(){
         $this->db->query("UPDATE users SET protect_levelsToday=0,protect_todayStars=0");
+        $this->db->query("UPDATE users SET protect_todayStars=stars");
     }
 
     function detectLevelModel($uid){
@@ -64,11 +65,10 @@ class CProtect{
             return -1;
         }
         $scnt=$this->db->preparedQuery("SELECT protect_todayStars as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['cnt'];
-        if($scnt>$this->levelModel['maxStars']){
+        if(($stars-$scnt)>$this->levelModel['maxStars']){
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
             return -1;
         }
-        $this->db->preparedQuery("UPDATE users SET protect_todayStars=? WHERE uid=?","ii",$stars,$uid);
         return 1;
     }
 
