@@ -68,7 +68,7 @@ class CProtect{
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
             return -1;
         }
-        $this->db->preparedQuery("UPDATE users SET protect_todayStars=protect_todayStars+? WHERE uid=?","ii",$stars,$uid);
+        $this->db->preparedQuery("UPDATE users SET protect_todayStars=? WHERE uid=?","ii",$stars,$uid);
         return 1;
     }
 
