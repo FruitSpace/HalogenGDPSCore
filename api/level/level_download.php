@@ -97,9 +97,19 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$output.=":40:".$cl->isLDM.":42:".$cl->isEpic.":43:".((int)$cl->demonDifficulty>=0?$cl->demonDifficulty:"3").":45:".$cl->objects.":46:1:47:2";
 	$output.=":48:1".($dailylvl?":41:".$wid:""); //GD 2.2 and daily/weekly
 
+    //Experimental
+    //$output.=":11:1";
+
 	//2.1 hashing
 	$solo_str=$cl->uid.",".$cl->starsGot.",".($cl->demonDifficulty>=0?1:0).",".$cl->id.",".($cl->coins>0?1:0).",".$cl->isFeatured.",".$cl->password.",".($dailylvl?$wid:0);
 	$output.="#".genhash_genSolo($cl->stringLevel)."#".genhash_genSolo2($solo_str);
+    if($dailylvl){
+        require_once __DIR__."/../../halcore/CAccount.php";
+        $acc=new CAccount($dbm);
+        $acc->uid=$cl->uid;
+        $acc->loadAuth();
+        $output.="#".$acc->uid.":".$acc->uname.":".$acc->uid;
+    }
 	//! Maybe need to add uid:uname:uid for Weekly/Daily
 	echo $output;
 }else{
