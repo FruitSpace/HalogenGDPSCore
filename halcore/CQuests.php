@@ -70,6 +70,6 @@ class CQuests{
 		$req=$this->db->query("SELECT id,lvl_id FROM quests WHERE type=".($weekly?"1":"0")." AND timeExpire<now() ORDER BY timeExpire DESC LIMIT 1");
 		if($this->db->isEmpty($req)) return "-2";
 		$sreq=$req->fetch_assoc();
-		return $lvl_id+$sreq['lvl_id']."|$timeLeft";
+		return ($lvl_id+$sreq['lvl_id'])."|$timeLeft";
 	}
 }

@@ -10,7 +10,7 @@ if ($lsec->isIPBlacklisted($ip)){
 	die('This IP is banned for security reasons');
 }
 if(!isset($_POST['secret'])) die();
-$weekly=(empty($_POST['weekly'])?false:true);
+$weekly= !empty($_POST['weekly']);
 $dbm=new DBManagement();
 $cq=new CQuests($dbm);
 echo $cq->getDailyLevel($weekly);

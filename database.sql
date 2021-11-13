@@ -20,6 +20,9 @@ CREATE TABLE users
     gameVer        int(4)                DEFAULT 20,
     lvlsCompleted  int(11)               DEFAULT 0,
     special        int(11)      NOT NULL DEFAULT 0,
+    protect_meta JSON NOT NULL DEFAULT '{"comm_time":0,"post_time":0,"msg_time":0}',
+    protect_levelsToday int(10) NOT NULL DEFAULT 0,
+    protect_todayStars int(10) NOT NULL DEFAULT 0,
 
     isBanned       tinyint(1)   NOT NULL DEFAULT 0,
     blacklist      text         NOT NULL DEFAULT '',
