@@ -24,7 +24,8 @@ class DBManagement{
 			$former="Query preparation error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error."\n\tQUERY: $query";
 			err_handle("DBM","fatal", $former);
 		}
-        call_user_func_array(array($req,"bind_param"),array_merge((array)$datatypes,$vars));
+        //call_user_func_array(array($req,"bind_param"),array_merge((array)$datatypes,$vars));
+        $req->bind_param($datatypes,...$vars);
         if(!($req->execute())){
 			$former="Query error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error;
 			err_handle("DBM","fatal", $former);
