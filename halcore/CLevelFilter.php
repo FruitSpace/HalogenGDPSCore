@@ -46,14 +46,14 @@ class CLevelFilter{
 			}
 		}else{
 			if(isset($params['diff'])) {
-				$whereq .= " AND difficulty IN (" . $params['diff'] . ")";
+				$whereq .= " AND difficulty IN (" .str_replace(",,",",",$params['diff']). ")";
 			}
 		} //Difficulty
 		if(isset($params['length'])){
-			$whereq.=" AND length IN (".$params['length'].")";
+			$whereq.=" AND length IN (".str_replace(",,",",",$params['length']).")";
 		} //length
 		if(isset($params['completed'])){
-			$whereq.=" AND id".($params['completed']===false?" NOT":"")." IN (".$params['completedLevels'].")";
+			$whereq.=" AND id".($params['completed']===false?" NOT":"")." IN (".str_replace(",,",",",$params['completedLevels']).")";
 		} //completed/uncompleted stuff
 		if(isset($params['isFeatured'])) $whereq.=" AND isFeatured=1"; //Featured
 		if(isset($params['is2p'])) $whereq.=" AND is2p=1"; //2 Players
@@ -146,11 +146,11 @@ class CLevelFilter{
 		}elseif($followmode==true){
 			if(isset($params['sterm'])) {
 				if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
-				$req = $this->db->preparedQuery($query." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
-				$this->count=$this->db->preparedQuery($cntquery." AND uid IN (".$params['followList'].") AND (id=? OR name LIKE ?)" . $suffix, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%")->fetch_assoc()['cnt'];
+				$req = $this->db->preparedQuery($query." AND uid IN (".str_replace(",,",",",$params['followList']).") AND (id=? OR name LIKE ?)" . $suffix . $sortstr, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%");
+				$this->count=$this->db->preparedQuery($cntquery." AND uid IN (".str_replace(",,",",",$params['followList']).") AND (id=? OR name LIKE ?)" . $suffix, "ii", $params['versionGame'],$params['sterm'],"%".$params['sterm']."%")->fetch_assoc()['cnt'];
 			}else{
-				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".$params['followList'].")".$suffix . $sortstr, "i", $params['versionGame']);
-				$this->count = $this->db->preparedQuery($cntquery." AND isUnlisted=0 AND uid IN (".$params['followList'].")".$suffix, "i", $params['versionGame'])->fetch_assoc()['cnt'];
+				$req = $this->db->preparedQuery($query." AND isUnlisted=0 AND uid IN (".str_replace(",,",",",$params['followList']).")".$suffix . $sortstr, "i", $params['versionGame']);
+				$this->count = $this->db->preparedQuery($cntquery." AND isUnlisted=0 AND uid IN (".str_replace(",,",",",$params['followList']).")".$suffix, "i", $params['versionGame'])->fetch_assoc()['cnt'];
 
 			}
 		}else{
@@ -172,7 +172,7 @@ class CLevelFilter{
 		$cntquery="SELECT count(*) as cnt FROM levels WHERE versionGame<=?";
 		$sortstr=" LIMIT 10 OFFSET $page";
 		if(isset($params['sterm'])){
-			$luid=" AND id IN (".$params['sterm'].")";
+			$luid=" AND id IN (".str_replace(",,",",",$params['sterm']).")";
 			$req=$this->db->preparedQuery($query.$luid.$sortstr,"i", $params['versionGame']);
 			$this->count=$this->db->preparedQuery($cntquery.$luid,"i", $params['versionGame'])->fetch_assoc()['cnt'];
 		}else{

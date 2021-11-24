@@ -45,6 +45,7 @@ switch($type){
 			array_push($friend_ids,$uid);
 			foreach ($friendships as $frid){
 				$ids=$cf->getFriendByFID($frid);
+                if($ids===null) continue;
 				$fid=($ids['uid1']==$uid?$ids['uid2']:$ids['uid1']);
 				array_push($friend_ids,$fid);
 			}

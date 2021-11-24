@@ -71,9 +71,13 @@ class CMessage{
 			$item['message']=$msg['body'];
 			$acc=new CAccount($this->db);
 			$acc->uid=($sent?$msg['uid_dest']:$msg['uid_src']);
-			$acc->loadAuth(); //Get uname
+            if($acc->exists($acc->uid)){
+                $acc->loadAuth(); //Get uname
+                $item['uname']=$acc->uname;
+            }else{
+                $item['uname']="[DELETED]";
+            }
 			$item['uid']=$acc->uid;
-			$item['uname']=$acc->uname;
 			$item['isNew']=$msg['isNew'];
 			$item['date']=$msg['postedTime'];
 			array_push($output, $item);

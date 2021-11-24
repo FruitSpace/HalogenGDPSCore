@@ -142,7 +142,6 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 					if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 					if(!isset($command[2]) or !isset($command[3]) or ($command[2])!=$cl->id) return -1;
 					require_once __DIR__."/../CAccount.php";
-					$acc=new CAccount($dbm);
 					$uid=$acc->getUIDbyUname($command[3]);
 					if($uid<1) return -1;
 					registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Chown->".ucfirst(strtolower($command[3]))." (".($isOwner?"Owner":"Mod").")"),$dbm);

@@ -20,9 +20,8 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 	if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
 		$cl=new CLevel($dbm);
 		$cl->id=$id;
-		if($cl->isOwnedBy($uid)){
+		if($cl->isOwnedBy($uid)>0){
             $ch=new CHalogen($dbm);
-			$cl->loadBase();
 			$cl->deleteLevel();
 			$cl->recalculateCPoints($cl->uid);
             $ch->onLevel();

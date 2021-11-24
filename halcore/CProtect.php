@@ -67,6 +67,7 @@ class CProtect{
         $scnt=$this->db->preparedQuery("SELECT protect_todayStars as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['cnt'];
         if(($stars-$scnt)>$this->levelModel['maxStars']){
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
+            err_handle("BAN","verbose","Banned $uid for stars [$scnt] vs max ".$this->levelModel['maxStars']);
             return -1;
         }
         return 1;
