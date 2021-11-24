@@ -24,9 +24,9 @@ define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
         $f=explode("//[LOCK]",$m)[0];
         $x=explode("//[MUSIC]",$m)[1];
         if($lock){
-            $f=$f."//[LOCK]\ndefine(\"LOCK\",true);\n//[MUSIC]\n$x";
+            $f=$f."//[LOCK]\ndefine(\"LOCK\",true);\n//[MUSIC]$x";
         }else{
-            $f=$f."//[LOCK]\ndefine(\"LOCK\",false);\n//[MUSIC]\n$x";
+            $f=$f."//[LOCK]\ndefine(\"LOCK\",false);\n//[MUSIC]$x";
         }
         file_put_contents(__DIR__."/../conf/mainconfig.php",$f);
     }

@@ -216,7 +216,7 @@ foreach($levels as $slevel){
 	$cl->loadAll();
 	$acc=new CAccount($dbm);
 	$acc->uid=$cl->uid;
-	$acc->loadAuth();
+	$acc->loadAuth(); //! Non-existant users level leftovers
 	$userstring.=$acc->uid.":".$acc->uname.":".$acc->uid."|";
 	$auto=0;
 	if($cl->difficulty<0){
