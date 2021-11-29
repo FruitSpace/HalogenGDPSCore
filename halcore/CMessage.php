@@ -79,6 +79,7 @@ class CMessage{
             }
 			$item['uid']=$acc->uid;
 			$item['isNew']=$msg['isNew'];
+            if(!empty($item['isNew'])) $this->db->query("UPDATE messages SET isNew=0 WHERE id=".$item['id']);
 			$item['date']=$msg['postedTime'];
 			array_push($output, $item);
 		}
