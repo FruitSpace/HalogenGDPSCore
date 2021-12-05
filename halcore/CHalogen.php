@@ -404,7 +404,7 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
     }
     function onComment(){
         $cnt=$this->countComments();
-        if($cnt>HALHOST_MAX_USERS) return -1;
+        if($cnt>HALHOST_MAX_COMMENTS) return -1;
         file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.comments&value=$cnt");
         return 1;
     }
