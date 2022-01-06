@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__."/../conf/halhost.php";
 /*
  * Support hal: links
  * hal:ng:int_ID (ex hal:ng:1008153 | Avenza - Wicked VIP)
@@ -30,7 +31,6 @@ class CMusic{
     }
 
     function requestNGOuter(int $id){
-        require_once __DIR__."/../conf/halhost.php";
         $song=file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=requestSong&id=$id");
         $song=json_decode($song,true);
         if($song['status']=="ok"){
@@ -54,10 +54,10 @@ class CMusic{
                 if(!preg_match("/([a-z\d\-\_])+[\\\\\/]([a-z\d\-\_])+$/i",$arn[2])) return -1;
                 break;
             case "yt":
-                if(!preg_match("/^([a-z\d\-\_])+$/i")) return -1;
+                if(!preg_match("/^([a-z\d\-\_])+$/i",$arn[2])) return -1;
                 break;
             case "vk":
-                if(!preg_match("/^(\d)+\_(\d)+$/")) return -1;
+                if(!preg_match("/^(\d)+\_(\d)+$/",$arn[2])) return -1;
                 break;
             default:
                 return -1;
