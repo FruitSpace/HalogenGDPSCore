@@ -42,11 +42,11 @@ class CLevelFilter{
 			if(isset($params['demonDiff'])){
 				$whereq.=" AND demonDifficulty=".$params['demonDiff'];
 			}else{
-				$whereq.=" AND demonDifficulty>0";
+				$whereq.=" AND demonDifficulty>=0";
 			}
 		}else{
 			if(isset($params['diff'])) {
-				$whereq .= " AND difficulty IN (" .str_replace(",,",",",$params['diff']). ") AND demonDifficulty=0";
+				$whereq .= " AND difficulty IN (" .str_replace(",,",",",$params['diff']). ") AND demonDifficulty=-1";
 			}
 		} //Difficulty
 		if(isset($params['length'])){
