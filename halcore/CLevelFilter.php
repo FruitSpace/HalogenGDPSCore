@@ -46,7 +46,7 @@ class CLevelFilter{
 			}
 		}else{
 			if(isset($params['diff'])) {
-				$whereq .= " AND difficulty IN (" .str_replace(",,",",",$params['diff']). ")";
+				$whereq .= " AND difficulty IN (" .str_replace(",,",",",$params['diff']). ") AND demonDifficulty=0";
 			}
 		} //Difficulty
 		if(isset($params['length'])){
