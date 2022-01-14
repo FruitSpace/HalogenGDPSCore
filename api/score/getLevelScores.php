@@ -39,7 +39,9 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 			}
 		}
 		//Now the retrival part
-		$scores=$cs->getScoresForLevelId($id,$mode+400);
+        $xacc=new CAccount($dbm);
+        $xacc->uid=$uid;
+		$scores=$cs->getScoresForLevelId($id,$mode+400,$xacc);
 		if(empty($scores)){
 			echo "";
 		}else{
