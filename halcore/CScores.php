@@ -30,7 +30,7 @@ class CScores{
 		return 1;
 	}
 
-	function getScoresForLevelId(int $lvl_id, int $type=CSCORE_TYPE_TOP){
+	function getScoresForLevelId(int $lvl_id, int $type=CSCORE_TYPE_TOP,CAccount $acc){
 		switch ($type){
 			case CSCORE_TYPE_TOP:
 				$suffix="";
@@ -39,7 +39,10 @@ class CScores{
 				$suffix="AND postedTime>='".date("Y-m-d H:i:s",strtotime("this week midnight"))."'";
 				break;
 			case CSCORE_TYPE_FRIENDS:
-				$suffix="AND 1=0";
+                $acc->loadSocial();
+                $fr=$acc->uid.",".$acc->friendshipIds;
+				$suffix="AND uid IN($fr)";
+                break;
 		}
 		$req=$this->db->query("SELECT * FROM scores WHERE lvl_id=$lvl_id ".$suffix." ORDER BY percent DESC");
 		if($this->db->isEmpty($req)) return array();
