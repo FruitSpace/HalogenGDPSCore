@@ -86,6 +86,16 @@ class CFriendship{
 		return $req;
 	}
 
+    function getAccFriends(CAccount $acc){
+        $fr=explode(",",$acc->friendshipIds);
+        $frlist=array();
+        foreach ($fr as $sfr){
+            $frl=$this->getFriendByFID($sfr);
+            array_push($frlist,($frl['uid1']==$acc->uid?$frl['uid2']:$frl['uid1']));
+        }
+        return $frlist;
+    }
+
 	function readFriendRequest(int $id, int $uid){
 		$this->db->query("UPDATE friendreqs SET isNew=0 WHERE id=$id AND uid_dest=$uid");
 		return 1;
