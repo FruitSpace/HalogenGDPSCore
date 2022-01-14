@@ -48,6 +48,7 @@ if(isset($_POST['itemID']) and isset($_POST['type']) and isset($_POST['accountID
 				break;
 
 		}
+        echo "1";
 	}else{
 		echo "-1";
 	}
