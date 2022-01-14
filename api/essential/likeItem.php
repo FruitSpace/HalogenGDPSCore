@@ -24,6 +24,7 @@ if(isset($_POST['itemID']) and isset($_POST['type']) and isset($_POST['accountID
 				$cl = new CLevel($dbm);
 				if ($cl->exists($id)) {
 					$cl->likeLevel($id, $uid, ($like ? CLEVEL_ACTION_LIKE : CLEVEL_ACTION_DISLIKE));
+                    echo "1";
 				} else {
 					echo "-1";
 				}
@@ -33,6 +34,7 @@ if(isset($_POST['itemID']) and isset($_POST['type']) and isset($_POST['accountID
 				$cc = new CComment($dbm);
 				if ($cc->existsLvlComment($id)) {
 					$cc->likeLvlComment($id, $uid, ($like ? CCOMMENT_ACTION_LIKE : CCOMMENT_ACTION_DISLIKE));
+                    echo "1";
 				} else {
 					echo "-1";
 				}
@@ -42,13 +44,13 @@ if(isset($_POST['itemID']) and isset($_POST['type']) and isset($_POST['accountID
 				$cc = new CComment($dbm);
 				if ($cc->existsAccComment($id)) {
 					$cc->likeAccComment($id, $uid, ($like ? CCOMMENT_ACTION_LIKE : CCOMMENT_ACTION_DISLIKE));
+                    echo "1";
 				} else {
 					echo "-1";
 				}
 				break;
 
 		}
-        echo "1";
 	}else{
 		echo "-1";
 	}
