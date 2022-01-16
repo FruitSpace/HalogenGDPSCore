@@ -80,7 +80,7 @@ define("CHEST_SMALL_DIAMONDS_MAX", '.(int)$chests['small']['diamonds']['max'].')
 define("CHEST_SMALL_SHARDS_MIN", '.(int)$chests['small']['shards']['min'].');
 define("CHEST_SMALL_SHARDS_MAX", '.(int)$chests['small']['shards']['max'].');
 define("CHEST_SMALL_KEYS_MIN",'.(int)$chests['small']['keys']['min'].');
-define("CHEST_SMALL_KEYS_MAX",'.(int)$chests['small']['orbs']['max'].');
+define("CHEST_SMALL_KEYS_MAX",'.(int)$chests['small']['keys']['max'].');
 define("CHEST_SMALL_WAIT", '.(int)$chests['small']['timeout'].'); //sec
 
 //----- BIG CHEST -----
