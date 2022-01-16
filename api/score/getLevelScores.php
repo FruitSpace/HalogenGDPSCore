@@ -38,7 +38,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 				$cs->uploadLevelScore();
 			}
 		}
-        
+
 		//Now the retrival part
         $xacc=new CAccount($dbm);
         $xacc->uid=$uid;
