@@ -51,6 +51,7 @@ class CProtect{
         $lvcnt=$this->db->preparedQuery("SELECT protect_levelsToday as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['cnt'];
         if($lvcnt>=$this->levelModel['maxLevelUpload']){
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
+            err_handle("BAN","warn","$uid WAS BANNED BECAUSE OF LVL UPLOAD $lvcnt/".$this->levelModel['maxLevelUpload']);
             return -1;
         }
         $this->db->preparedQuery("UPDATE users SET protect_levelsToday=protect_levelsToday+1 WHERE uid=?","i",$uid);
@@ -62,12 +63,13 @@ class CProtect{
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
             $this->db->preparedQuery("DELETE FROM levels WHERE uid=?","i",$uid);
             $this->db->preparedQuery("DELETE FROM actions WHERE type=4 AND uid=?","i",$uid);
+            err_handle("BAN","warn","$uid WAS BANNED FOR NEGATIVE STATS");
             return -1;
         }
         $scnt=$this->db->preparedQuery("SELECT protect_todayStars as cnt FROM users WHERE uid=?","i",$uid)->fetch_assoc()['cnt'];
         if(($stars-$scnt)>$this->levelModel['maxStars']){
             $this->db->preparedQuery("UPDATE users SET isBanned=2 WHERE uid=?","i",$uid);
-            err_handle("BAN","verbose","Banned $uid for stars [$scnt] vs max ".$this->levelModel['maxStars']);
+            err_handle("BAN","warn","Banned $uid for stars [$scnt] vs max ".$this->levelModel['maxStars']);
             return -1;
         }
         return 1;
