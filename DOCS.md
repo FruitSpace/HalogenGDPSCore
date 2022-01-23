@@ -211,7 +211,8 @@ CREATE TABLE songs (
     artist varchar(128) NOT NULL DEFAULT 'Unknown',
     size float(5,2) NOT NULL,
     url varchar(1024) NOT NULL,
-    isBanned tinyint(1) NOT NULL DEFAULT 0
+    isBanned tinyint(1) NOT NULL DEFAULT 0,
+    downloads int NOT NULL DEFAULT 0
 );
 ```
 
