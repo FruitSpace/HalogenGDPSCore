@@ -63,18 +63,22 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
             $ch=new CHalogen($dbm);
             if($ch->onLevel()>0) {
                 $protect=new CProtect($dbm);
-                if($protect->detectLevelModel($uid)>0) {
-                    $res = $cl->uploadLevel();
-                    echo $res;
-                    if ($res > 0) {
-                        $xdata = array(
-                            "name" => $cl->name,
-                            "version" => $cl->version,
-                            "objects" => $cl->objects,
-                            "starsReq" => $cl->starsRequested
-                        );
-                        require_once __DIR__ . "/../../halcore/lib/actions.php";
-                        registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+                if($cl->checkParams()) {
+                    if ($protect->detectLevelModel($uid) > 0) {
+                        $res = $cl->uploadLevel();
+                        echo $res;
+                        if ($res > 0) {
+                            $xdata = array(
+                                "name" => $cl->name,
+                                "version" => $cl->version,
+                                "objects" => $cl->objects,
+                                "starsReq" => $cl->starsRequested
+                            );
+                            require_once __DIR__ . "/../../halcore/lib/actions.php";
+                            registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+                        }
+                    } else {
+                        echo "-1";
                     }
                 }else{
                     echo "-1";
