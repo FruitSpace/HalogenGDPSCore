@@ -71,7 +71,7 @@ class CLevelFilter{
 			if(isset($params['songCustom'])){
 				$whereq.=" AND song_id=".$params['songid'];
 			}else{
-				$whereq.=" AND track_id=".$params['songid'];
+				$whereq.=" AND song_id=0 AND track_id=".$params['songid'];
 			}
 		} //Song NG/Classic stuff
 		return $whereq;
