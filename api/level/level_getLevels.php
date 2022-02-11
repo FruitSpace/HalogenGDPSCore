@@ -120,7 +120,7 @@ if(!empty($_POST['noStar'])) $param['star']=false; //stars=0
 if(!empty($_POST['song'])) $param['songid']=(int)$_POST['song'];
 if(!empty($_POST['customSong'])) {
     $param['songCustom'] = true; //Track if not else ng
-}else $param['songid']=abs($param['songid']-1);
+}elseif(!empty($_POST['song'])) $param['songid']=abs($param['songid']-1);
 $dbm=new DBManagement();
 $filter=new CLevelFilter($dbm);
 if(empty($_POST['gauntlet']) or !is_numeric($_POST['gauntlet'])) {
