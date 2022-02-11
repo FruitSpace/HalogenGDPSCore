@@ -3,7 +3,6 @@
 require __DIR__ . "/../../conf/mainconfig.php";
 
 if(!defined('LOG_HTML')) define("LOG_HTML",false);
-
 $errTypes= array(
     'warn'=>'<font color="yellow">WARNING</font>',
     'err'=>'<font color="red">ERROR</font>',
