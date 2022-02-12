@@ -130,7 +130,7 @@ switch($_GET['action']){
         if(!isset($params['type'])) die('{"status":"error","error":"Method rejects provided data"}');
         $limit=key_exists("limit",$params)?" LIMIT ".(int)$params['limit']:"";
         $querys=(key_exists("mod",$params)?" AND isMod=1":"").(key_exists('queryData',$params)?(" AND data LIKE '%".addslashes($params['queryData'])."%'"):"");
-        $req=$dbm->preparedQuery("SELECT * FROM actions WHERE type=? ".$querys." ORDER BY date DESC".$limit);
+        $req=$dbm->preparedQuery("SELECT * FROM actions WHERE type=? ".$querys." ORDER BY date DESC".$limit,"i",$params['type']);
         $reqm=array();
         while($res=$req->fetch_assoc()) $reqm[]=$res;
         die(json_encode(array(
