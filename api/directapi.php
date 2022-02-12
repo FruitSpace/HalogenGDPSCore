@@ -128,8 +128,8 @@ switch($_GET['action']){
 
     case "log.get":
         if(!isset($params['type'])) die('{"status":"error","error":"Method rejects provided data"}');
-        $limit=empty($params['limit'])?"":" LIMIT ".(int)$params['limit'];
-        $querys=($params['mod']?" AND isMod=1":"").($params['queryData']?(" AND data LIKE '%".addslashes($params['queryData'])."%'"):"");
+        $limit=key_exists("limit",$params)?"":" LIMIT ".(int)$params['limit'];
+        $querys=(key_exists("mod",$params)?" AND isMod=1":"").(key_exists('queryData',$params)?(" AND data LIKE '%".addslashes($params['queryData'])."%'"):"");
         $req=$dbm->preparedQuery("SELECT * FROM actions WHERE type=? ".$querys." ORDER BY date DESC".$limit);
         $reqm=array();
         while($res=$req->fetch_assoc()) $reqm[]=$res;
