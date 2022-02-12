@@ -128,7 +128,9 @@ switch($_GET['action']){
 
     case "log.get":
         if(!isset($params['type'])) die('{"status":"error","error":"Method rejects provided data"}');
-        $req=$dbm->preparedQuery("SELECT * FROM actions WHERE type=? ORDER BY date DESC".(empty($params['limit'])?"":" LIMIT ".(int)$params['limit']));
+        $limit=empty($params['limit'])?"":" LIMIT ".(int)$params['limit'];
+        $querys=($params['mod']?" AND isMod=1":"").($params['queryData']?(" AND data LIKE '%".addslashes($params['queryData'])."%'"):"");
+        $req=$dbm->preparedQuery("SELECT * FROM actions WHERE type=? ".$querys." ORDER BY date DESC".$limit);
         $reqm=array();
         while($res=$req->fetch_assoc()) $reqm[]=$res;
         die(json_encode(array(
