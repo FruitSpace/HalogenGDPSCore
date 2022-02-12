@@ -27,6 +27,7 @@ if(isset($_POST['userID']) and $_POST['userID']!=""){
 	$acc->uid=$id;
 	$acc->loadAuth();
 	$acc->loadVessels();
+    $acc->loadStats();
 	$roleObj=$acc->getRoleObj();
 	$comments=$cc->getAllCommentsHistory($id,$page,$sortmode);
 	if(empty($comments)) {
@@ -39,7 +40,7 @@ if(isset($_POST['userID']) and $_POST['userID']!=""){
 			$output.="1~".$comm->lvl_id."~2~".$comm->comment."~3~".$id."~4~".$comm->likes."~5~0~7~".$comm->isSpam."~9~".$age."~10~".$comm->percent;
 			$output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
 			//user part, Force No glow
-			$output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~0~16~".$acc->uid."|";
+			$output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~".$acc->special."~16~".$acc->uid."|";
 		}
 		echo substr($output,0,-1)."#".$commentcount.":".($page*10).":10";
 	}
