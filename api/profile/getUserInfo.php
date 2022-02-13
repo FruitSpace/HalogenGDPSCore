@@ -28,7 +28,7 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 		}
 	}
 	$acc=new CAccount($dbm);
-	if(!$acc->exists($uid)) die("-18");
+	if(!$acc->exists($uid)) die("-1");
 	$acc->uid=$uid;
 	$acc->loadAll();
 	$cf=new CFriendship($dbm);
@@ -42,7 +42,7 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	$output.=":45:".$acc->twitch.":46:".$acc->diamonds.":48:".$acc->death.":49:".(empty($roleObj)?"0":$roleObj['level']).":50:".$acc->cS;
 	//check blacklist status
 	$blacklist=explode(",",$acc->blacklist);
-	if(in_array($uid_self,$blacklist)) die("-1");
+	if($uid_self>0 and in_array($uid_self,$blacklist)) die("-1");
 	$rank=($acc->isBanned>0?0:$acc->getLeaderboardRank($uid));
 	if($uid==$uid_self){
 		require_once __DIR__ . "/../../halcore/CMessage.php";
@@ -53,5 +53,5 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	}
 	echo $output;
 }else{
-	echo "-12";
+	echo "-1";
 }
