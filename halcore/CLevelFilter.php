@@ -14,7 +14,7 @@ class CLevelFilter{
 	/*
 	 * --- [PARAMS] Object ---
 	 * + (s) sterm - search term (used with other params to specify exact usage)
-	 * + (s) diff - difficulties array. If doesnt exist then all diffs | Ex: array(10,20,30)
+	 * + (s) diff - difficulties array. If it doesn't exist then all diffs | Ex: array(10,20,30)
 	 * + (b) isDemon - should we look for demon difficulty or not
 	 * + (i) demonDiff - demon difficulty (auto sorted)
 	 * + (i) length - level length array (if not specified -> all) | Ex: array(0,1,4)
@@ -138,7 +138,8 @@ class CLevelFilter{
 		$suffix=$this->generateQueryString($params);
 		$query="SELECT id FROM levels WHERE versionGame<=?";
 		$cntquery="SELECT count(*) as cnt FROM levels WHERE versionGame<=?";
-		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
+//		$sortstr=" ORDER BY likes DESC LIMIT 10 OFFSET $page";
+        $sortstr=" ORDER BY downloads DESC LIMIT 10 OFFSET $page";
 		if(isset($params['sterm']) and $followmode===false){
 			if(!is_numeric($params['sterm'])) $query.=" AND isUnlisted=0";
 			$req=$this->db->preparedQuery($query." AND uid=?".$suffix.$sortstr,"ii", $params['versionGame'],$params['sterm']);
