@@ -63,7 +63,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
             $acc->uid=$uid;
             $acc->loadAuth();
             $roles=$acc->getRoleObj(true);
-            if($roles['privs']['cLvlAccess']==1) $password=base64_encode(doXOR(1,26364));
+            if($roles['privs']['cLvlAccess']==1) $password=base64_encode(doXOR("1",26364));
         }
     }
 	if($cl->difficulty<0){
@@ -111,7 +111,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$output.=":48:1".($dailylvl?":41:".$wid:""); //GD 2.2 and daily/weekly
 
 	//2.1 hashing
-	$solo_str=$cl->uid.",".$cl->starsGot.",".($cl->demonDifficulty>=0?1:0).",".$cl->id.",".($cl->coins>0?1:0).",".$cl->isFeatured.",".$cl->password.",".($dailylvl?$wid:0);
+	$solo_str=$cl->uid.",".$cl->starsGot.",".($cl->demonDifficulty>=0?1:0).",".$cl->id.",".($cl->coins>0?1:0).",".$cl->isFeatured.",".$password.",".($dailylvl?$wid:0);
 	$output.="#".genhash_genSolo($cl->stringLevel)."#".genhash_genSolo2($solo_str);
     if($dailylvl){
         require_once __DIR__."/../../halcore/CAccount.php";
