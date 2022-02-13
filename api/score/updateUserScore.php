@@ -50,7 +50,7 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 	}
 	$r=0;
 }else{
-	echo "-1";
+	echo "1";
 	$r=1;
 }
 if(LOG_ENDPOINT_ACCESS){
