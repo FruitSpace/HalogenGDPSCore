@@ -50,9 +50,11 @@ class DBManagement{
 		}
     	if(LOG_DB_REQUESTS){
     		$former="Direct query: [$query]";
-			$ra=(($this->isEmpty($result) or $result===false or $result===true)?"EMPTY":($result->fetch_assoc()));
-			if($result!==false and $result!==true) $result->data_seek(0);
-			$former.="\n\tResponse: ".json_encode($ra);
+            if(LOG_DB_RESPONSES){
+			    $ra=(($this->isEmpty($result) or $result===false or $result===true)?"EMPTY":($result->fetch_assoc()));
+			    if($result!==false and $result!==true) $result->data_seek(0);
+			    $former.="\n\tResponse: ".json_encode($ra);
+            }
     		err_handle("DBM", "verbose",$former);
 		}
     	return $result;
