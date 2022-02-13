@@ -63,7 +63,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
             $acc->uid=$uid;
             $acc->loadAuth();
             $roles=$acc->getRoleObj(true);
-            if($roles['privs']['cLvlAccess']==1) $password=base64_encode(doXOR("1",26364));
+            if($roles['privs']['cLvlAccess']==1 and $cl->password!=0) $password=base64_encode(doXOR("1",26364));
         }
     }
 	if($cl->difficulty<0){
