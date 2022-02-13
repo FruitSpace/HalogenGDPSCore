@@ -53,6 +53,19 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$cl->onDownloadLevel();
 	$auto=0;
 	$password=($cl->password==0?"0":base64_encode(doXOR($cl->password,26364)));
+    if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!="" and $_POST['gjp']!=""){
+        $uid=(int)$_POST['accountID'];
+        $id=(int)$_POST['levelID'];
+        $gjp=exploitPatch_remove($_POST['gjp']);
+        if($lsec->verifySession($dbm, $uid, $ip, $gjp)){
+            require_once __DIR__ . "/../../halcore/CAccount.php";
+            $acc=new CAccount($dbm);
+            $acc->uid=$uid;
+            $acc->loadAuth();
+            $roles=$acc->getRoleObj(true);
+            if($roles['privs']['cLvlAccess']==1) $password=base64_encode(doXOR(1,26364));
+        }
+    }
 	if($cl->difficulty<0){
 		$auto=1;
 		$cl->difficulty=0;

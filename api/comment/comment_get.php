@@ -42,10 +42,11 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 			$roleObj=$acc->getRoleObj();
 			$output.="2~".$comm->comment."~3~".$comm->uid."~4~".$comm->likes."~5~0~7~".$comm->isSpam."~9~".$age."~10~".$comm->percent;
 			$output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
-			//user part, Force No glow
 			$output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~".$acc->special."~16~".$acc->uid."|";
 		}
-		echo substr($output,0,-1)."#".$commentcount.":".($page*10).":10";
+        $output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
+        $output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~".$acc->special."~16~".$acc->uid."|";
+        echo substr($output,0,-1)."#".$commentcount.":".($page*10).":10";
 	}
 }else{
 	echo "-1";
