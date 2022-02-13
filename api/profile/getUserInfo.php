@@ -28,7 +28,7 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 		}
 	}
 	$acc=new CAccount($dbm);
-	if(!$acc->exists($uid)) die("-1");
+	if(!$acc->exists($uid)) die("-18");
 	$acc->uid=$uid;
 	$acc->loadAll();
 	$cf=new CFriendship($dbm);
