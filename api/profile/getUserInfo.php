@@ -53,5 +53,5 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	}
 	echo $output;
 }else{
-	echo "-1";
+	echo "-12";
 }
