@@ -20,13 +20,6 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	$uid=(int)$_POST['targetAccountID'];
 	$dbm=new DBManagement();
 	$uid_self=0;
-	if (isset($_POST['accountID']) and $_POST['accountID']!=""){
-		$uid_self=(int)$_POST['accountID'];
-		$gjp=exploitPatch_remove($_POST['gjp']);
-		if(!$lsec->verifySession($dbm, $uid_self, $ip, $gjp)) {
-			die("-1");
-		}
-	}
 	$acc=new CAccount($dbm);
 	if(!$acc->exists($uid)) die("-1");
 	$acc->uid=$uid;
@@ -44,13 +37,19 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	$blacklist=explode(",",$acc->blacklist);
 	if(in_array($uid_self,$blacklist)) die("-1");
 	$rank=($acc->isBanned>0?0:$acc->getLeaderboardRank($uid));
-	if($uid==$uid_self){
-		require_once __DIR__ . "/../../halcore/CMessage.php";
-		$cm=new CMessage($dbm);
-		$fr_req=$cf->countFriendRequests($uid,true);
-		$msg_new=$cm->countMessages($uid,true);
-		$output.=":38:".$msg_new.":39:".$fr_req.":40:0";
-	}
+    if (isset($_POST['accountID']) and $_POST['accountID']!=""){
+        $uid_self=(int)$_POST['accountID'];
+        $gjp=exploitPatch_remove($_POST['gjp']);
+        if($lsec->verifySession($dbm, $uid_self, $ip, $gjp)) {
+            if($uid==$uid_self){
+                require_once __DIR__ . "/../../halcore/CMessage.php";
+                $cm=new CMessage($dbm);
+                $fr_req=$cf->countFriendRequests($uid,true);
+                $msg_new=$cm->countMessages($uid,true);
+                $output.=":38:".$msg_new.":39:".$fr_req.":40:0";
+            }
+        }
+    }
 	echo $output;
 }else{
 	echo "-1";
