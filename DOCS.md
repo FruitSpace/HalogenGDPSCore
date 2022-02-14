@@ -156,6 +156,7 @@ CREATE  TABLE levels (
     downloads int(11) UNSIGNED NOT NULL DEFAULT 0,
     likes int(11) NOT NULL DEFAULT 0,
     reports int(11) UNSIGNED NOT NULL DEFAULT 0,
+    collab TEXT NOT NULL DEFAULT '',
     
     is2p tinyint(1) NOT NULL DEFAULT 0,
     isVerified tinyint(1) NOT NULL DEFAULT 0,
