@@ -44,8 +44,6 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 			$output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
 			$output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~".$acc->special."~16~".$acc->uid."|";
 		}
-        $output.="~11~".(empty($roleObj)?"0":$roleObj['level']).(empty($roleObj)?"":"~12~".$roleObj['color'])."~6~".$comm->id.":";
-        $output.="1~".$acc->uname."~9~".$acc->getShownIcon()."~10~".$acc->colorPrimary."~11~".$acc->colorSecondary."~14~".$acc->iconType."~15~".$acc->special."~16~".$acc->uid."|";
         echo substr($output,0,-1)."#".$commentcount.":".($page*10).":10";
 	}
 }else{
