@@ -21,7 +21,7 @@ class DBManagement{
     function preparedQuery($query,$datatypes, ...$vars){
         $req=$this->db->prepare($query);
         if(!$req){
-			$former="Query preparation error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error."\n\tQUERY: $query";
+			$former="Query preparation error #".$this->db->errno."  [".$_SERVER['REQUEST_URI']."]\n\tMySQLi Thrown: ".$this->db->error."\n\tQUERY: $query";
 			err_handle("DBM","fatal", $former);
 		}
         //call_user_func_array(array($req,"bind_param"),array_merge((array)$datatypes,$vars));
@@ -45,7 +45,7 @@ class DBManagement{
 
     function query($query){
     	if(!($result=$this->db->query($query))){
-			$former="Direct query error #".$this->db->errno."\n\tMySQLi Thrown: ".$this->db->error."\nQUERY: $query";
+			$former="Direct query error #".$this->db->errno."  [".$_SERVER['REQUEST_URI']."]\n\tMySQLi Thrown: ".$this->db->error."\nQUERY: $query";
 			err_handle("DBM","fatal", $former);
 		}
     	if(LOG_DB_REQUESTS){

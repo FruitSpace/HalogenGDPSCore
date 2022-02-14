@@ -43,7 +43,7 @@ class CScores{
                 require_once __DIR__ . "/CFriendship.php";
                 $cfr=new CFriendship($this->db);
                 $fr=$cfr->getAccFriends($acc);
-                $fr=$acc->uid.",".implode(",",$fr);
+                $fr=str_replace(",,",",",$acc->uid.",".implode(",",$fr));
 				$suffix="AND uid IN($fr)";
                 break;
 		}

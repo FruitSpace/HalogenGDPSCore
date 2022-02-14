@@ -7,3 +7,4 @@ $protect=new CProtect($dbm);
 //recalculate
 $protect->resetUserLimits();
 $protect->fillLevelModel();
+$dbm->query("ALTER TABLE levels ADD COLUMN collab TEXT NOT NULL DEFAULT ''");
