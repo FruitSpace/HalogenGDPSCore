@@ -280,7 +280,7 @@ class CLevel{
 	}
 
 	function recalculateCPoints(int $uid){
-		$req=$this->db->query("SELECT starsGot,isFeatured,isEpic FROM levels WHERE uid=$uid");
+		$req=$this->db->query("SELECT starsGot,isFeatured,isEpic,collab FROM levels WHERE uid=$uid");
 		if($this->db->isEmpty($req)) return -2;
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
@@ -289,6 +289,10 @@ class CLevel{
 			if($sreq['starsGot']>0) $cpoints++;
 			if($sreq['isFeatured']==1) $cpoints++;
 			if($sreq['isEpic']==1) $cpoints++;
+            $collablist=explode(",",str_replace(",,",",",$sreq['collab']));
+            foreach ($collablist as $colid){
+                $this->db->preparedQuery("UPDATE users SET cpoints=cpoints+$cpoints WHERE uid=?","i",$colid);
+            }
 		}
 		$this->db->query("UPDATE users SET cpoints=$cpoints WHERE uid=$uid");
 	}
