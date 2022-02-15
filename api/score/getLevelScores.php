@@ -51,10 +51,11 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and isset($_POST['levelID
 				$acc=new CAccount($dbm);
 				$acc->uid=$score['uid'];
 				$acc->loadAuth();
+                $acc->loadStats();
 				$acc->loadVessels();
 				//Ignore Glow/Special here
 				$output.="1:".$acc->uname.":2:".$acc->uid.":3:".$score['percent'].":6:".$score['ranking'].":9:".$acc->getShownIcon();
-				$output.=":10:".$acc->colorPrimary.":11:".$acc->colorSecondary.":13:".$score['coins'].":14:".$acc->iconType.":15:0:16:".$acc->uid;
+				$output.=":10:".$acc->colorPrimary.":11:".$acc->colorSecondary.":13:".$score['coins'].":14:".$acc->iconType.":15:".$acc->special.":16:".$acc->uid;
 				$output.=":42:".getDateAgo(strtotime($score['date']))."|";
 			}
 			echo substr($output,0,-1);

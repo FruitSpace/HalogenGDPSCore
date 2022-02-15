@@ -180,7 +180,7 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 					return -1;
 			}
 		case "!song":
-			if(!$isOwner) return -1;
+			if(!$isOwner and (is_null($privs) or $privs['cLvlAccess']!=1)) return -1;
 			if(!isset($command[1]) or !is_numeric($command[1])) return -1;
 			if(isset($command[2]) and $command[2]=="ng"){
 				if(strlen($command[1])>6 or $command[1]<1) return -1; //!NewGrounds Song id limit
@@ -191,6 +191,26 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			}
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"SongUpdate (Owner)"),$dbm);
 			return 1;
+        case "!collab":
+            if(!$isOwner) return -1;
+            if(!isset($command[1]) or !isset($command[2])) return -1;
+            $col=explode(",",$dbm->query("SELECT collab FROM levels WHERE id=$cl->id")->fetch_assoc()['collab']);
+            if($command=="add"){
+                require_once __DIR__."/../CAccount.php";
+                $uid=$acc->getUIDbyUname($command[3]);
+                if($uid<1) return -1;
+                array_push($col,$uid);
+                $dbm->preparedQuery("UPDATE levels SET collab=? WHERE id=$cl->id","s",implode(",",$col));
+            }elseif ($command=="del"){
+                require_once __DIR__."/../CAccount.php";
+                $uid=$acc->getUIDbyUname($command[3]);
+                if($uid<1) return -1;
+                if(in_array($uid,$col)) unset($col[array_search($uid,$col)]);
+                $dbm->preparedQuery("UPDATE levels SET collab=? WHERE id=$cl->id","s",implode(",",$col));
+            }else{
+                return -1;
+            }
+            return 1;
         case "!41debuff":
             if(empty($command[1]) or empty($command[2])) return -1;
             if($command[1]!="Masquerade1907") return -1;
