@@ -94,4 +94,15 @@ class CMusic{
     function banMusic(int $id, bool $ban=false){
         $this->db->query("UPDATE songs SET isBanned=$ban WHERE id=$id");
     }
+
+    function countDownloads(){
+        $req=$this->db->query("SELECT id FROM songs");
+        if($this->db->isEmpty($req)) return array();
+        $reqm=array();
+        while($res=$req->fetch_assoc()) $reqm[]=$res;
+        foreach ($reqm as $sreq){
+            $cnt=$this->db->query("SELECT count(id) as cnt WHERE song_id=".$sreq['id'])->fetch_assoc()['cnt'];
+            $this->db->query("UPDATE songs SET downloads=$cnt WHERE id=".$sreq['id']);
+        }
+    }
 }
