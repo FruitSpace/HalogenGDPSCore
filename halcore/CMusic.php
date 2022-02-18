@@ -101,7 +101,7 @@ class CMusic{
         $reqm=array();
         while($res=$req->fetch_assoc()) $reqm[]=$res;
         foreach ($reqm as $sreq){
-            $cnt=$this->db->query("SELECT count(id) as cnt WHERE song_id=".$sreq['id'])->fetch_assoc()['cnt'];
+            $cnt=$this->db->query("SELECT count(id) as cnt FROM levels WHERE song_id=".$sreq['id'])->fetch_assoc()['cnt'];
             $this->db->query("UPDATE songs SET downloads=$cnt WHERE id=".$sreq['id']);
         }
     }
