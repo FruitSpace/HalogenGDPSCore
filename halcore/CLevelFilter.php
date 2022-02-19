@@ -211,7 +211,7 @@ class CLevelFilter{
 	function getGauntletLevels(int $gau){
 		$req=$this->db->preparedQuery("SELECT levels FROM levelpacks WHERE packType=1 AND packName=?","s",$gau);
 		if($this->db->isEmpty($req)) array();
-		$lvls=explode(",",$req->fetch_assoc()['levels']);
+		$lvls=explode(",",str_replace(",,",",",$req->fetch_assoc()['levels']));
 		return array($lvls[0],$lvls[1],$lvls[2],$lvls[3],$lvls[4]);
 	}
 

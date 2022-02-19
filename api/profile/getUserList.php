@@ -26,6 +26,8 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 			}else {
 				$bstring = "";
 				foreach ($blacklist as $buid) {
+                    $buid=intval($buid);
+                    if(empty($buid)) continue;
 					$bacc = new CAccount($dbm);
 					$bacc->uid = $buid;
 					$bacc->loadAuth();
@@ -45,6 +47,8 @@ if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!=
 				$fstring="";
 				$cf=new CFriendship($dbm);
 				foreach ($friends as $fid) {
+                    $fid=intval($fid);
+                    if(empty($fid)) continue;
 					$fx=$cf->getFriendByFID($fid);
 					$fuid=($fx['uid1']==$uid?$fx['uid2']:$fx['uid1']);
 					$facc = new CAccount($dbm);
