@@ -178,9 +178,9 @@ class CAccount{
 
 	function loadSocial(){
 		$req=$this->db->query("SELECT blacklist,friends_cnt,friendship_ids FROM users WHERE uid=$this->uid")->fetch_assoc();
-		$this->blacklist=$req['blacklist'];
-		$this->friendsCount=$req['friends_cnt'];
-		$this->friendshipIds=$req['friendship_ids'];
+		$this->blacklist=str_replace(",,",",",$req['blacklist']);
+		$this->friendsCount=(int)$req['friends_cnt'];
+		$this->friendshipIds=str_replace(",,",",",$req['friendship_ids']);
 	}
 
 	function loadAll(){
@@ -204,9 +204,9 @@ class CAccount{
 		$this->lastIP=$req['lastIP'];
 		$this->gameVer=$req['gameVer'];
 		$this->lvlsCompleted=$req['lvlsCompleted'];
-		$this->blacklist=$req['blacklist'];
+		$this->blacklist=str_replace(",,",",",$req['blacklist']);
 		$this->friendsCount=$req['friends_cnt'];
-		$this->friendshipIds=$req['friendship_ids'];
+		$this->friendshipIds=str_replace(",,",",",$req['friendship_ids']);
 		$reqd=json_decode($req['vessels'],true);
 		$this->iconType=$req['iconType'];
 		$this->colorPrimary=$reqd['clr_primary'];

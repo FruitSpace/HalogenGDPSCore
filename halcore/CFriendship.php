@@ -90,6 +90,7 @@ class CFriendship{
         $fr=explode(",",$acc->friendshipIds);
         $frlist=array();
         foreach ($fr as $sfr){
+            if(!is_numeric($sfr)) continue;
             $frl=$this->getFriendByFID($sfr);
             array_push($frlist,($frl['uid1']==$acc->uid?$frl['uid2']:$frl['uid1']));
         }

@@ -32,6 +32,7 @@ switch($type){
 		}
 		break;
 	case "friends":
+        if(empty($_POST['accountID'])) die('-1');
 		$uid=(int)$_POST['accountID'];
 		$gjp=exploitPatch_remove($_POST['gjp']);
 		if($lsec->verifySession($dbm, $uid, $ip, $gjp)) {
@@ -44,6 +45,7 @@ switch($type){
 			$friend_ids=array();
 			array_push($friend_ids,$uid);
 			foreach ($friendships as $frid){
+                if(!is_numeric($frid)) continue;
 				$ids=$cf->getFriendByFID($frid);
                 if($ids===null) continue;
 				$fid=($ids['uid1']==$uid?$ids['uid2']:$ids['uid1']);
@@ -62,7 +64,7 @@ switch($type){
 		$users=$acc->getLeaderboard(CLEADERBOARD_BY_STARS);
 }
 
-if(empty($users)) die("");
+if(empty($users)) die('-1');
 $output="";
 $lk=0;
 foreach ($users as $usr){
