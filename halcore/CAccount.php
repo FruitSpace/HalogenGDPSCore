@@ -243,7 +243,7 @@ class CAccount{
 	}
 
     function getUnameByUID($uid){
-        $req=$this->db->preparedQuery("SELECT uname FROM users WHERE uname=?","i",$uid);
+        $req=$this->db->preparedQuery("SELECT uname FROM users WHERE uid=?","i",$uid);
         if ($this->db->isEmpty($req)) return -1;
         return $req->fetch_assoc()['uname'];
     }
