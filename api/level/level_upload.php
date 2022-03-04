@@ -61,6 +61,7 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
                     $plugCore->preInit();
                     $acc=new CAccount($dbm);
                     $plugCore->onLevelUpload($cl->id,$cl->name,$acc->getUnameByUID($cl->uid),base64_decode($cl->description));
+                    $plugCore->unload();
 				}
 			}else{
 				echo "-1";

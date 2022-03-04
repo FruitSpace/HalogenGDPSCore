@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__."/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__ . "/../../halcore/plugins/autoload.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -28,13 +29,20 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			$cl = new CLevel($dbm);
 			if ($cl->exists($id)) {
 				$cl->id=$id;
-				$cl->loadBase();
+				$cl->loadMain();
 				$cl->rateLevel($stars);
 				$cl->featureLevel($feature);
 				$cl->recalculateCPoints($cl->uid);
 				require_once __DIR__."/../../halcore/lib/actions.php";
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"StarRate:".$stars." (Mod)"),$dbm);
 				if($feature) registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Feature (Mod)"),$dbm);
+                require_once __DIR__."/../../halcore/CAccount.php";
+                $plugCore=new PluginCore();
+                $plugCore->preInit();
+                $acc=new CAccount($dbm);
+                $cl->loadStats();
+                $plugCore->onLevelRate($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), $stars, $cl->likes, $cl->downloads, $cl->length, false, $feature, array($uid,$acc->getUnameByUID($uid)));
+                $plugCore->unload();
 				echo "1";
 			} else {
 				echo "-1";
