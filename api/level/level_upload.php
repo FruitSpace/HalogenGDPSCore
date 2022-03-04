@@ -5,6 +5,7 @@ require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 require_once __DIR__ . "/../../halcore/CHalogen.php";
 require_once __DIR__ . "/../../halcore/CProtect.php";
+require_once __DIR__ . "/../../halcore/plugins/autoload.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -54,7 +55,12 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
 						"starsReq" => $cl->starsRequested
 					);
 					require_once __DIR__ . "/../../halcore/lib/actions.php";
-					registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+                    registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+                    require_once __DIR__."/../../halcore/CAccount.php";
+                    $plugCore=new PluginCore();
+                    $plugCore->preInit();
+                    $acc=new CAccount($dbm);
+                    $plugCore->onLevelUpload($cl->id,$cl->name,$acc->getUnameByUID($cl->uid),base64_decode($cl->description));
 				}
 			}else{
 				echo "-1";
@@ -76,6 +82,11 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
                             );
                             require_once __DIR__ . "/../../halcore/lib/actions.php";
                             registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
+                            require_once __DIR__."/../../halcore/CAccount.php";
+                            $plugCore=new PluginCore();
+                            $plugCore->preInit();
+                            $acc=new CAccount($dbm);
+                            $plugCore->onLevelUpdate($cl->id,$cl->name,$acc->getUnameByUID($cl->uid),base64_decode($cl->description));
                         }
                     } else {
                         echo "-1";
