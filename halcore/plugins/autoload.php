@@ -111,9 +111,9 @@ class PluginCore{
 
 }
 
-$plug=new PluginCore();
-var_dump($plug->HAL_PLUGINS);
-
-$plug->preInit();
-$plug->onLevelUpload(4,"hi halogen","DaniilKreyk","-");
-$plug->unload();
+//$plug=new PluginCore();
+//var_dump($plug->HAL_PLUGINS);
+//
+//$plug->preInit();
+//$plug->onLevelUpload(4,"hi halogen","DaniilKreyk","-");
+//$plug->unload();
