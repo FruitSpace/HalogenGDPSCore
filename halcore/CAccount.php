@@ -242,6 +242,12 @@ class CAccount{
 		return $uid;
 	}
 
+    function getUnameByUID($uid){
+        $req=$this->db->preparedQuery("SELECT uname FROM users WHERE uname=?","i",$uid);
+        if ($this->db->isEmpty($req)) return -1;
+        return $req->fetch_assoc()['uname'];
+    }
+
 	function updateIP($ip){
 		$this->lastIP=$ip;
 		$this->db->preparedQuery("UPDATE users SET lastIP=?, accessDate=? WHERE uid=?","ssi",$ip,date("Y-m-d H:i:s"),$this->uid);
