@@ -17,7 +17,7 @@ class RabbitMQ{
         $this->conn->close();
         return null;
     }
-    function publishText($channel,$queue,$text){
+    function publishText($channel,$text){
         $msg=new AMQPMessage($text);
         $channel->basic_publish($msg,'',"bot_".SRV_ID);
     }
