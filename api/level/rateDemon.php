@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__."/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__."/../../halcore/plugins/autoload.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -29,6 +30,12 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			if ($cl->exists($id)) {
 				$cl->id=$id;
 				$cl->rateDemon($diff);
+                $plugCore=new PluginCore();
+                $plugCore->preInit();
+                $acc=new CAccount($dbm);
+                $cl->loadStats();
+                $plugCore->onLevelRate($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), $cl->stars, $cl->likes, $cl->downloads, $cl->length, $cl->demonDifficulty, $cl->isEpic, $cl->isFeatured, array($uid,$acc->getUnameByUID($uid)));
+                $plugCore->unload();
 				echo "1";
 			} else {
 				echo "-1";

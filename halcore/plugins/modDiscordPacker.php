@@ -39,7 +39,7 @@ class DiscordPacker{
             "likes"=>$likes,
             "downloads"=>$downloads,
             "len"=>$length,
-            "rateuser"=>$ratedBy['uname']
+            "rateuser"=>$ratedBy[1]
         )));
     }
 
