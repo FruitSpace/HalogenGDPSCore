@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../halcore/CLevel.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 require_once __DIR__ . "/../../halcore/CHalogen.php";
+require_once __DIR__.'/../../halcore/plugins/autoload.php';
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -31,6 +32,13 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			$acc->uid=$uid;
 			$acc->loadAuth();
 			registerAction(ACTION_LEVEL_DELETE,$uid,$id,array("uname"=>$acc->uname,"type"=>"Delete (Owner)"),$dbm);
+            require_once __DIR__."/../../halcore/CAccount.php";
+            $plugCore=new PluginCore();
+            $plugCore->preInit();
+            $acc=new CAccount($dbm);
+            $cl->loadMain();
+            $plugCore->onLevelDelete($cl->id,$cl->name,$acc->getUnameByUID($cl->uid));
+            $plugCore->unload();
 			echo "1";
 		}else{
 			echo "-1";

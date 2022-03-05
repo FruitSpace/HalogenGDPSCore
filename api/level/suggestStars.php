@@ -41,7 +41,7 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
                 $plugCore->preInit();
                 $acc=new CAccount($dbm);
                 $cl->loadStats();
-                $plugCore->onLevelRate($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), $stars, $cl->likes, $cl->downloads, $cl->length, false, $feature, array($uid,$acc->getUnameByUID($uid)));
+                $plugCore->onLevelRate($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), $stars, $cl->likes, $cl->downloads, $cl->length, $cl->demonDifficulty, false, $feature, array($uid,$acc->getUnameByUID($uid)));
                 $plugCore->unload();
 				echo "1";
 			} else {

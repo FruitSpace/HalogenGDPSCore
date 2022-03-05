@@ -42,7 +42,7 @@ function onLevelUpdate(PluginCore $pch, int $id, string $name, string $builder, 
 
 function onLevelDelete(PluginCore $pch, int $id, string $name, string $builder)
 
-function onLevelRate(PluginCore $pch, int $id, string $name, string $builder, int $stars, int $likes, int $downloads, int $length, bool $isEpic, bool $isFeatured, array[uid,uname] $ratedBy)
+function onLevelRate(PluginCore $pch, int $id, string $name, string $builder, int $stars, int $likes, int $downloads, int $length, int $demonDiff, bool $isEpic, bool $isFeatured, array[uid,uname] $ratedBy)
 
 function onLevelReport(PluginCore $pch, int $id, string $name, string $builder)
 ```
