@@ -12,8 +12,12 @@ class DiscordPacker{
         return json_encode(array("type"=>$type,"data"=>$obj));
     }
 
-    function onUserActivate($pch,$id,$uname){
+    function onPlayerActivate($pch,$id,$uname,$emailFWD){
         $pch->callPlugin("RabbitMQ::publishText",$this->rabbitChan,$this->genpayload("newuser",$uname));
+    }
+
+    function onPlayerNew(...$data){
+        $this->onPlayerActivate(...$data);
     }
 
     function onLevelUpload($pch, $id, $name, $builder, $desc){
