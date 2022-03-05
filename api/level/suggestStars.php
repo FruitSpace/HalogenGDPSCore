@@ -36,7 +36,6 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 				require_once __DIR__."/../../halcore/lib/actions.php";
 				registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"StarRate:".$stars." (Mod)"),$dbm);
 				if($feature) registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Feature (Mod)"),$dbm);
-                require_once __DIR__."/../../halcore/CAccount.php";
                 $plugCore=new PluginCore();
                 $plugCore->preInit();
                 $acc=new CAccount($dbm);
