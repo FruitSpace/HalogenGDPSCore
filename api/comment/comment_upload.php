@@ -34,7 +34,7 @@ if(isset($_POST['accountID']) and isset($_POST['comment']) and isset($_POST['gjp
 			if (!empty($role) or $own) {
 				$modComment = base64_decode($comment);
 				if ($modComment[0] == "!") {
-					$cl->loadBase();
+					$cl->loadMain();
 					require_once __DIR__ . "/../../halcore/lib/modCommandProcessor.php";
 					$state = invokeCommands($dbm, $cl, $acc, $modComment, $own, (empty($role)?null:$role['privs']));
 					if($state>0){

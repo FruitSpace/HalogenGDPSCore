@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__."/../plugins/autoload.php";
 function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, bool $isOwner=false, $privs=null){
 	$command=explode(" ",$comment);
 	require_once __DIR__."/../../halcore/lib/actions.php";
@@ -18,11 +18,21 @@ function invokeCommands(DBManagement $dbm, CLevel $cl, CAccount $acc, $comment, 
 			if(is_null($privs) or $privs['cEpic']!=1) return -1;
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Epic (Mod)"),$dbm);
 			$cl->epicLevel(true);
+            $plugCore=new PluginCore();
+            $plugCore->preInit();
+            $cl->loadStats();
+            $plugCore->onLevelRate($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), $cl->starsGot, $cl->likes, $cl->downloads, $cl->length, $cl->demonDifficulty, true, false, array($acc->uid,$acc->uname));
+            $plugCore->unload();
 			return 1;
 		case "!unepic":
 			if(is_null($privs) or $privs['cEpic']!=1) return -1;
 			registerAction(ACTION_LEVEL_UPDATE,$acc->uid,$cl->id,array("uname"=>$acc->uname,"type"=>"Unepic (Mod)"),$dbm);
 			$cl->epicLevel(false);
+            $plugCore=new PluginCore();
+            $plugCore->preInit();
+            $cl->loadStats();
+            $plugCore->onLevelRate($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), $cl->starsGot, $cl->likes, $cl->downloads, $cl->length, $cl->demonDifficulty, false, $cl->isFeatured, array($acc->uid,$acc->uname));
+            $plugCore->unload();
 			return 1;
 		case "!coins":
 			if(is_null($privs) or $privs['cVerCoins']!=1) return -1;
