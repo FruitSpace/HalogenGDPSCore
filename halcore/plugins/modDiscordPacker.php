@@ -84,6 +84,7 @@ class DiscordPacker{
                         break;
                     case 6:
                         $diff.="-extreme";
+                        break;
                     case 0:
                     default:
                         $diff.="-hard";
