@@ -4,6 +4,7 @@ require_once __DIR__ . "/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
 require_once __DIR__ . "/../../halcore/CHalogen.php";
+require_once __DIR__ . "/../../halcore/plugins/autoload.php";
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
@@ -25,6 +26,10 @@ if(isset($_POST['userName']) and isset($_POST['password']) and isset($_POST['ema
 		if($resp>0) {
 			require_once __DIR__."/../../halcore/lib/actions.php";
 			registerAction(ACTION_USER_REGISTER, 0, $acc->uid, array("uname" => $uname,"email"=>$email), $dbm);
+            $plugCore=new PluginCore();
+            $plugCore->preInit();
+            $plugCore->onPlayerNew($resp,$uname,$email);
+            $plugCore->unload();
 		}
 	}else{echo "-1";}
 
