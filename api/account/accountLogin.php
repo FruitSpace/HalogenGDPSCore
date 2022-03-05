@@ -22,6 +22,10 @@ if(isset($_POST['userName']) and isset($_POST['password']) and $_POST['userName'
 		echo "$uid,$uid";
 		require_once __DIR__."/../../halcore/lib/actions.php";
 		registerAction(ACTION_USER_LOGIN,0,$uid,array("uname"=>$uname),$dbm);
+        $plugCore=new PluginCore();
+        $plugCore->preInit();
+        $plugCore->onPlayerLogin($uid,$uname);
+        $plugCore->unload();
 	}
 	$r=0;
 }else{

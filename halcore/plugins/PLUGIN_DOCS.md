@@ -5,9 +5,9 @@
 - [X] `preInit` - invoked to load anything
 - [X] `unload` - unloads everything
 ### Player
-- [ ] `onPlayerNew` - invoked when player is registered, but not yet activated account
+- [X] `onPlayerNew` - invoked when player is registered, but not yet activated account
 - [ ] `onPlayerActivate` - invoked when player first activated account
-- [ ] `onPlayerLogin` - invoked when player commits login (regular, not gjp)
+- [X] `onPlayerLogin` - invoked when player commits login (regular, not gjp)
 - [ ] `onPlayerBackup` - invoked when player uploads his backup
 - [ ] `onPlayerSync is forbidden`
 - [ ] `onPlayerScoreUpdate` - invoked when player updates his score
@@ -35,6 +35,10 @@ function unload(PluginCore $pch)
 ### Player
 ```php
 function onPlayerNew(PluginCore $pch, int $uid, string $uname, string $email)
+
+function onPlayerActivate(PluginCore $pch, int $uid, string $uname)
+
+function onPlayerLogin(PluginCore $pch, int $uid, string $uname)
 ```
 ### Level
 ```php
