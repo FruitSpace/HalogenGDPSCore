@@ -56,12 +56,14 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
 					);
 					require_once __DIR__ . "/../../halcore/lib/actions.php";
                     registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
-                    require_once __DIR__."/../../halcore/CAccount.php";
-                    $plugCore=new PluginCore();
-                    $plugCore->preInit();
-                    $acc=new CAccount($dbm);
-                    $plugCore->onLevelUpload($cl->id,$cl->name,$acc->getUnameByUID($cl->uid),base64_decode($cl->description));
-                    $plugCore->unload();
+                    if(!$cl->isUnlisted) {
+                        require_once __DIR__ . "/../../halcore/CAccount.php";
+                        $plugCore = new PluginCore();
+                        $plugCore->preInit();
+                        $acc = new CAccount($dbm);
+                        $plugCore->onLevelUpload($cl->id, $cl->name, $acc->getUnameByUID($cl->uid), base64_decode($cl->description));
+                        $plugCore->unload();
+                    }
 				}
 			}else{
 				echo "-1";
@@ -83,11 +85,13 @@ if(isset($_POST['accountID']) and isset($_POST['gameVersion']) and isset($_POST[
                             );
                             require_once __DIR__ . "/../../halcore/lib/actions.php";
                             registerAction(ACTION_LEVEL_UPLOAD, $uid, $res, $xdata, $dbm);
-                            require_once __DIR__."/../../halcore/CAccount.php";
-                            $plugCore=new PluginCore();
-                            $plugCore->preInit();
-                            $acc=new CAccount($dbm);
-                            $plugCore->onLevelUpdate($res,$cl->name,$acc->getUnameByUID($cl->uid),base64_decode($cl->description));
+                            if(!$cl->isUnlisted) {
+                                require_once __DIR__ . "/../../halcore/CAccount.php";
+                                $plugCore = new PluginCore();
+                                $plugCore->preInit();
+                                $acc = new CAccount($dbm);
+                                $plugCore->onLevelUpdate($res, $cl->name, $acc->getUnameByUID($cl->uid), base64_decode($cl->description));
+                            }
                         }
                     } else {
                         echo "-1";
