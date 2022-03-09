@@ -3,6 +3,7 @@ require_once __DIR__ . "/../../halcore/lib/DBManagement.php";
 require_once __DIR__ . "/../../halcore/CAccount.php";
 require_once __DIR__ . "/../../halcore/lib/legacy.php";
 require_once __DIR__ . "/../../halcore/lib/libsec.php";
+require_once __DIR__.'/../../halcore/plugins/autoload.php';
 
 $ip=$_SERVER['HTTP_X_REAL_IP'];
 $lsec=new LibSec();
