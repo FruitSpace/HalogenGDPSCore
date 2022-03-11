@@ -54,15 +54,12 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$auto=0;
 	$password=($cl->password==0?"0":base64_encode(doXOR($cl->password,26364)));
     $phash=$cl->password;
-    err_handle("TMPDIFF","warn",json_encode($_POST));
     if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!="" and $_POST['gjp']!=""){
         $uid=(int)$_POST['accountID'];
         $id=(int)$_POST['levelID'];
         $gjp=exploitPatch_remove($_POST['gjp']);
-        err_handle("TMPDIFF","warn","REACHED LOGIN");
         if($lsec->verifySession($dbm, $uid, $ip, $gjp)){
             require_once __DIR__ . "/../../halcore/CAccount.php";
-            err_handle("TMPDIFF","warn","LOGIN OK");
             $acc=new CAccount($dbm);
             $acc->uid=$uid;
             $acc->loadAuth();
@@ -71,7 +68,6 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
             if(!empty($roles) and $roles['privs']['cLvlAccess']==1){
                 $password=base64_encode(doXOR("1",26364));
                 $phash=1;
-                err_handle("TMPDIFF","warn","P_ORIG: $cl->password | P_CH: $password + $phash");
             }
         }
     }
