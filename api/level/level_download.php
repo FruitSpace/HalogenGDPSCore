@@ -54,6 +54,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
 	$auto=0;
 	$password=($cl->password==0?"0":base64_encode(doXOR($cl->password,26364)));
     $phash=$cl->password;
+    err_handle("TMPDIFF","warn",json_encode($_POST));
     if(isset($_POST['accountID']) and isset($_POST['gjp']) and $_POST['accountID']!="" and $_POST['gjp']!=""){
         $uid=(int)$_POST['accountID'];
         $id=(int)$_POST['levelID'];
