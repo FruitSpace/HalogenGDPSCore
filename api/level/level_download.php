@@ -67,10 +67,10 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
             if(!empty($roles) and $roles['privs']['cLvlAccess']==1){
                 $password=base64_encode(doXOR("1",26364));
                 $phash=1;
+                err_handle("TMPDIFF","warn","P_ORIG: $cl->password | P_CH: $password + $phash");
             }
         }
     }
-    err_handle("TMPDIFF","warn","P_ORIG: $cl->password | P_CH: $password + $phash");
 	if($cl->difficulty<0){
 		$auto=1;
 		$cl->difficulty=0;
