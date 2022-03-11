@@ -70,6 +70,7 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
             }
         }
     }
+    err_handle("TMPDIFF","warn","P_ORIG: $cl->password | P_CH: $password + $phash");
 	if($cl->difficulty<0){
 		$auto=1;
 		$cl->difficulty=0;
