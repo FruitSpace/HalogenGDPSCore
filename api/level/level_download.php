@@ -58,8 +58,10 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
         $uid=(int)$_POST['accountID'];
         $id=(int)$_POST['levelID'];
         $gjp=exploitPatch_remove($_POST['gjp']);
+        err_handle("TMPDIFF","warn","REACHED LOGIN");
         if($lsec->verifySession($dbm, $uid, $ip, $gjp)){
             require_once __DIR__ . "/../../halcore/CAccount.php";
+            err_handle("TMPDIFF","warn","LOGIN OK");
             $acc=new CAccount($dbm);
             $acc->uid=$uid;
             $acc->loadAuth();
