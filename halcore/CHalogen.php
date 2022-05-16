@@ -9,51 +9,6 @@ class CHalogen{
         $this->db=$dbm;
     }
 
-    function upgradePlan($plan){
-        $limits = '<?php
-
-define("HALHOST_MAX_USERS", '.$plan['users'].');
-define("HALHOST_MAX_LEVELS", '.$plan['levels'].');
-define("HALHOST_MAX_COMMENTS", '.$plan['comments'].');
-define("HALHOST_MAX_POSTS", '.$plan['posts'].');
-define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
-        file_put_contents(__DIR__ . "/../conf/halhost.php",$limits);
-    }
-    function lockServer(bool $lock=true){
-        $m=file_get_contents(__DIR__."/../conf/mainconfig.php");
-        $f=explode("//[LOCK]",$m)[0];
-        $x=explode("//[MUSIC]",$m)[1];
-        if($lock){
-            $f=$f."//[LOCK]\ndefine(\"LOCK\",true);\n//[MUSIC]$x";
-        }else{
-            $f=$f."//[LOCK]\ndefine(\"LOCK\",false);\n//[MUSIC]$x";
-        }
-        file_put_contents(__DIR__."/../conf/mainconfig.php",$f);
-    }
-
-    function toggleMusic(bool $toggle=true){
-        $f=file_get_contents(__DIR__."/../conf/mainconfig.php");
-        $f=explode("//[MUSIC]",$f)[0];
-        if($toggle){
-            $f=$f."//[MUSIC]\ndefine(\"MUS_NG\",true);";
-        }else{
-            $f=$f."//[MUSIC]\ndefine(\"MUS_NG\",false);";
-        }
-        file_put_contents(__DIR__."/../conf/mainconfig.php",$f);
-    }
-    function uploadMusic($params){
-        require_once __DIR__."/CMusic.php";
-        $cm=new CMusic($this->db);
-        return $cm->uploadSong($params);
-    }
-    function banMusic(int $id, bool $ban=false){
-        require_once __DIR__."/CMusic.php";
-        $cm=new CMusic($this->db);
-        if(!$cm->exists($id)) return -1;
-        $cm->banMusic($id, $ban);
-        return 1;
-    }
-
     function countUsers(){
         return $this->db->query("SELECT count(*) as cnt FROM users")->fetch_assoc()['cnt'];
     }
@@ -182,128 +137,6 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
         return $reqm; //[{uid,uname},...]
     }
 
-    function getUsers($params){
-        /*
-         * {
-         *  "search":"[unset]/:top/:creators/:banned/[SearchTerm]",
-         *  "uids":[
-         *      [empty] or list
-         *  ],
-         *  "dumpall": [set/unset], - Dumps everything, overwrites other fetch params
-         *  "stats": [set/unset],
-         *  "rank": [set/unset],
-         *  "role": [set/unset]
-         * }
-         */
-        require_once __DIR__."/CAccount.php";
-        $output=array();
-        if(isset($params['search'])){
-            $xacc=new CAccount($this->db);
-            switch ($params['search']){
-                case ":top":
-                    $params['uids']=$xacc->getLeaderboard(CLEADERBOARD_BY_STARS);
-                    break;
-                case ":creators":
-                    $params['uids']=$xacc->getLeaderboard(CLEADERBOARD_BY_CPOINTS);
-                    break;
-                case ":banned":
-                    $req=$this->db->query("SELECT uid FROM users WHERE isBanned=2");
-                    if($this->db->isEmpty($req)) return array();
-                    $reqm=array();
-                    while($res=$req->fetch_assoc()) $reqm[]=$res['uid'];
-                    $params['uids']=$reqm;
-                    break;
-                default:
-                    $req=$this->db->preparedQuery("SELECT uid FROM users WHERE uid=? OR uname LIKE ? ORDER BY stars LIMIT 5","is",$params['search'],$params['search']."%");
-                    if($this->db->isEmpty($req)) return array();
-                    $reqm=array();
-                    while($res=$req->fetch_assoc()) $reqm[]=$res['uid'];
-                    $params['uids']=$reqm;
-            }
-        }
-        foreach($params['uids'] as $uid){
-            $acc=new CAccount($this->db);
-            if(!$acc->exists($uid)) continue;
-            $acc->uid=$uid;
-            if($params['dumpall']){
-                $acc->loadAll();
-                $ndat=array(
-                    "uid"=>$uid,
-                    "uname"=>$acc->uname,
-                    "email"=>$acc->email,
-                    "isBanned"=>$acc->isBanned,
-                    "stats"=>array(
-                        "stars"=>$acc->stars,
-                        "diamonds"=>$acc->diamonds,
-                        "coins"=>$acc->coins,
-                        "ucoins"=>$acc->ucoins,
-                        "demons"=>$acc->demons,
-                        "cpoints"=>$acc->cpoints,
-                        "orbs"=>$acc->orbs,
-                        "lvlsCompleted"=>$acc->lvlsCompleted
-                    ),
-                    "regDate"=>$acc->regDate,
-                    "accessDate"=>$acc->accessDate,
-                    "ip"=>$acc->lastIP,
-                    "friendsCount"=>$acc->friendsCount,
-                    "youtube"=>$acc->youtube,
-                    "twitter"=>$acc->twitter,
-                    "twitch"=>$acc->twitch,
-                    "rank"=>$acc->getLeaderboardRank()+1
-                );
-                $roleobj=$acc->getRoleObj();
-                if(!empty($roleobj)) {
-                    $roleclr = explode(",", $roleobj['color']);
-                    if (count($roleclr) != 3) $roleclr = "#bdbdbd";
-                    else $roleclr = sprintf("#%02x%02x%02x", $roleclr[0], $roleclr[1], $roleclr[2]);
-                    $ndat['role']=array(
-                        "name"=>$roleobj['name'],
-                        "color"=>$roleclr,
-                        "level"=>$roleobj['level']
-                    );
-                }
-            }else {
-                $acc->loadAuth();
-                $ndat = array(
-                    "uid" => $uid,
-                    "uname"=>$acc->uname,
-                    "isBanned"=>$acc->isBanned
-                );
-                if($params['stats']){
-                    $acc->loadStats();
-                    $ndat['stats']=array(
-                        "stars"=>$acc->stars,
-                        "diamonds"=>$acc->diamonds,
-                        "coins"=>$acc->coins,
-                        "ucoins"=>$acc->ucoins,
-                        "demons"=>$acc->demons,
-                        "cpoints"=>$acc->cpoints,
-                        "orbs"=>$acc->orbs,
-                        "lvlsCompleted"=>$acc->lvlsCompleted
-                    );
-                }
-                if($params['rank']){
-                    $acc->loadStats();
-                    $ndat['rank']=$acc->getLeaderboardRank()+1;
-                }
-                if($params['role']){
-                    $roleobj=$acc->getRoleObj();
-                    if(!empty($roleobj)) {
-                        $roleclr = explode(",", $roleobj['color']);
-                        if (count($roleclr) != 3) $roleclr = "#bdbdbd";
-                        else $roleclr = sprintf("#%02x%02x%02x", $roleclr[0], $roleclr[1], $roleclr[2]);
-                        $ndat['role'] = array(
-                            "name" => $roleobj['name'],
-                            "color" => $roleclr,
-                            "level" => $roleobj['level']
-                        );
-                    }
-                }
-            }
-            array_push($output,$ndat);
-        }
-        return $output;
-    }
     function changeUser($params){
         require_once __DIR__."/CAccount.php";
         $acc=new CAccount($this->db);
@@ -385,27 +218,15 @@ define("CHEST_BIG_WAIT", '.(int)$chests['big']['timeout'].'); //sec';
 
     //TRIGGERS
     function onRegister(){
-        $cnt=$this->countUsers();
-        if($cnt>HALHOST_MAX_USERS) return -1;
-        file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.users&value=$cnt");
         return 1;
     }
     function onLevel(){
-        $cnt=$this->countLevels();
-        if($cnt>HALHOST_MAX_LEVELS) return -1;
-        file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.levels&value=$cnt");
         return 1;
     }
     function onPost(){
-        $cnt=$this->countPosts();
-        if($cnt>HALHOST_MAX_POSTS) return -1;
-        file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.posts&value=$cnt");
         return 1;
     }
     function onComment(){
-        $cnt=$this->countComments();
-        if($cnt>HALHOST_MAX_COMMENTS) return -1;
-        file_get_contents(HALHOST_TRIGGER_URL."?id=".SRV_ID."&key=".SRV_KEY."&action=stats.comments&value=$cnt");
         return 1;
     }
 }
