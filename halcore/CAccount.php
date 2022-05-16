@@ -268,7 +268,7 @@ class CAccount{
 		$this->db->preparedQuery("UPDATE users SET blacklist=? WHERE uid=$this->uid","s",$this->blacklist);
 	}
 
-	function updateFriendships($action=CFRIENDSHIP_ADD, int $id){
+	function updateFriendships($action, int $id){
 		$this->loadSocial();
 		$friendships=(empty($this->friendshipIds)?array():explode(",",$this->friendshipIds));
 		if($action==CFRIENDSHIP_ADD and !in_array($id,$friendships)) {

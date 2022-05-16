@@ -49,5 +49,5 @@ adminer.*
 userpanel.php
 *.png
 *.jpg
-#halcore/plugins/vendor
-#halcore/plugins/mod*
+halcore/plugins/vendor
+halcore/plugins/mod*
