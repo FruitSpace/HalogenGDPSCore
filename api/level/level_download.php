@@ -64,7 +64,6 @@ if(isset($_POST['levelID']) and $_POST['levelID']!=""){
             $acc->uid=$uid;
             $acc->loadAuth();
             $roles=$acc->getRoleObj(true);
-            err_handle("TMPDIFF","warn","GOT AUTH - E?".empty($roles)." VAL=".$roles['privs']);
             if(!empty($roles) and $roles['privs']['cLvlAccess']==1){
                 $password=base64_encode(doXOR("1",26364));
                 $phash=1;

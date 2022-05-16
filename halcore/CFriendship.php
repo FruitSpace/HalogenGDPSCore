@@ -62,9 +62,12 @@ class CFriendship{
 	function deleteFriendship(int $uid, int $uid_dest){
 		require_once __DIR__ . "/CAccount.php";
 		$id=$this->getFriendshipId($uid, $uid_dest);
+        if($id<0) return;
 		$this->db->query("DELETE FROM friendships WHERE (uid1=$uid AND uid2=$uid_dest) OR (uid2=$uid AND uid1=$uid_dest)");
 		$acc1=new CAccount($this->db);
+        $acc1->uid=$uid;
 		$acc2=new CAccount($this->db);
+        $acc2->uid=$uid_dest;
 		$acc1->updateFriendships(CFRIENDSHIP_REMOVE, $id);
 		$acc2->updateFriendships(CFRIENDSHIP_REMOVE, $id);
 
