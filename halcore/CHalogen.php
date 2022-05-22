@@ -54,6 +54,19 @@ define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
         return 1;
     }
 
+    function pushMusicNotify($songid) {
+        require_once __DIR__."/CMusic.php";
+        require_once __DIR__."/plugins/autoload.php";
+
+        $cm=new CMusic($this->db);
+        $plug=new PluginCore();
+        $plug->preInit();
+        if($cm->getSong($songid)>0){
+            $plug->callPlugin("DiscordPacker::onMusicUpload",$songid,$cm->name,$cm->artist);
+        }
+        $plug->unload();
+    }
+
     function countUsers(){
         return $this->db->query("SELECT count(*) as cnt FROM users")->fetch_assoc()['cnt'];
     }

@@ -47,6 +47,14 @@ class DiscordPacker{
         )));
     }
 
+    function onMusicUpload($pch, $id, $name, $artist) {
+        $pch->callPlugin("RabbitMQ::publishText",$this->rabbitChan,$this->genpayload("newmusic",array(
+            "id"=>$id,
+            "name"=>$name,
+            "artist"=>$artist
+        )));
+    }
+
     function unload($pch){
         $pch->callPlugin("RabbitMQ::close",$this->rabbitChan);
     }
@@ -102,3 +110,4 @@ class DiscordPacker{
         return $diff;
     }
 }
+
