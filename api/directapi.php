@@ -11,9 +11,6 @@ switch($_GET['action']){
     case "music.add":
         if(empty($params['song'])) die('{"status":"error","error":"Method rejects provided data"}');
         die('{"status":"ok","id":'.$ch->uploadMusic($params['song']).'}');
-    case "music.ack":
-        if(empty($params['song'])) die('{"status":"error","error":"Method rejects provided data"}');
-        die('{"status":"ok","id":'.$ch->pushMusicNotify($params['song']).'}');
     case "music.ban":
         if(empty($params['song_id'])) die('{"status":"error","error":"Method rejects provided data"}');
         if($ch->banMusic($params['song_id'],true)>0) die('{"status":"ok"}');
