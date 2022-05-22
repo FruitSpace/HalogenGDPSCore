@@ -62,7 +62,7 @@ define("HALHOST_TRIGGER_URL", "https://halhost.cc/app/api/gdps_callback.php");';
         $plug=new PluginCore();
         $plug->preInit();
         if($cm->getSong($songid)>0){
-            $plug->callPlugin("DiscordPacker::onMusicUpload",$songid,$cm->name,$cm->artist);
+            $plug->callPlugin("DiscordPacker::onMusicUpload",$plug,$songid,$cm->name,$cm->artist);
         }
         $plug->unload();
     }
