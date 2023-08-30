@@ -23,6 +23,8 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 		$cl->id=$id;
 		if($cl->isOwnedBy($uid)>0){
             $ch=new CHalogen($dbm);
+            $cl->loadMain();
+            $cl->loadParams();
 			$cl->deleteLevel();
 			$cl->recalculateCPoints($cl->uid);
             $ch->onLevel();
@@ -32,13 +34,11 @@ if(isset($_POST['accountID']) and isset($_POST['levelID']) and isset($_POST['gjp
 			$acc->uid=$uid;
 			$acc->loadAuth();
 			registerAction(ACTION_LEVEL_DELETE,$uid,$id,array("uname"=>$acc->uname,"type"=>"Delete (Owner)"),$dbm);
-            $cl->loadParams();
             if(!$cl->isUnlisted) {
                 require_once __DIR__ . "/../../halcore/CAccount.php";
                 $plugCore = new PluginCore();
                 $plugCore->preInit();
                 $acc = new CAccount($dbm);
-                $cl->loadMain();
                 $plugCore->onLevelDelete($cl->id, $cl->name, $acc->getUnameByUID($cl->uid));
                 $plugCore->unload();
             }

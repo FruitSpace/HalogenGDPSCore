@@ -9,7 +9,6 @@ class RabbitMQ{
     public AMQPStreamConnection $conn;
     function connChan(){
         $this->conn=new AMQPStreamConnection("localhost",5672,"gdps_".SRV_ID,SRV_KEY);
-//        $this->conn=new AMQPStreamConnection("207.180.238.155",5672,"gdps_001A","1rbYI8pcOo7MJk2R");
         return $this->conn->channel();
     }
     function close($chan){

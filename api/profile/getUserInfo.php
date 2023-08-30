@@ -43,7 +43,6 @@ if(isset($_POST['targetAccountID']) and $_POST['targetAccountID']!=""){
 	//check blacklist status
 	$blacklist=explode(",",$acc->blacklist);
 	if($uid_self>0 and in_array($uid_self,$blacklist)) die("-1");
-	$rank=($acc->isBanned>0?0:$acc->getLeaderboardRank($uid));
 	if($uid==$uid_self){
 		require_once __DIR__ . "/../../halcore/CMessage.php";
 		$cm=new CMessage($dbm);
