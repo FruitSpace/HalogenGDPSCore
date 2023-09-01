@@ -280,7 +280,7 @@ class CLevel{
 	}
 
 	function recalculateCPoints(int $uid){
-		$req=$this->db->query("SELECT starsGot,isFeaturedп,isEpic,collab FROM levels WHERE uid=$uid");
+		$req=$this->db->query("SELECT starsGot,isFeatured,isEpic,collab FROM levels WHERE uid=$uid");
 		if($this->db->isEmpty($req)) return -2;
 		$reqm=array();
 		while($res=$req->fetch_assoc()) $reqm[]=$res;
