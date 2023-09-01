@@ -3,6 +3,7 @@ CREATE TABLE users
     uid            int(11)      NOT NULL AUTO_INCREMENT PRIMARY KEY,
     uname          varchar(16)  NOT NULL,
     passhash       varchar(128) NOT NULL,
+    gjphash        varchar(64) NOT NULL,
     email          varchar(256) NOT NULL,
     role_id        int(4)       NOT NULL DEFAULT 0,
 
@@ -13,6 +14,7 @@ CREATE TABLE users
     demons         int(11)      NOT NULL DEFAULT 0,
     cpoints        int(11)      NOT NULL DEFAULT 0,
     orbs           int(11)      NOT NULL DEFAULT 0,
+    moons           int(11)      NOT NULL DEFAULT 0,
 
     regDate        DATETIME     NOT NULL,
     accessDate     DATETIME     NOT NULL,
@@ -20,7 +22,7 @@ CREATE TABLE users
     gameVer        int(4)                DEFAULT 20,
     lvlsCompleted  int(11)               DEFAULT 0,
     special        int(11)      NOT NULL DEFAULT 0,
-    protect_meta JSON NOT NULL DEFAULT '{"comm_time":0,"post_time":0,"msg_time":0}',
+    protect_meta TEXT NOT NULL DEFAULT '{"comm_time":0,"post_time":0,"msg_time":0}',
     protect_levelsToday int(10) NOT NULL DEFAULT 0,
     protect_todayStars int(10) NOT NULL DEFAULT 0,
 
@@ -30,9 +32,9 @@ CREATE TABLE users
     friendship_ids TEXT         NOT NULL DEFAULT '',
 
     iconType       TINYINT      NOT NULL DEFAULT 0,
-    vessels        JSON         NOT NULL DEFAULT '{"clr_primary":0,"clr_secondary":0,"cube":0,"ship":0,"ball":0,"ufo":0,"wave":0,"robot":0,"spider":0,"trace":0,"death":0}',
-    chests         JSON         NOT NULL DEFAULT '{"small_count":0,"big_count":0,"small_time":0,"big_time":0}',
-    settings       JSON         NOT NULL DEFAULT '{"frS":0,"cS":0,"mS":0,"youtube":"","twitch":"","twitter":""}'
+    vessels        TEXT         NOT NULL DEFAULT '{"clr_primary":0,"clr_secondary":0,"cube":0,"ship":0,"ball":0,"ufo":0,"wave":0,"robot":0,"spider":0,"swing":0,"jetpack":0,"trace":0,"death":0}',
+    chests         TEXT         NOT NULL DEFAULT '{"small_count":0,"big_count":0,"small_time":0,"big_time":0}',
+    settings       TEXT         NOT NULL DEFAULT '{"frS":0,"cS":0,"mS":0,"youtube":"","twitch":"","twitter":""}'
 );
 
 CREATE TABLE levels
@@ -55,6 +57,7 @@ CREATE TABLE levels
     versionGame          tinyint(3)       NOT NULL,
     versionBinary        tinyint(3)       NOT NULL,
     stringExtra          mediumtext       NOT NULL,
+    stringSettings       mediumtext       NOT NULL,
     stringLevel          longtext         NOT NULL,
     stringLevelInfo      mediumtext       NOT NULL,
     original_id          int(11)          NOT NULL DEFAULT 0,
@@ -79,7 +82,7 @@ CREATE TABLE levels
 
     uploadDate           DATETIME         NOT NULL,
     updateDate           DATETIME         NOT NULL
-);
+)AUTO_INCREMENT=30;
 
 CREATE TABLE levelpacks
 (
@@ -100,7 +103,7 @@ CREATE TABLE roles
     roleName     varchar(64) NOT NULL DEFAULT 'Moderator',
     commentColor varchar(11) NOT NULL DEFAULT '0,0,255',
     modLevel     tinyint(1)  NOT NULL DEFAULT 1,
-    privs        text        NOT NULL DEFAULT '{"cRate":0,"cFeature":0,"cEpic":0,"cVerCoins":0,"cDaily":0,"cWeekly":0,"cDelete":0,"cLvlAccess":0,"aRateDemon":0,"aRateStars":0,"aReqMod":0,"dashboardMod":0,"dashboardBan":0,"dashboardCreatePack":0}'
+    privs        text        NOT NULL DEFAULT '{"cRate":0,"cFeature":0,"cEpic":0,"cVerCoins":0,"cDaily":0,"cWeekly":0,"cDelete":0,"cLvlAccess":0,"aRateDemon":0,"aRateReq":0,"aRateStars":0,"aReqMod":0}'
 );
 
 CREATE TABLE songs
@@ -197,5 +200,16 @@ CREATE TABLE actions
     type      tinyint(1) NOT NULL,
     target_id int(11)    NOT NULL,
     isMod     tinyint(1) NOT NULL DEFAULT 0,
-    data      JSON       NOT NULL DEFAULT '{}'
+    data      TEXT       NOT NULL DEFAULT '{}'
+);
+
+CREATE TABLE rateQueue
+(
+    id              int(11)      NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    lvl_id          int(11)          NOT NULL,
+    name            varchar(32)      NOT NULL DEFAULT 'Unnamed',
+    uid             int(11)          NOT NULL,
+    mod_uid         int(11)          NOT NULL,
+    stars           int(11)          NOT NULL DEFAULT 0,
+    isFeatured      tinyint(1)       NOT NULL DEFAULT 0
 );
