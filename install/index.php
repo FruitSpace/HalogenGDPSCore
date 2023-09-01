@@ -95,5 +95,55 @@
             </button>
         </div>
     </div>
+
+    <!-- API -->
+    <div id="content-2" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
+        <p>Тут ничего нет</p>
+
+
+        <div class="flex items-center justify-end space-x-2.5">
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
+                Next
+                <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1 ml-2 h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M5 12l14 0"></path>
+                    <path d="M13 18l6 -6"></path>
+                    <path d="M13 6l6 6"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="content-3" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
+        <p>Тут ничего нет</p>
+
+
+        <div class="flex items-center justify-end space-x-2.5">
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
+                Next
+                <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1 ml-2 h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M5 12l14 0"></path>
+                    <path d="M13 18l6 -6"></path>
+                    <path d="M13 6l6 6"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div id="content-4" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
+        <p>Тут ничего нет</p>
+
+
+        <div class="flex items-center justify-end space-x-2.5">
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
+                Done
+            </button>
+        </div>
+    </div>
+
 </body>
 </html>

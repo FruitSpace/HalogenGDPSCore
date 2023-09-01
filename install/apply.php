@@ -1,6 +1,6 @@
 <?php
-ini_set('display_errors', 0);
-error_reporting(E_ERROR);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 function mkresp($status, $data) {
     die(json_encode(array(
         "status"=>$status,
@@ -27,7 +27,7 @@ define("DB_NAME", "'.$dbname.'");
     if ($mdb->connect_errno) mkresp("error", $mdb->connect_error);
 
     require_once __DIR__."/../halcore/lib/DBManagement.php";
-    $dbm = new DBManagement();
+    $dbm = new DBManagement(true);
     //@m41denx: Мне влом отлавливать ошибки. Плиз добавьте тут цикл с проверкой успешного успеха (https://www.php.net/manual/en/mysqli.multi-query.php)
     $dbm->getDB()->multi_query(file_get_contents(__DIR__."/../database.sql"));
 

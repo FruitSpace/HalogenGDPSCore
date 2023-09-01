@@ -42,6 +42,8 @@ const initDB = async ()=> {
         showError(resp.data)
         return false
     }
+    showError("",false)
+    return true
 }
 
 
