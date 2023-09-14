@@ -43,7 +43,7 @@
 
         <div class="flex items-center justify-end space-x-2.5">
             <button onclick="pageNext()" class="<?=($block?"!bg-gray-500":"")?> rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium" <?=($block?"disabled":"")?>>
-                Next
+                Начать
                 <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1 ml-2 h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M5 12l14 0"></path>
@@ -58,7 +58,7 @@
 
     <div id="content-1" class="hidden mt-12 flex w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
         <div class="flex flex-col">
-            <label for="db-host" class="text-sm font-medium">DB Host</label>
+            <label for="db-host" class="text-sm font-medium">DB Хост</label>
             <span class="flex gap-2">
                 <input id="db-host" class="flex-1 border-b border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="127.0.0.1" />
                 <input id="db-port" class="border-b text-center border-gray-600 w-[4rem] bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="3306" />
@@ -66,26 +66,26 @@
         </div>
 
         <div class="flex flex-col">
-            <label for="db-user" class="text-sm font-medium">DB Username</label>
+            <label for="db-user" class="text-sm font-medium">DB Пользователь</label>
             <input id="db-user" class="border-b border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="mysql_user" />
         </div>
 
         <div class="flex flex-col">
-            <label for="db-pass" class="text-sm font-medium">DB Password</label>
+            <label for="db-pass" class="text-sm font-medium">DB Пароль</label>
             <input id="db-pass" class="border-b border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="********" type="password" />
         </div>
 
         <div class="flex flex-col">
-            <label for="db-name" class="text-sm font-medium">DB Name</label>
+            <label for="db-name" class="text-sm font-medium">DB Название</label>
             <input id="db-name" class="border-b border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="gdps_db" />
         </div>
 
         <div id="error-1" class="!hidden rounded-xl bg-red-500 px-5 py-2 flex gap-2 items-center"></div>
         <div class="flex items-center justify-end space-x-2.5">
             <div class="loader mr-auto"></div>
-            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Назад</button>
             <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
-                Next
+                Вперед
                 <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1 ml-2 h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M5 12l14 0"></path>
@@ -98,13 +98,16 @@
 
     <!-- API -->
     <div id="content-2" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
-        <p>Тут ничего нет</p>
+        <div class="flex flex-col">
+            <label for="api-key-input" class="text-sm font-medium">API Ключ (опционально)</label>
+            <input id="api-key-input" name="api-key" class="border-b border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="какое то поле ввода" />
+        </div>
 
 
         <div class="flex items-center justify-end space-x-2.5">
-            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Назад</button>
             <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
-                Next
+                Вперед
                 <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1 ml-2 h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M5 12l14 0"></path>
@@ -115,14 +118,43 @@
         </div>
     </div>
 
+    <!-- Chests -->
     <div id="content-3" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
-        <p>Тут ничего нет</p>
+        <h1 class="text-center">Маленький сундук</h1>
+        <div class="flex flex-col">
+                <label for="orb-min-small" class="text-sm font-medium">Орбы</label>
+                <span class="flex gap-1">
+                    <input id="orb-min-small" type="number" min="0" name="orb-min" class="flex-1 border-b text-center border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="Минимум" />
+                    <input id="orb-max-small" type="number" min="0" name="orb-max" class="border-b text-center border-gray-600 w-[12.5rem] bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="Максимум" />
+                </span>
+        </div>
 
+        <div class="flex flex-col">
+                <label for="diamond-small" class="text-sm font-medium">Алмазы</label>
+                <span class="flex gap-1">
+                    <input id="diamond-min-small" type="number" min="0" name="diamond-min-small" class="flex-1 border-b text-center border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="Минимум" />
+                    <input id="diamond-max-small" type="number" min="0" name="diamond-max-small" class="border-b text-center border-gray-600 w-[12.5rem] bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="Максимум" />
+                </span>
+        </div>
+        <div class="flex flex-col">
+                <label for="keys-small" class="text-sm font-medium">Ключи</label>
+                <span class="flex gap-1">
+                    <input id="key-min-small" type="number" min="0" name="key-min-small" class="flex-1 border-b text-center border-gray-600 bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="Минимум" />
+                    <input id="key-max-small" type="number" min="0" name="key-max-small" class="border-b text-center border-gray-600 w-[12.5rem] bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="Максимум" />
+                </span>
+        </div>
 
+        <div class="flex flex-col">
+                <label for="timeout-small" class="text-sm font-medium">Ожидание [секунды]</label>
+                <input id="timeout-small-input" type="number" min="1" name="timeout-small-input" class="border-b border-gray-600 text-center bg-transparent py-2 focus:border-blue-600 focus:outline-none" placeholder="3600" />
+        </div>
+        <h1 class="text-center">Большой сундук</h1>
+        <p class="text-center">Soon</p>
+        
         <div class="flex items-center justify-end space-x-2.5">
-            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Назад</button>
             <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
-                Next
+                Вперед
                 <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1 ml-2 h-5 w-5" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                     <path d="M5 12l14 0"></path>
@@ -133,14 +165,39 @@
         </div>
     </div>
 
-    <div id="content-4" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6">
-        <p>Тут ничего нет</p>
+    <div id="content-4" class="hidden transition-all mt-12 w-full max-w-md flex-col space-y-6 rounded-[1.375rem] bg-gray-900 p-6 justify-center">
+    <div class="flex justify-between items-center">
+
+        <label for="log-file" >Логи</label>
+                <div class="flex flex-col">
+                    <label class="switch">
+                        <input type="checkbox" id="log-file" name="logs_s">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                </div>
+                <div class="flex justify-between items-center">
+                    <label for="log-file" >Музыка NewGrounds</label>
+
+
+                    <div class="flex flex-col justify-center">
+                        <label class="switch">
+                            <input type="checkbox" id="log-file" name="ng_music" />
+                            <span class="slider round"></span>
+                        </label>
+                        </div>
+            </div>
+
+
+    
+
+            
 
 
         <div class="flex items-center justify-end space-x-2.5">
-            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Back</button>
+            <button onclick="pagePrev()" class="rounded-xl px-5 py-2.5 hover:bg-gray-800 transition-all text-sm font-medium">Назад</button>
             <button onclick="pageNext()" class="rounded-xl flex items-center bg-blue-600 hover:bg-blue-700 transition-all px-5 py-2.5 text-sm font-medium">
-                Done
+                Завершить
             </button>
         </div>
     </div>
