@@ -7,7 +7,7 @@
 >
 > Модули и как с ними работать - все в папке [halcore/plugins](halcore/plugins).
 
-> Создать установщики можно здесь: [Windows](https://gdrainix.xyz/create-gdps) и [Android](https://gdrainix.xyz/create-android-gdps)
+> Создать установщики можно здесь: [Windows](https://gmdworld.xyz/create-gdps) и [Android](https://gmdworld.xyz/create-android-gdps)
 
 > ⚠️ [Лицензия MIT](LICENSE): Вы можете использовать данный код в коммерческих и личных целях, изменять его и создавать свой на его основе. Единственное условие - наличие файла `LICENSE` в ваших репозиториях и сайтах/серверах, на которых используется ядрою
 > Спасибо
